@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Top 20 Rated Movies</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+<h1>Top 20 Rated Movies</h1>
+<div th:each="movie : ${movies}">
+    <div>
+        <img th:src="'https://image.tmdb.org/t/p/w200/' + ${movie.posterPath}" alt="Movie Poster" />
+        <h3 th:text="${movie.title}"></h3>
+        <p>Rating: <span th:text="${movie.voteAverage}">0.0</span></p>
+        <p th:text="${movie.overview}"></p>
+    </div>
+</div>
+</body>
+</html>
