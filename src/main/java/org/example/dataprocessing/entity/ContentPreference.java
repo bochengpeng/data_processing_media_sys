@@ -19,8 +19,8 @@ public class ContentPreference
     private List<String> preferredQualities;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "profileId", nullable = false)
+    private Profile profile;
 
     @Enumerated(EnumType.STRING)
     private AgeRating minAgeRating;
@@ -30,11 +30,11 @@ public class ContentPreference
     {
     }
 
-    public ContentPreference(List<Genre> preferredGenres, List<String> preferredQualities, User user, AgeRating minAgeRating)
+    public ContentPreference(List<Genre> preferredGenres, List<String> preferredQualities, Profile profile, AgeRating minAgeRating)
     {
         this.preferredGenres = preferredGenres;
         this.preferredQualities = preferredQualities;
-        this.user = user;
+        this.profile = profile;
         this.minAgeRating = minAgeRating;
     }
 
@@ -89,14 +89,14 @@ public class ContentPreference
         this.preferredQualities = preferredQualities;
     }
 
-    public User getUser()
+    public Profile getProfile()
     {
-        return user;
+        return this.profile;
     }
 
-    public void setUser(User user)
+    public void setProfile(Profile profile)
     {
-        this.user = user;
+        this.profile = profile;
     }
 
     // Methods

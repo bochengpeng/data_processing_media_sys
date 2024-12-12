@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/MediaBrowsingSysProject.iml" filepath="$PROJECT_DIR$/.idea/MediaBrowsingSysProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DataProcessing.iml" filepath="$PROJECT_DIR$/.idea/modules/DataProcessing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DataProcessing.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DataProcessing.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DataProcessing.test.iml" filepath="$PROJECT_DIR$/.idea/modules/DataProcessing.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.DataProcessing.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.DataProcessing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.DataProcessing.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.DataProcessing.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.DataProcessing.test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.DataProcessing.test.iml" />
     </modules>
   </component>
 </project>

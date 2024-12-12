@@ -25,9 +25,9 @@ public class Episode extends Content
         super(); // No-arg constructor from Content
     }
 
-    public Episode(Long contentId, String title, String description, String genre, AgeRating ageRating, List<String> supportedQualities, Long episodeId, int episodeNumber, int seasonNumber, int duration, Serie serie)
+    public Episode(Long contentId, String title, String description, List<Genre> genres, AgeRating ageRating, List<String> supportedQualities, Long episodeId, int episodeNumber, int seasonNumber, int duration, Serie serie)
     {
-        super(contentId, title, description, genre, ageRating, supportedQualities);
+        super(contentId, title, description, genres, ageRating, supportedQualities);
         this.episodeId = episodeId;
         this.episodeNumber = episodeNumber;
         this.seasonNumber = seasonNumber;

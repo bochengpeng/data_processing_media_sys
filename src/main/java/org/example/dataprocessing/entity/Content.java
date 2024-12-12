@@ -10,7 +10,11 @@ public abstract class Content
     private Long contentId;
     private String title;
     private String description;
-    private String genre;
+
+    @ElementCollection(fetch = FetchType.EAGER) // Maps a collection of basic types or embeddables
+    @Enumerated(EnumType.STRING) // Store the enum values as strings in the database
+    private List<Genre> genres;
+
     private AgeRating ageRating;
 
     @ElementCollection
@@ -20,13 +24,13 @@ public abstract class Content
     {
     }
 
-    public Content(Long contentId, String title, String description, String genre, AgeRating ageRating, List<String> supportedQualities)
+    public Content(Long contentId, String title, String description, List<Genre> genres, AgeRating ageRating, List<String> supportedQualities)
     {
 
         this.contentId = contentId;
         this.title = title;
         this.description = description;
-        this.genre = genre;
+        this.genres = genres;
         this.ageRating = ageRating;
         this.supportedQualities = supportedQualities;
 
@@ -62,14 +66,14 @@ public abstract class Content
         this.description = description;
     }
 
-    public String getGenre()
+    public List<Genre> getGenres()
     {
-        return this.genre;
+        return this.genres;
     }
 
-    public void setGenre(String genre)
+    public void setGenres(List<Genre> genres)
     {
-        this.genre = genre;
+        this.genres = genres;
     }
 
     public AgeRating getAgeRating()
