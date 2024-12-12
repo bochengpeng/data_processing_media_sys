@@ -1,11 +1,10 @@
 package com.netflix.api.netflix.services;
 
 import com.netflix.api.netflix.dto.SubscriptionDto;
-
-import java.util.List;
+import com.netflix.api.netflix.models.Subscription;
 
 public interface SubscriptionService {
-    SubscriptionDto createSubscription(int userId, SubscriptionDto subscriptionDto);
+    SubscriptionDto createSubscription(Subscription subscription);
     SubscriptionDto getSubscriptionByUserId(int userId);
 
     SubscriptionDto getSubscriptionById(int subscriptionId);

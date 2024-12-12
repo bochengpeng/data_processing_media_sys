@@ -9,9 +9,6 @@ import com.netflix.api.netflix.services.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService
 {
@@ -19,27 +16,44 @@ public class SubscriptionServiceImpl implements SubscriptionService
     private final SubscriptionRepository subscriptionRepository;
     private final UserRepository userRepository;
 
+
     @Autowired
     public SubscriptionServiceImpl(SubscriptionRepository subscriptionRepository, UserRepository userRepository) {
         this.subscriptionRepository = subscriptionRepository;
         this.userRepository = userRepository;
     }
 
+//    @Override
+//    public SubscriptionDto createSubscription(int userId, SubscriptionDto subscriptionDto) {
+//        // Fetch the user by ID to associate the subscription with the user
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        // Convert SubscriptionDto to Subscription entity
+//        Subscription subscription = mapToEntity(subscriptionDto);
+////        subscription.setUser(user); // Associate the subscription with the user
+//
+//        // Save the subscription entity
+//        Subscription savedSubscription = subscriptionRepository.save(subscription);
+//
+//        // Convert the saved subscription entity to a SubscriptionDto and return it
+//        return mapToDto(savedSubscription);
+//    }
+
     @Override
-    public SubscriptionDto createSubscription(int userId, SubscriptionDto subscriptionDto) {
-        // Fetch the user by ID to associate the subscription with the user
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Convert SubscriptionDto to Subscription entity
-        Subscription subscription = mapToEntity(subscriptionDto);
-//        subscription.setUser(user); // Associate the subscription with the user
-
-        // Save the subscription entity
+    public SubscriptionDto createSubscription(Subscription subscription) {
+        // Save the subscription to the database
         Subscription savedSubscription = subscriptionRepository.save(subscription);
 
-        // Convert the saved subscription entity to a SubscriptionDto and return it
-        return mapToDto(savedSubscription);
+        // Manually map Subscription to SubscriptionDto
+        SubscriptionDto subscriptionDto = new SubscriptionDto();
+        subscriptionDto.setSubscriptionId(savedSubscription.getSubscriptionId());
+        subscriptionDto.setTier(savedSubscription.getTier());
+        subscriptionDto.setStartDate(savedSubscription.getStartDate());  // Assuming it's a LocalDate or similar
+        subscriptionDto.setEndDate(savedSubscription.getNextBillingDate());  // Assuming it's a LocalDate or similar
+
+        // Return the DTO
+        return subscriptionDto;
     }
 
     @Override
