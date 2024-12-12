@@ -16,7 +16,7 @@ public class Content
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long contentId;
+    private int contentId;
     private String title;
     private String description;
     private Genre genre;
