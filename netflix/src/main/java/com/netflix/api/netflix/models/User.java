@@ -37,15 +37,13 @@ public class User
 //        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
 //)
 //private List<Role> roles = new ArrayList<>();
-@ManyToOne // Assuming a user can have one subscription, and a subscription can have many users.
-@JoinColumn(name = "role_id")
-private Role role;
+    @ManyToOne // Assuming a user can have one subscription, and a subscription can have many users.
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    public void setUsername(String username)
+    public User(int userId, String email, String password, boolean activated)
     {
     }
-
-    public void setRoles(Role roles)
-    {
-    }
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Profile> profiles = new ArrayList<>();
 }

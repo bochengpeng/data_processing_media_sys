@@ -25,6 +25,7 @@ public class Movie
     private Genre genre;
     private ContentClassification contentClassification;
     private AgeRating ageRating;
+    private String description;
 
 //    @ElementCollection
 //    @CollectionTable(name = "movie_cast", joinColumns = @JoinColumn(name = "movie_id"))

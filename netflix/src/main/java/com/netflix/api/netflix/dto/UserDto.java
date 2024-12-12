@@ -15,8 +15,13 @@ import java.util.List;
 public class UserDto {
     private int userId;
     private String email;
+    private String password;
     private boolean isActivated;
     private LocalDateTime createdAt;
     private List<ProfileDto> profiles;
     private SubscriptionDto subscription;
+
+    public UserDto(int userId, String email, String password, boolean activated)
+    {
+    }
 }

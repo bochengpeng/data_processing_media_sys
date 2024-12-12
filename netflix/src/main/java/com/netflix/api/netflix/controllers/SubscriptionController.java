@@ -19,21 +19,21 @@ public class SubscriptionController {
         return subscriptionRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Subscription> getSubscriptionById(@PathVariable int id) {
-        return subscriptionRepository.findById(id)
+    @GetMapping("/{subscriptionId}")
+    public ResponseEntity<Subscription> getSubscriptionById(@PathVariable int subscriptionId) {
+        return subscriptionRepository.findById(subscriptionId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Subscription createSubscription(@RequestBody Subscription subscription) {
+    @PostMapping("/users/{userId}")
+    public Subscription createSubscription(@RequestBody Subscription subscription, @PathVariable int userId) {
         return subscriptionRepository.save(subscription);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Subscription> updateSubscription(@PathVariable int id, @RequestBody Subscription subscriptionDetails) {
-        return subscriptionRepository.findById(id)
+    @PutMapping("/{subscriptionId}")
+    public ResponseEntity<Subscription> updateSubscription(@PathVariable int subscriptionId, @RequestBody Subscription subscriptionDetails) {
+        return subscriptionRepository.findById(subscriptionId)
                 .map(subscription -> {
 //                    subscription.setPlan(subscriptionDetails.getPlan());
                     return ResponseEntity.ok(subscriptionRepository.save(subscription));
@@ -41,9 +41,9 @@ public class SubscriptionController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSubscription(@PathVariable int id) {
-        return subscriptionRepository.findById(id)
+    @DeleteMapping("/{subscriptionId}")
+    public ResponseEntity<Void> deleteSubscription(@PathVariable int subscriptionId) {
+        return subscriptionRepository.findById(subscriptionId)
                 .map(subscription -> {
                     subscriptionRepository.delete(subscription);
                     return ResponseEntity.ok().<Void>build();

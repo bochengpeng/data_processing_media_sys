@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Data
 public class SubscriptionDto {
-    private Long subscriptionId;
+    private int subscriptionId;
     private SubscriptionTier tier;
     private LocalDate startDate;
     private LocalDate endDate;

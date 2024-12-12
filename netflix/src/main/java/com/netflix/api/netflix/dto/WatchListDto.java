@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class WatchListDto {
-    private Long watchListId;
+    private int watchListId;
     private List<ContentDto> savedContent;
 }
