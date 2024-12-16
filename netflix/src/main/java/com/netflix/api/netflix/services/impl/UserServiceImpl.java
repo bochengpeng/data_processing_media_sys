@@ -17,12 +17,14 @@ public class UserServiceImpl implements UserService
     private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository)
+    {
         this.userRepository = userRepository;
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public UserDto createUser(UserDto userDto)
+    {
         User user = mapToEntity(userDto);
         User newUser = userRepository.save(user);
         return mapToDto(newUser);
@@ -37,7 +39,8 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
+    public List<UserDto> getAllUsers()
+    {
         List<User> users = userRepository.findAll();
         return users.stream().map(this::mapToDto).collect(Collectors.toList());
     }
@@ -70,11 +73,13 @@ public class UserServiceImpl implements UserService
         userRepository.delete(user);
     }
 
-    private UserDto mapToDto(User user) {
+    private UserDto mapToDto(User user)
+    {
         return new UserDto(user.getUserId(), user.getEmail(), user.getPassword(), user.isActivated());
     }
 
-    private User mapToEntity(UserDto userDto) {
+    private User mapToEntity(UserDto userDto)
+    {
         return new User(userDto.getUserId(), userDto.getEmail(), userDto.getPassword(), userDto.isActivated());
     }
 }

@@ -10,31 +10,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/episodes")
-public class EpisodeController {
+public class EpisodeController
+{
     @Autowired
     private EpisodeRepository episodeRepository;
 
     @GetMapping
-    public List<Episode> getAllEpisodes() {
+    public List<Episode> getAllEpisodes()
+    {
         return episodeRepository.findAll();
     }
 
     @GetMapping("/{episodeId}")
-    public ResponseEntity<Episode> getEpisodeById(@PathVariable int episodeId) {
+    public ResponseEntity<Episode> getEpisodeById(@PathVariable int episodeId)
+    {
         return episodeRepository.findById(episodeId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Episode createEpisode(@RequestBody Episode episode) {
+    public Episode createEpisode(@RequestBody Episode episode)
+    {
         return episodeRepository.save(episode);
     }
 
     @PutMapping("/{episodeId}")
-    public ResponseEntity<Episode> updateEpisode(@PathVariable int episodeId, @RequestBody Episode episodeDetails) {
+    public ResponseEntity<Episode> updateEpisode(@PathVariable int episodeId, @RequestBody Episode episodeDetails)
+    {
         return episodeRepository.findById(episodeId)
-                .map(episode -> {
+                .map(episode ->
+                {
 //                    episode.setTitle(episodeDetails.getTitle());
                     episode.setSeasonNumber(episodeDetails.getSeasonNumber());
                     return ResponseEntity.ok(episodeRepository.save(episode));
@@ -43,9 +49,11 @@ public class EpisodeController {
     }
 
     @DeleteMapping("/{episodeId}")
-    public ResponseEntity<Void> deleteEpisode(@PathVariable int episodeId) {
+    public ResponseEntity<Void> deleteEpisode(@PathVariable int episodeId)
+    {
         return episodeRepository.findById(episodeId)
-                .map(episode -> {
+                .map(episode ->
+                {
                     episodeRepository.delete(episode);
                     return ResponseEntity.ok().<Void>build();
                 })

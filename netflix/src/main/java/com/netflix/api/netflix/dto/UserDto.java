@@ -12,7 +12,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class UserDto
+{
     private int userId;
     private String email;
     private String password;

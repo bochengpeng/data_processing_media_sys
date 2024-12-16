@@ -1,13 +1,18 @@
 package com.netflix.api.netflix.services.impl;
 
 import com.netflix.api.netflix.dto.SubscriptionDto;
+import com.netflix.api.netflix.dto.SubscriptionResponse;
 import com.netflix.api.netflix.models.Subscription;
 import com.netflix.api.netflix.models.User;
 import com.netflix.api.netflix.repository.SubscriptionRepository;
 import com.netflix.api.netflix.repository.UserRepository;
 import com.netflix.api.netflix.services.SubscriptionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService
@@ -15,6 +20,8 @@ public class SubscriptionServiceImpl implements SubscriptionService
 
     private final SubscriptionRepository subscriptionRepository;
     private final UserRepository userRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
 
     @Autowired
@@ -50,7 +57,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
         subscriptionDto.setSubscriptionId(savedSubscription.getSubscriptionId());
         subscriptionDto.setTier(savedSubscription.getTier());
         subscriptionDto.setStartDate(savedSubscription.getStartDate());  // Assuming it's a LocalDate or similar
-        subscriptionDto.setEndDate(savedSubscription.getNextBillingDate());  // Assuming it's a LocalDate or similar
+        subscriptionDto.setNextBillingDate(savedSubscription.getNextBillingDate());  // Assuming it's a LocalDate or similar
 
         // Return the DTO
         return subscriptionDto;
@@ -91,7 +98,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
 
         // Update the subscription fields with the data from the DTO
         existingSubscription.setStartDate(subscriptionDto.getStartDate());
-        existingSubscription.setNextBillingDate(subscriptionDto.getEndDate());
+        existingSubscription.setNextBillingDate(subscriptionDto.getNextBillingDate());
         existingSubscription.setTier(subscriptionDto.getTier());
 
         // Save the updated subscription entity
@@ -110,13 +117,14 @@ public class SubscriptionServiceImpl implements SubscriptionService
         // Delete the subscription entity
         subscriptionRepository.delete(subscription);
     }
+    
 
     // Helper method to map Subscription entity to SubscriptionDto
     private SubscriptionDto mapToDto(Subscription subscription) {
         SubscriptionDto subscriptionDto = new SubscriptionDto();
         subscriptionDto.setSubscriptionId(subscription.getSubscriptionId());
         subscriptionDto.setStartDate(subscription.getStartDate());
-        subscriptionDto.setEndDate(subscription.getNextBillingDate());
+        subscriptionDto.setNextBillingDate(subscription.getNextBillingDate());
         subscriptionDto.setTier(subscription.getTier());
         return subscriptionDto;
     }
@@ -125,7 +133,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
     private Subscription mapToEntity(SubscriptionDto subscriptionDto) {
         Subscription subscription = new Subscription();
         subscription.setStartDate(subscriptionDto.getStartDate());
-        subscription.setNextBillingDate(subscriptionDto.getEndDate());
+        subscription.setNextBillingDate(subscriptionDto.getNextBillingDate());
         subscription.setTier(subscriptionDto.getTier());
         return subscription;
     }

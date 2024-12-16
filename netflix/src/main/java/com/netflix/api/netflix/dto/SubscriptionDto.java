@@ -6,11 +6,12 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class SubscriptionDto {
+public class SubscriptionDto
+{
     private int subscriptionId;
     private SubscriptionTier tier;
     private LocalDate startDate;
-    private LocalDate endDate;
-    private boolean isActive;
+    private LocalDate nextBillingDate;
+    private boolean isTrialPeriod;
 }
 

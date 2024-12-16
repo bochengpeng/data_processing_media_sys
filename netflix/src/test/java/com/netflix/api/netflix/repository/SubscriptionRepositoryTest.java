@@ -14,7 +14,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest  // Automatically configures an in-memory database and repository
-public class SubscriptionRepositoryTest {
+public class SubscriptionRepositoryTest
+{
 
     @Autowired
     private SubscriptionRepository subscriptionRepository;
@@ -22,7 +23,8 @@ public class SubscriptionRepositoryTest {
     private Subscription subscription;
 
     @BeforeEach
-    public void setup() {
+    public void setup()
+    {
         // Create a new subscription for testing
         subscription = new Subscription();
         subscription.setTier(SubscriptionTier.HD);
@@ -31,7 +33,8 @@ public class SubscriptionRepositoryTest {
     }
 
     @Test
-    public void testCreateSubscription() {
+    public void testCreateSubscription()
+    {
         // Save the subscription
         Subscription savedSubscription = subscriptionRepository.save(subscription);
 
@@ -41,7 +44,8 @@ public class SubscriptionRepositoryTest {
     }
 
     @Test
-    public void testFindById() {
+    public void testFindById()
+    {
         // Save the subscription
         Subscription savedSubscription = subscriptionRepository.save(subscription);
 
@@ -54,9 +58,11 @@ public class SubscriptionRepositoryTest {
     }
 
     @Test
-    public void testPagination() {
+    public void testPagination()
+    {
         // Save a few subscriptions for pagination
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             Subscription sub = new Subscription();
             sub.setTier(SubscriptionTier.MONTHLY_PRICE);
             sub.setStartDate(LocalDate.parse("2024-01-01"));
@@ -74,7 +80,8 @@ public class SubscriptionRepositoryTest {
     }
 
     @Test
-    public void testDeleteSubscription() {
+    public void testDeleteSubscription()
+    {
         // Save the subscription
         Subscription savedSubscription = subscriptionRepository.save(subscription);
 

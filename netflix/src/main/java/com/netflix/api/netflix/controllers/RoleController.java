@@ -10,31 +10,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/roles")
-public class RoleController {
+public class RoleController
+{
     @Autowired
     private RoleRepository roleRepository;
 
     @GetMapping
-    public List<Role> getAllRoles() {
+    public List<Role> getAllRoles()
+    {
         return roleRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Role> getRoleById(@PathVariable int id) {
+    public ResponseEntity<Role> getRoleById(@PathVariable int id)
+    {
         return roleRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Role createRole(@RequestBody Role role) {
+    public Role createRole(@RequestBody Role role)
+    {
         return roleRepository.save(role);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Role> updateRole(@PathVariable int id, @RequestBody Role roleDetails) {
+    public ResponseEntity<Role> updateRole(@PathVariable int id, @RequestBody Role roleDetails)
+    {
         return roleRepository.findById(id)
-                .map(role -> {
+                .map(role ->
+                {
                     role.setName(roleDetails.getName());
                     return ResponseEntity.ok(roleRepository.save(role));
                 })
@@ -42,9 +48,11 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRole(@PathVariable int id) {
+    public ResponseEntity<Void> deleteRole(@PathVariable int id)
+    {
         return roleRepository.findById(id)
-                .map(role -> {
+                .map(role ->
+                {
                     roleRepository.delete(role);
                     return ResponseEntity.ok().<Void>build();
                 })

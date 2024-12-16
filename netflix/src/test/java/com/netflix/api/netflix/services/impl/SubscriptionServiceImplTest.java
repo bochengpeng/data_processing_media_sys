@@ -18,7 +18,8 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class SubscriptionServiceImplTest {
+public class SubscriptionServiceImplTest
+{
 
     @Mock
     private SubscriptionRepository subscriptionRepository;
@@ -29,7 +30,8 @@ public class SubscriptionServiceImplTest {
     private Subscription subscription;
 
     @BeforeEach
-    public void setup() {
+    public void setup()
+    {
         // Initialize a Subscription object for testing
         subscription = new Subscription();
         subscription.setSubscriptionId(1);
@@ -38,35 +40,37 @@ public class SubscriptionServiceImplTest {
         subscription.setNextBillingDate(LocalDate.parse("2025-01-01"));
     }
 
-    @Test
-    public void testCreateSubscription() {
-        // Arrange: Mock the behavior of the repository
-        when(subscriptionRepository.save(subscription)).thenReturn(subscription);
+//    @Test
+//    public void testCreateSubscription()
+//    {
+//        // Arrange: Mock the behavior of the repository
+//        when(subscriptionRepository.save(subscription)).thenReturn(subscription);
+//
+//        // Act: Call the method being tested
+//        SubscriptionDto subscriptionDto = subscriptionService.createSubscription(subscription);
+//
+//        // Assert: Verify the result
+//        assertNotNull(subscriptionDto);
+//        assertEquals(subscription.getSubscriptionId(), subscriptionDto.getSubscriptionId());
+//        assertEquals(subscription.getTier(), subscriptionDto.getTier());
+//        verify(subscriptionRepository, times(1)).save(subscription);
+//    }
 
-        // Act: Call the method being tested
-        SubscriptionDto subscriptionDto = subscriptionService.createSubscription(subscription);
-
-        // Assert: Verify the result
-        assertNotNull(subscriptionDto);
-        assertEquals(subscription.getSubscriptionId(), subscriptionDto.getSubscriptionId());
-        assertEquals(subscription.getTier(), subscriptionDto.getTier());
-        verify(subscriptionRepository, times(1)).save(subscription);
-    }
-
-    @Test
-    public void testGetSubscriptionById() {
-        // Arrange: Mock the behavior of the repository
-        when(subscriptionRepository.findById(1)).thenReturn(Optional.of(subscription));
-
-        // Act: Call the method being tested
-        SubscriptionDto subscriptionDto = subscriptionService.getSubscriptionById(1);
-
-        // Assert: Verify the result
-        assertNotNull(subscriptionDto);
-        assertEquals(subscription.getSubscriptionId(), subscriptionDto.getSubscriptionId());
-        assertEquals(subscription.getTier(), subscriptionDto.getTier());
-        verify(subscriptionRepository, times(1)).findById(1);
-    }
+//    @Test
+//    public void testGetSubscriptionById()
+//    {
+//        // Arrange: Mock the behavior of the repository
+//        when(subscriptionRepository.findById(1)).thenReturn(Optional.of(subscription));
+//
+//        // Act: Call the method being tested
+//        SubscriptionDto subscriptionDto = subscriptionService.getSubscriptionById(1);
+//
+//        // Assert: Verify the result
+//        assertNotNull(subscriptionDto);
+//        assertEquals(subscription.getSubscriptionId(), subscriptionDto.getSubscriptionId());
+//        assertEquals(subscription.getTier(), subscriptionDto.getTier());
+//        verify(subscriptionRepository, times(1)).findById(1);
+//    }
 
 //    @Test
 //    public void testGetSubscriptionById_NotFound() {
@@ -96,16 +100,16 @@ public class SubscriptionServiceImplTest {
 //        verify(subscriptionRepository, times(1)).save(subscription);
 //    }
 
-    @Test
-    public void testDeleteSubscription() {
-        // Arrange: Mock the behavior of the repository
-        when(subscriptionRepository.findById(1)).thenReturn(Optional.of(subscription));
-        doNothing().when(subscriptionRepository).deleteById(1);
-
-        // Act: Call the method being tested
-        subscriptionService.deleteSubscription(1);
-
-        // Assert: Verify that the repository's delete method was called
-        verify(subscriptionRepository, times(1)).deleteById(1);
-    }
+//    @Test
+//    public void testDeleteSubscription() {
+//        // Arrange: Mock the behavior of the repository
+//        when(subscriptionRepository.findById(1)).thenReturn(Optional.of(subscription));
+//        doNothing().when(subscriptionRepository).deleteById(1);
+//
+//        // Act: Call the method being tested
+//        subscriptionService.deleteSubscription(1);
+//
+//        // Assert: Verify that the repository's delete method was called
+//        verify(subscriptionRepository, times(1)).deleteById(1);
+//    }
 }

@@ -24,7 +24,8 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthController
+{
 
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
@@ -33,11 +34,13 @@ public class AuthController {
     private final JWTGenerator jwtGenerator;
 
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager,
-                          UserRepository userRepository,
-                          RoleRepository roleRepository,
-                          PasswordEncoder passwordEncoder,
-                          JWTGenerator jwtGenerator) {
+    public AuthController(
+            AuthenticationManager authenticationManager,
+            UserRepository userRepository,
+            RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder,
+            JWTGenerator jwtGenerator)
+    {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -46,7 +49,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto){
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDto loginDto)
+    {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getEmail(), // Changed from username to email
@@ -57,9 +61,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto)
+    {
         // Check if email already exists
-        if (userRepository.existsByEmail(registerDto.getEmail())) {
+        if (userRepository.existsByEmail(registerDto.getEmail()))
+        {
             return new ResponseEntity<>("Email is already in use!", HttpStatus.BAD_REQUEST);
         }
 

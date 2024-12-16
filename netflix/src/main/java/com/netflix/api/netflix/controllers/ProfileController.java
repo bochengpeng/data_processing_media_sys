@@ -10,31 +10,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/profiles")
-public class ProfileController {
+public class ProfileController
+{
     @Autowired
     private ProfileRepository profileRepository;
 
     @GetMapping
-    public List<Profile> getAllProfiles() {
+    public List<Profile> getAllProfiles()
+    {
         return profileRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Profile> getProfileById(@PathVariable int id) {
+    public ResponseEntity<Profile> getProfileById(@PathVariable int id)
+    {
         return profileRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Profile createProfile(@RequestBody Profile profile) {
+    public Profile createProfile(@RequestBody Profile profile)
+    {
         return profileRepository.save(profile);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Profile> updateProfile(@PathVariable int id, @RequestBody Profile profileDetails) {
+    public ResponseEntity<Profile> updateProfile(@PathVariable int id, @RequestBody Profile profileDetails)
+    {
         return profileRepository.findById(id)
-                .map(profile -> {
+                .map(profile ->
+                {
                     profile.setName(profileDetails.getName());
                     profile.setAge(profileDetails.getAge());
                     return ResponseEntity.ok(profileRepository.save(profile));
@@ -43,9 +49,11 @@ public class ProfileController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProfile(@PathVariable int id) {
+    public ResponseEntity<Void> deleteProfile(@PathVariable int id)
+    {
         return profileRepository.findById(id)
-                .map(profile -> {
+                .map(profile ->
+                {
                     profileRepository.delete(profile);
                     return ResponseEntity.ok().<Void>build();
                 })

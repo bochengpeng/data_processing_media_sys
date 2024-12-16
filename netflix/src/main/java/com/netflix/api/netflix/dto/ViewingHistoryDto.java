@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class ViewingHistoryDto {
+public class ViewingHistoryDto
+{
     private Long historyId;
     private ContentDto content;
     private LocalDateTime viewedAt;
