@@ -1,6 +1,7 @@
 package org.example.moviesystem.service;
 
 import org.example.moviesystem.model.Series;
+import org.example.moviesystem.response.TMDBResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,4 +32,4 @@ public class TVSeriesService
         return response != null ? Arrays.asList(response.getResults()) : List.of();
     }
 }
-//The TVSeriesService class interacts with the TMDB API to retrieve top-rated movies.
+//The TVSeriesService class interacts with the TMDB API to retrieve top-rated series.

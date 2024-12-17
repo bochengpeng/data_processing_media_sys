@@ -11,11 +11,16 @@ import java.util.List;
 @Controller
 public class TVSeriesController
 {
-
     private final TVSeriesService TVSeriesService;
 
     public TVSeriesController(TVSeriesService TVSeriesService) {
         this.TVSeriesService = TVSeriesService;
+    }
+
+    @GetMapping("/home")
+    public String getHomePage()
+    {
+        return "home";
     }
 
     @GetMapping("/tv_rate")
@@ -29,6 +34,6 @@ public class TVSeriesController
 
         model.addAttribute("series", topRatedTVSeries);
 
-        return "index";
+        return "series";
     }
 }
