@@ -1,4 +1,4 @@
-package org.example.moviesystem.service;
+package org.example.moviesystem.response;
 
 import org.example.moviesystem.model.Series;
 

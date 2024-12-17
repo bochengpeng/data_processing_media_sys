@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top 20 Rated TV Series</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/series.css}" />
 </head>
 <header>
     <h1>Top 20 Rated TV Series</h1>
+    <button onclick="window.location.href='/home'">Back</button>
 </header>
 <body>
 <section class="movie-list" th:each="series : ${series}">
