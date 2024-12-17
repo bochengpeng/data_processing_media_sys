@@ -22,4 +22,9 @@ public class Subscription
     private LocalDate startDate;
     private LocalDate nextBillingDate;
     private boolean isTrialPeriod;
+    @Column(nullable = true)
+    private int userId;
 }
+
+// find a way to restore and backup the database in case of corruption, put everything in a package to send him
+

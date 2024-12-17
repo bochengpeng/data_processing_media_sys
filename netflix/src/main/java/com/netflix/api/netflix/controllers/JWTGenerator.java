@@ -9,15 +9,18 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-public class JWTGenerator {
+public class JWTGenerator
+{
 
     private final Key key;
 
-    public JWTGenerator() {
+    public JWTGenerator()
+    {
         this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Generate a key
     }
 
-    public String generateToken(String subject) {
+    public String generateToken(String subject)
+    {
         return Jwts.builder()
                 .setSubject(subject)  // Set the subject (e.g., username or user ID)
                 .setIssuedAt(new Date()) // Token creation time
@@ -26,7 +29,8 @@ public class JWTGenerator {
                 .compact(); // Build the token
     }
 
-    public Key getKey() {
+    public Key getKey()
+    {
         return key; // Expose the key for validation purposes
     }
 }

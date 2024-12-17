@@ -5,7 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class WatchListDto {
-    private Long watchListId;
+public class WatchListDto
+{
+    private int watchListId;
     private List<ContentDto> savedContent;
 }

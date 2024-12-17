@@ -10,31 +10,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/viewing-history")
-public class ViewingHistoryController {
+public class ViewingHistoryController
+{
 
     @Autowired
     private ViewingHistoryRepository viewingHistoryRepository;
 
     @GetMapping
-    public List<ViewingHistory> getAllViewingHistories() {
+    public List<ViewingHistory> getAllViewingHistories()
+    {
         return viewingHistoryRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ViewingHistory> getViewingHistoryById(@PathVariable int id) {
+    public ResponseEntity<ViewingHistory> getViewingHistoryById(@PathVariable int id)
+    {
         return viewingHistoryRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ViewingHistory createViewingHistory(@RequestBody ViewingHistory viewingHistory) {
+    public ViewingHistory createViewingHistory(@RequestBody ViewingHistory viewingHistory)
+    {
         return viewingHistoryRepository.save(viewingHistory);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ViewingHistory> updateViewingHistory(@PathVariable int id, @RequestBody ViewingHistory updatedHistory) {
-        return viewingHistoryRepository.findById(id).map(existingHistory -> {
+    public ResponseEntity<ViewingHistory> updateViewingHistory(@PathVariable int id, @RequestBody ViewingHistory updatedHistory)
+    {
+        return viewingHistoryRepository.findById(id).map(existingHistory ->
+        {
             existingHistory.setMovie(updatedHistory.getMovie());
             existingHistory.setStopAt(updatedHistory.getStopAt());
             return ResponseEntity.ok(viewingHistoryRepository.save(existingHistory));

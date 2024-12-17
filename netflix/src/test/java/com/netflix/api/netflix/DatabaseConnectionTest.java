@@ -8,13 +8,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class DatabaseConnectionTest {
+public class DatabaseConnectionTest
+{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Test
-    public void testDatabaseConnection() {
+    public void testDatabaseConnection()
+    {
         // Simple query to check if the connection works
         String result = jdbcTemplate.queryForObject("SELECT version();", String.class);
 

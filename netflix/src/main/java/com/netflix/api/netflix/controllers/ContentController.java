@@ -10,31 +10,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/content")
-public class ContentController {
+public class ContentController
+{
     @Autowired
     private ContentRepository contentRepository;
 
     @GetMapping
-    public List<Content> getAllContent() {
+    public List<Content> getAllContent()
+    {
         return contentRepository.findAll();
     }
 
     @GetMapping("/{contentId}")
-    public ResponseEntity<Content> getContentById(@PathVariable int contentId) {
+    public ResponseEntity<Content> getContentById(@PathVariable int contentId)
+    {
         return contentRepository.findById(contentId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Content createContent(@RequestBody Content content) {
+    public Content createContent(@RequestBody Content content)
+    {
         return contentRepository.save(content);
     }
 
     @PutMapping("/{contentId}")
-    public ResponseEntity<Content> updateContent(@PathVariable int contentId, @RequestBody Content contentDetails) {
+    public ResponseEntity<Content> updateContent(@PathVariable int contentId, @RequestBody Content contentDetails)
+    {
         return contentRepository.findById(contentId)
-                .map(content -> {
+                .map(content ->
+                {
                     content.setTitle(contentDetails.getTitle());
                     content.setDescription(contentDetails.getDescription());
                     return ResponseEntity.ok(contentRepository.save(content));
@@ -43,9 +49,11 @@ public class ContentController {
     }
 
     @DeleteMapping("/{contentId}")
-    public ResponseEntity<Void> deleteContent(@PathVariable int contentId) {
+    public ResponseEntity<Void> deleteContent(@PathVariable int contentId)
+    {
         return contentRepository.findById(contentId)
-                .map(content -> {
+                .map(content ->
+                {
                     contentRepository.delete(content);
                     return ResponseEntity.ok().<Void>build();
                 })

@@ -3,7 +3,8 @@ package com.netflix.api.netflix.dto;
 import lombok.Data;
 
 @Data
-public class EpisodeDto {
+public class EpisodeDto
+{
     private Long episodeId;
     private String title;
     private int seasonNumber;

@@ -5,7 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class SeriesDto extends ContentDto {
+public class SeriesDto extends ContentDto
+{
     private int totalSeasons;
     private List<EpisodeDto> episodes;
 }

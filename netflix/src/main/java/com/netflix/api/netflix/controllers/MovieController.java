@@ -10,31 +10,37 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movies")
-public class MovieController {
+public class MovieController
+{
     @Autowired
     private MovieRepository movieRepository;
 
     @GetMapping
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAllMovies()
+    {
         return movieRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovieById(@PathVariable int id) {
+    public ResponseEntity<Movie> getMovieById(@PathVariable int id)
+    {
         return movieRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Movie createMovie(@RequestBody Movie movie) {
+    public Movie createMovie(@RequestBody Movie movie)
+    {
         return movieRepository.save(movie);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateMovie(@PathVariable int id, @RequestBody Movie movieDetails) {
+    public ResponseEntity<Movie> updateMovie(@PathVariable int id, @RequestBody Movie movieDetails)
+    {
         return movieRepository.findById(id)
-                .map(movie -> {
+                .map(movie ->
+                {
                     movie.setTitle(movieDetails.getTitle());
                     movie.setDuration(movieDetails.getDuration());
                     return ResponseEntity.ok(movieRepository.save(movie));
@@ -43,9 +49,11 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMovie(@PathVariable int id) {
+    public ResponseEntity<Void> deleteMovie(@PathVariable int id)
+    {
         return movieRepository.findById(id)
-                .map(movie -> {
+                .map(movie ->
+                {
                     movieRepository.delete(movie);
                     return ResponseEntity.ok().<Void>build();
                 })

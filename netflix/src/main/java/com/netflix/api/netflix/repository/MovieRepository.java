@@ -20,4 +20,6 @@ public interface MovieRepository extends JpaRepository<Movie, Integer>
     List<Movie> findByContentClassification(ContentClassification classification);
 
     List<Movie> findByGenre(Genre genre);
+//
+//    List<Movie> findByGenreAndClassification(Genre genre, ContentClassification classification);
 }

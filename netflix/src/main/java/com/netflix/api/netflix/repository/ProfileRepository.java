@@ -18,4 +18,6 @@ public interface ProfileRepository extends JpaRepository<Profile, Integer>
 
     // Find profiles by language
     List<Profile> findByLanguage(Language language);
+
+//    List<Profile> findByUserId(int userId);
 }
