@@ -2,7 +2,7 @@ package org.example.moviesystem.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Series
+public class RatedSeries
 {
     private String name;
     @JsonProperty("vote_average")
