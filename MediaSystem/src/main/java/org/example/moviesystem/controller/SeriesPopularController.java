@@ -27,11 +27,11 @@ public class SeriesPopularController
         {
             System.out.println("TV Popularity: " + popularSeries.getPopularity());
             System.out.println("Poster Path: " + popularSeries.getPosterPath());
-            System.out.println("Poster Path: " + popularSeries.getOriginCountry());
+            System.out.println("Origin Country: " + popularSeries.getOriginCountry());
         }
 
         model.addAttribute("popularSeries", topPopularTVSeries);
 
-        return "popularSeries";
+        return "popularSeries"; //refers to the name of the HTML file
     }
 }
