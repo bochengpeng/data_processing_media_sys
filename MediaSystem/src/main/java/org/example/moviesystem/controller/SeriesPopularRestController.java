@@ -1,5 +1,6 @@
 package org.example.moviesystem.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.moviesystem.model.PopularSeries;
 import org.example.moviesystem.service.SeriesPopularService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class SeriesPopularRestController
     }
 
     @GetMapping("/popular_series")
-    public List<PopularSeries> getTopPopularSeries()
+    public List<PopularSeries> getTopPopularSeries(HttpSession session)
     {
         return seriesPopularService.getTopPopularTVSeries();
     }

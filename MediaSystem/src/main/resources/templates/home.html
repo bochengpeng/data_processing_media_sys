@@ -15,7 +15,11 @@
     <div class="buttons">
         <button onclick="window.location.href='/tv_rate'">Top 20 Rated</button>
         <button onclick="window.location.href='/popular'">Top 20 Popularity</button>
-        <button>Add More</button>
+        <form action="/logout" method="POST" style="display: inline;">
+            <!-- Include CSRF Token for Security -->
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <button type="submit">Log Out</button>
+        </form>
     </div>
 </div>
 </body>

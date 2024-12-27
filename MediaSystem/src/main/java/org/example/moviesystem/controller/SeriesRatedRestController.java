@@ -22,7 +22,7 @@ public class SeriesRatedRestController
         return seriesRatedService.getTopRatedTVSeries();
     }
 
-    @GetMapping("ratedxml")
+    @GetMapping("/ratedxml")
     public Document getTopRatedSeriesXML()
     {
         return seriesRatedService.getTopRatedTVSeriesAsXml();

@@ -1,7 +1,9 @@
 package org.example.moviesystem.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.example.moviesystem.model.RatedSeries;
 import org.example.moviesystem.service.SeriesRatedService;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,10 @@ public class SeriesRatedController
     @GetMapping("/home")
     public String getHomePage()
     {
+//        if (session.getAttribute("loggedIn") == null && (boolean) session.getAttribute("loggedIn")) {
+//            return "redirect:/login"; // Redirect to home if already logged in
+//        }
+
         return "home";
     }
 
