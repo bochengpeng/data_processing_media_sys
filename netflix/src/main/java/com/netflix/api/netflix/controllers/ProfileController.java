@@ -42,7 +42,7 @@ public class ProfileController
                 .map(profile ->
                 {
                     profile.setName(profileDetails.getName());
-                    profile.setAge(profileDetails.getAge());
+//                    profile.setAge(profileDetails.getAge());
                     return ResponseEntity.ok(profileRepository.save(profile));
                 })
                 .orElse(ResponseEntity.notFound().build());

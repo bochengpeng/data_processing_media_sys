@@ -28,7 +28,8 @@ public class SubscriptionController
     }
 
     @GetMapping("/user/{userId}/subscription")
-    public SubscriptionDto getSubscriptionByUserId(@PathVariable(value = "userId") int userId) {
+    public SubscriptionDto getSubscriptionByUserId(@PathVariable(value = "userId") int userId) throws SubscriptionNotFoundException
+    {
         return subscriptionService.getSubscriptionByUserId(userId);
     }
 

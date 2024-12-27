@@ -77,7 +77,7 @@ public class ProfileServiceImpl implements ProfileService
 
         // Update the profile fields with the data from the DTO
         existingProfile.setName(profileDto.getName());
-        existingProfile.setAge(profileDto.getAge());
+//        existingProfile.setAge(profileDto.getAge());
         existingProfile.setProfilePhotoUrl(profileDto.getProfilePhotoUrl());
 
         // Save the updated profile entity
@@ -102,7 +102,7 @@ public class ProfileServiceImpl implements ProfileService
         ProfileDto profileDto = new ProfileDto();
         profileDto.setProfileId(profile.getProfileId());
         profileDto.setName(profile.getName());
-        profileDto.setAge(profile.getAge());
+//        profileDto.setAge(profile.getAge());
         profileDto.setProfilePhotoUrl(profile.getProfilePhotoUrl());
         return profileDto;
     }
@@ -111,7 +111,7 @@ public class ProfileServiceImpl implements ProfileService
     private Profile mapToEntity(ProfileDto profileDto) {
         Profile profile = new Profile();
         profile.setName(profileDto.getName());
-        profile.setAge(profileDto.getAge());
+//        profile.setAge(profileDto.getAge());
         profile.setProfilePhotoUrl(profileDto.getProfilePhotoUrl());
         return profile;
     }

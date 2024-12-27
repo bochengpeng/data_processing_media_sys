@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 public class User
@@ -22,21 +23,10 @@ public class User
     private boolean isActivated;
     private int failedLoginAttempts;
     private LocalDateTime accountLockUntil;
-    @ManyToOne // Assuming a user can have one subscription, and a subscription can have many users.
-    @JoinColumn(name = "subscription_id")
+    @ManyToOne
+    @JoinColumn(name = "subscription_id", nullable = false)
     private Subscription subscription;
 
-    //    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-//    private List<Role> roles = new ArrayList<>();
-//@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-//@JoinTable(
-//        name = "users",
-//        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-//        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-//)
-//private List<Role> roles = new ArrayList<>();
     @ManyToOne // Assuming a user can have one subscription, and a subscription can have many users.
     @JoinColumn(name = "role_id")
     private Role role;

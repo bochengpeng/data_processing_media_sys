@@ -1,129 +1,144 @@
-//package com.netflix.api.netflix.controllers;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.netflix.api.netflix.dto.SubscriptionDto;
-//import com.netflix.api.netflix.services.SubscriptionService;
-//import org.hamcrest.CoreMatchers;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.mockito.ArgumentMatchers;
-//import org.mockito.junit.jupiter.MockitoExtension;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-//import org.springframework.boot.test.mock.mockito.MockBean;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.ResultActions;
-//import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-//
-//import static java.lang.reflect.Array.get;
-//import static org.mockito.BDDMockito.given;
-//import static org.mockito.Mockito.doNothing;
-//import static org.mockito.Mockito.when;
-//import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
-//import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.put;
-//
-//@WebMvcTest(controllers = SubscriptionController.class)
-//@AutoConfigureMockMvc(addFilters = false)
-//@ExtendWith(MockitoExtension.class)
-//public class SubscriptionControllerTests {
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @MockBean
-//    private SubscriptionService subscriptionService;
-//
-//    @Autowired
-//    private ObjectMapper objectMapper;
-//    private SubscriptionDto subscriptionDto;
-//
-//    @BeforeEach
-//    public void init() {
-//        subscriptionDto = SubscriptionDto.builder()
-//                .id(1)
-//                .userId(1)
-//                .plan("Premium")
-//                .startDate("2024-01-01")
-//                .endDate("2025-01-01")
-//                .build();
-//    }
-//
-//    @Test
-//    public void SubscriptionController_CreateSubscription_ReturnCreated() throws Exception {
-//        // Mocking service layer behavior
-//        given(subscriptionService.createSubscription(ArgumentMatchers.anyInt(), ArgumentMatchers.any()))
-//                .willAnswer((invocation) -> invocation.getArgument(1));
-//
-//        // Perform the POST request to create a subscription
-//        ResultActions response = mockMvc.perform(post("/api/subscriptions/users/{userId}", 1)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(subscriptionDto)));
-//
-//        // Assertions to verify the expected outcome
-//        response.andExpect(MockMvcResultMatchers.status().isCreated())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.plan", CoreMatchers.is(subscriptionDto.getTier())));
-//    }
-//
-//    @Test
-//    public void SubscriptionController_GetSubscriptionById_ReturnSubscriptionDto() throws Exception {
-//        // Mocking service layer behavior
-//        int subscriptionId = 1;
-//        when(subscriptionService.getSubscriptionById(subscriptionId)).thenReturn(subscriptionDto);
-//
-//        // Perform the GET request to fetch the subscription by ID
-//        ResultActions response = mockMvc.perform(get("{subscriptionId}", subscriptionId)
-//                .contentType(MediaType.APPLICATION_JSON));
-//
-//        // Assertions to verify the expected outcome
-//        response.andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.plan", CoreMatchers.is(subscriptionDto.getTier())));
-//    }
-//
-////    @Test
-////    public void SubscriptionController_GetSubscriptionsByUserId_ReturnSubscriptionDtos() throws Exception {
-////        // Mocking service layer behavior
-////        when(subscriptionService.getSubscriptionsByUserId(1)).thenReturn(java.util.Arrays.asList(subscriptionDto));
-////
-////        // Perform the GET request to fetch subscriptions by user ID
-////        ResultActions response = mockMvc.perform(get("/api/subscriptions/users/{userId}", 1)
-////                .contentType(MediaType.APPLICATION_JSON));
-////
-////        // Assertions to verify the expected outcome
-////        response.andExpect(MockMvcResultMatchers.status().isOk())
-////                .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(1)));
-////    }
-//
-//    @Test
-//    public void SubscriptionController_UpdateSubscription_ReturnUpdatedSubscriptionDto() throws Exception {
-//        // Mocking service layer behavior
-//        int subscriptionId = 1;
-//        when(subscriptionService.updateSubscription(ArgumentMatchers.anyInt(), ArgumentMatchers.any()))
-//                .thenReturn(subscriptionDto);
-//
-//        // Perform the PUT request to update the subscription
-//        ResultActions response = mockMvc.perform(put("/api/subscriptions/{subscriptionId}", subscriptionId)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(subscriptionDto)));
-//
-//        // Assertions to verify the expected outcome
-//        response.andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.plan", CoreMatchers.is(subscriptionDto.getTier())));
-//    }
-//
-//    @Test
-//    public void SubscriptionController_DeleteSubscription_ReturnOk() throws Exception {
-//        // Mocking service layer behavior
-//        int subscriptionId = 1;
-//        doNothing().when(subscriptionService).deleteSubscription(subscriptionId);
-//
-//        // Perform the DELETE request to delete the subscription
-//        ResultActions response = mockMvc.perform(delete("/api/subscriptions/{subscriptionId}", subscriptionId)
-//                .contentType(MediaType.APPLICATION_JSON));
-//
-//        // Assertions to verify the expected outcome
-//        response.andExpect(MockMvcResultMatchers.status().isOk());
-//    }
-//}
+package com.netflix.api.netflix.controllers;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.netflix.api.netflix.dto.SubscriptionDto;
+import com.netflix.api.netflix.models.SubscriptionTier;
+import com.netflix.api.netflix.services.SubscriptionService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDate;
+
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@AutoConfigureMockMvc(addFilters = false) // Disable Spring Security filters
+@WebMvcTest(SubscriptionController.class)
+public class SubscriptionControllerTest
+{
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private SubscriptionService subscriptionService;
+
+    private SubscriptionDto subscriptionDto;
+    private ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setUp()
+    {
+        MockitoAnnotations.openMocks(this);
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
+        subscriptionDto = SubscriptionDto.builder()
+                .subscriptionId(1)
+                .tier(SubscriptionTier.HD)
+                .isTrialPeriod(true)
+                .startDate(LocalDate.of(2024, 12, 1))
+                .nextBillingDate(LocalDate.of(2025, 1, 1))
+                .build();
+    }
+
+    @Test
+    void testCreateSubscription() throws Exception
+    {
+        int userId = 101;
+
+        when(subscriptionService.createSubscription(eq(userId), any(SubscriptionDto.class)))
+                .thenReturn(subscriptionDto);
+
+        mockMvc.perform(post("/netflix/user/{userId}/subscription", userId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(subscriptionDto)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.subscriptionId").value(subscriptionDto.getSubscriptionId()))
+                .andExpect(jsonPath("$.tier").value(subscriptionDto.getTier().toString()))
+                .andExpect(jsonPath("$.trialPeriod").value(subscriptionDto.isTrialPeriod()));
+    }
+
+    @Test
+    void testGetSubscriptionByUserId() throws Exception
+    {
+        int userId = 101;
+
+        when(subscriptionService.getSubscriptionByUserId(userId)).thenReturn(subscriptionDto);
+
+        mockMvc.perform(get("/netflix/user/{userId}/subscription", userId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.subscriptionId").value(subscriptionDto.getSubscriptionId()))
+                .andExpect(jsonPath("$.tier").value(subscriptionDto.getTier().toString()))
+                .andExpect(jsonPath("$.trialPeriod").value(subscriptionDto.isTrialPeriod()));
+    }
+
+    @Test
+    void testGetSubscriptionById() throws Exception
+    {
+        int userId = 101;
+        int subscriptionId = 1;
+
+        when(subscriptionService.getSubscriptionById(userId, subscriptionId)).thenReturn(subscriptionDto);
+
+        mockMvc.perform(get("/netflix/user/{userId}/subscription/{id}", userId, subscriptionId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.subscriptionId").value(subscriptionDto.getSubscriptionId()))
+                .andExpect(jsonPath("$.tier").value(subscriptionDto.getTier().toString()))
+                .andExpect(jsonPath("$.trialPeriod").value(subscriptionDto.isTrialPeriod()));
+    }
+
+    @Test
+    void testUpdateSubscription() throws Exception
+    {
+        int userId = 101;
+        int subscriptionId = 1;
+        SubscriptionDto updatedSubscriptionDto = SubscriptionDto.builder()
+                .subscriptionId(subscriptionId)
+                .tier(SubscriptionTier.MONTHLY_PRICE)
+                .isTrialPeriod(false)
+                .startDate(LocalDate.of(2024, 12, 10))
+                .nextBillingDate(LocalDate.of(2025, 1, 10))
+                .build();
+
+        when(subscriptionService.updateSubscription(eq(userId), eq(subscriptionId), any(SubscriptionDto.class)))
+                .thenReturn(updatedSubscriptionDto);
+
+        mockMvc.perform(put("/netflix/user/{userId}/subscription/{id}", userId, subscriptionId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updatedSubscriptionDto)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.subscriptionId").value(updatedSubscriptionDto.getSubscriptionId()))
+                .andExpect(jsonPath("$.tier").value(updatedSubscriptionDto.getTier().toString()))
+                .andExpect(jsonPath("$.trialPeriod").value(updatedSubscriptionDto.isTrialPeriod()));
+    }
+
+    @Test
+    void testDeleteSubscription() throws Exception
+    {
+        int userId = 101;
+        int subscriptionId = 1;
+
+        doNothing().when(subscriptionService).deleteSubscription(userId, subscriptionId);
+
+        mockMvc.perform(delete("/netflix/user/{userId}/subscription/{id}", userId, subscriptionId))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Subscription deleted successfully"));
+    }
+}

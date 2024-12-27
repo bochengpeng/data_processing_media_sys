@@ -19,13 +19,17 @@ public class Profile
     private int profileId;
     private String name;
     private int age;
-    private String profilePhotoUrl;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+//    private String profilePhotoUrl = "placeholder.jpeg";
+    @Column(name = "profile_photo_url", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'placeholder.jpeg'")
+    private String profilePhotoUrl = "placeholder.jpeg";
+
 
     @Enumerated(EnumType.STRING)
     private Language language;
-
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<ContentPreference> preferences;
 
     @OneToOne(cascade = CascadeType.ALL)
     private WatchList watchList;

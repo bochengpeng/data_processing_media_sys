@@ -2,14 +2,18 @@ package com.netflix.api.netflix.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "subscriptions")
 public class Subscription
@@ -22,8 +26,11 @@ public class Subscription
     private LocalDate startDate;
     private LocalDate nextBillingDate;
     private boolean isTrialPeriod;
-    @Column(nullable = true)
-    private int userId;
+//    @Column(nullable = true)
+//    private int userId;
+
+    @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
 }
 
 // find a way to restore and backup the database in case of corruption, put everything in a package to send him

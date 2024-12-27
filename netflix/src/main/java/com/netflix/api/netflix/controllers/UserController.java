@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/netflix")
 public class UserController
 {
     @Autowired
@@ -21,7 +21,7 @@ public class UserController
         return userRepository.findAll();
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable int userId)
     {
         return userRepository.findById(userId)
