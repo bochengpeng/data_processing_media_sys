@@ -7,7 +7,7 @@ body {
     text-align: center;
 }
 header {
-    background-color: #333;
+    background-color: #7d3c98;
     color: white;
     padding: 1em 0;
 }
@@ -15,7 +15,7 @@ header {
     margin-top: 50px;
 }
 button {
-    background-color: #007BFF;
+    background-color: #3498db;
     color: white;
     border: none;
     padding: 10px 20px;
