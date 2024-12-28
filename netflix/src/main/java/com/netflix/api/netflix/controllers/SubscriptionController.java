@@ -8,7 +8,6 @@ import com.netflix.api.netflix.services.SubscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/netflix")

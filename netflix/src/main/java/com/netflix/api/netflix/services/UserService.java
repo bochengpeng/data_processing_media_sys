@@ -8,8 +8,8 @@ import java.util.List;
 public interface UserService {
     UserDto createUser(UserDto userDto);
     UserDto getUserById(int userId) throws UserNotFoundException;
-    List<UserDto> getAllUsers();
-    UserDto updateUser(int userId, UserDto userDto);
+//    List<UserDto> getAllUsers();
+//    UserDto updateUser(int userId, UserDto userDto);
 
     UserDto updateUser(UserDto userDto, int userId) throws UserNotFoundException;
 

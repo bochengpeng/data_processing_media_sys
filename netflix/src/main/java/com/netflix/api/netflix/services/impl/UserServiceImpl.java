@@ -1,7 +1,9 @@
 package com.netflix.api.netflix.services.impl;
 
+import com.netflix.api.netflix.dto.SubscriptionDto;
 import com.netflix.api.netflix.dto.UserDto;
 import com.netflix.api.netflix.exception.UserNotFoundException;
+import com.netflix.api.netflix.models.Subscription;
 import com.netflix.api.netflix.models.User;
 import com.netflix.api.netflix.repository.UserRepository;
 import com.netflix.api.netflix.services.UserService;
@@ -38,18 +40,18 @@ public class UserServiceImpl implements UserService
         return mapToDto(user);
     }
 
-    @Override
-    public List<UserDto> getAllUsers()
-    {
-        List<User> users = userRepository.findAll();
-        return users.stream().map(this::mapToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public UserDto updateUser(int userId, UserDto userDto)
-    {
-        return null;
-    }
+//    @Override
+//    public List<UserDto> getAllUsers()
+//    {
+//        List<User> users = userRepository.findAll();
+//        return users.stream().map(this::mapToDto).collect(Collectors.toList());
+//    }
+//
+//    @Override
+//    public UserDto updateUser(int userId, UserDto userDto)
+//    {
+//        return null;
+//    }
 
     @Override
     public UserDto updateUser(UserDto userDto, int userId) throws UserNotFoundException
@@ -75,7 +77,12 @@ public class UserServiceImpl implements UserService
 
     private UserDto mapToDto(User user)
     {
-        return new UserDto(user.getUserId(), user.getEmail(), user.getPassword(), user.isActivated());
+        UserDto userDto = new UserDto();
+        userDto.setActivated(user.isActivated());
+        userDto.setUserId(user.getUserId());
+        userDto.setEmail(user.getEmail());
+        userDto.setPassword(user.getPassword());
+        return userDto;
     }
 
     private User mapToEntity(UserDto userDto)
