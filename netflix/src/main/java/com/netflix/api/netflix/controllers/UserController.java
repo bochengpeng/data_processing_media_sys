@@ -1,6 +1,8 @@
 package com.netflix.api.netflix.controllers;
 
+import com.netflix.api.netflix.dto.SubscriptionDto;
 import com.netflix.api.netflix.dto.UserDto;
+import com.netflix.api.netflix.exception.SubscriptionNotFoundException;
 import com.netflix.api.netflix.exception.UserNotFoundException;
 import com.netflix.api.netflix.models.User;
 import com.netflix.api.netflix.repository.UserRepository;
@@ -13,17 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/netflix")
+@RequestMapping("/netflix/user")
 public class UserController
 {
     @Autowired
     private UserService userService;
-
-//    @GetMapping
-//    public List<User> getAllUsers()
-//    {
-//        return userRepository.findAll();
-//    }
 
 
     public UserController(UserService userService)
@@ -31,41 +27,31 @@ public class UserController
         this.userService = userService;
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable(value = "userId") int userId) throws UserNotFoundException
     {
         UserDto userDto = this.userService.getUserById(userId);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-//    @PostMapping
-//    public User createUser(@RequestBody User user)
-//    {
-//        return userRepository.save(user);
-//    }
-//
-//    @PutMapping("/{userId}")
-//    public ResponseEntity<User> updateUser(@PathVariable int userId, @RequestBody User userDetails)
-//    {
-//        return userRepository.findById(userId)
-//                .map(user ->
-//                {
-//                    user.setEmail(userDetails.getEmail());
-//                    user.setActivated(userDetails.isActivated());
-//                    return ResponseEntity.ok(userRepository.save(user));
-//                })
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-//
-//    @DeleteMapping("/{userId}")
-//    public ResponseEntity<Void> deleteUser(@PathVariable int userId)
-//    {
-//        return userRepository.findById(userId)
-//                .map(user ->
-//                {
-//                    userRepository.delete(user);
-//                    return ResponseEntity.ok().<Void>build();
-//                })
-//                .orElse(ResponseEntity.notFound().build());
-//    }
+    @PostMapping("/{userId}")
+    public ResponseEntity<UserDto> createUser(@PathVariable(value = "userId") int userId, @RequestBody UserDto userDto) throws UserNotFoundException
+    {
+        return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable(value = "userId") int userId,
+                                              @RequestBody UserDto userDto) throws UserNotFoundException, SubscriptionNotFoundException
+    {
+        UserDto updatedUser = userService.updateUser(userDto, userId);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable(value = "userId") int userId) throws UserNotFoundException, SubscriptionNotFoundException
+    {
+        userService.deleteUser(userId);
+        return new ResponseEntity<>("Subscription deleted successfully", HttpStatus.OK);
+    }
 }
