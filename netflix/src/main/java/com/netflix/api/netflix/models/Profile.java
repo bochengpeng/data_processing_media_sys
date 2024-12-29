@@ -19,7 +19,8 @@ public class Profile
     private int profileId;
     private String name;
     private int age;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

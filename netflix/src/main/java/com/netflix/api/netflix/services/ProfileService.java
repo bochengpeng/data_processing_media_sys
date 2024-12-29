@@ -56,7 +56,7 @@ import java.util.Optional;
 
 public interface ProfileService {
     ProfileDto createProfile(int userId, ProfileDto profileDto);
-    ProfileDto getProfileById(int profileId);
+    ProfileDto getProfileById(int profileId, int userId);
 //    List<ProfileDto> getProfilesByUserId(int userId);
     ProfileDto updateProfile(int profileId, ProfileDto profileDto);
     void deleteProfile(int profileId);

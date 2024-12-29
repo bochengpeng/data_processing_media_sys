@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 public class ProfileServiceImpl implements ProfileService
 {
 
-    private final ProfileRepository profileRepository;
-    private final UserRepository userRepository;
+    private ProfileRepository profileRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public ProfileServiceImpl(ProfileRepository profileRepository, UserRepository userRepository) {
@@ -35,6 +35,7 @@ public class ProfileServiceImpl implements ProfileService
         Profile profile = mapToEntity(profileDto);
 //        profile.setUser(user); // Associate the profile with the user
 
+        profile.setUser(user);
         // Save the profile entity
         Profile savedProfile = profileRepository.save(profile);
 
@@ -43,8 +44,9 @@ public class ProfileServiceImpl implements ProfileService
     }
 
     @Override
-    public ProfileDto getProfileById(int profileId) {
+    public ProfileDto getProfileById(int profileId, int userId) {
         // Retrieve the profile by its ID
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("no user pokemon"));
         Profile profile = profileRepository.findById(profileId)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
 

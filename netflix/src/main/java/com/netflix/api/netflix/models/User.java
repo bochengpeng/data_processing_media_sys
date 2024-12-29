@@ -32,6 +32,9 @@ public class User
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Profile> profiles = new ArrayList<Profile>();
+
     public User(int userId, String email, String password, boolean activated)
     {
     }
