@@ -2,6 +2,7 @@ package com.netflix.api.netflix.services;
 
 
 import com.netflix.api.netflix.dto.ProfileDto;
+import com.netflix.api.netflix.exception.ProfileNotFoundException;
 import com.netflix.api.netflix.models.Language;
 import com.netflix.api.netflix.models.Profile;
 import com.netflix.api.netflix.models.User;
@@ -56,9 +57,10 @@ import java.util.Optional;
 
 public interface ProfileService {
     ProfileDto createProfile(int userId, ProfileDto profileDto);
-    ProfileDto getProfileById(int profileId, int userId);
+    ProfileDto getProfileById(int profileId, int userId) throws ProfileNotFoundException;
 //    List<ProfileDto> getProfilesByUserId(int userId);
+    List<ProfileDto> getProfilesByName(String name) throws ProfileNotFoundException;
     ProfileDto updateProfile(int profileId, ProfileDto profileDto);
-    void deleteProfile(int profileId);
+    void deleteProfile(int profileId) throws ProfileNotFoundException;
 }
 

@@ -1,6 +1,7 @@
 package com.netflix.api.netflix.controllers;
 
 import com.netflix.api.netflix.dto.ProfileDto;
+import com.netflix.api.netflix.exception.ProfileNotFoundException;
 import com.netflix.api.netflix.exception.UserNotFoundException;
 import com.netflix.api.netflix.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,19 @@ public class ProfileController {
     public ResponseEntity<ProfileDto> getProfileById(
             @PathVariable int profileId,
             @PathVariable int userId)
-             throws UserNotFoundException
+            throws ProfileNotFoundException
     {
         ProfileDto profile = profileService.getProfileById(profileId, userId);
         return ResponseEntity.ok(profile);
+    }
+
+    @GetMapping("/profiles/{profileName}")
+    public ResponseEntity<List<ProfileDto>> getProfilesByName(
+            @PathVariable(value = "profileName") String profileName)
+            throws UserNotFoundException, ProfileNotFoundException
+    {
+        List<ProfileDto> profiles = profileService.getProfilesByName(profileName);
+        return ResponseEntity.ok(profiles);
     }
 
 //    @GetMapping

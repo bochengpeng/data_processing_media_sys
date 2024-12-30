@@ -34,21 +34,22 @@ public class UserController
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<UserDto> createUser(@PathVariable(value = "userId") int userId, @RequestBody UserDto userDto) throws UserNotFoundException
+    @PostMapping("/user/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws UserNotFoundException
     {
         return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/{userId}/update")
     public ResponseEntity<UserDto> updateUser(@PathVariable(value = "userId") int userId,
-                                              @RequestBody UserDto userDto) throws UserNotFoundException, SubscriptionNotFoundException
+                                              @RequestBody UserDto userDto) throws UserNotFoundException
     {
         UserDto updatedUser = userService.updateUser(userDto, userId);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{userId}/delete")
     public ResponseEntity<String> deleteUser(@PathVariable(value = "userId") int userId) throws UserNotFoundException, SubscriptionNotFoundException
     {
         userService.deleteUser(userId);

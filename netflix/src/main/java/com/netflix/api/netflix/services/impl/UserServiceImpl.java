@@ -40,19 +40,6 @@ public class UserServiceImpl implements UserService
         return mapToDto(user);
     }
 
-//    @Override
-//    public List<UserDto> getAllUsers()
-//    {
-//        List<User> users = userRepository.findAll();
-//        return users.stream().map(this::mapToDto).collect(Collectors.toList());
-//    }
-//
-//    @Override
-//    public UserDto updateUser(int userId, UserDto userDto)
-//    {
-//        return null;
-//    }
-
     @Override
     public UserDto updateUser(UserDto userDto, int userId) throws UserNotFoundException
     {
@@ -87,7 +74,12 @@ public class UserServiceImpl implements UserService
 
     private User mapToEntity(UserDto userDto)
     {
-        return new User(userDto.getUserId(), userDto.getEmail(), userDto.getPassword(), userDto.isActivated());
+        User user = new User();
+        user.setPassword(userDto.getPassword());
+        user.setUserId(userDto.getUserId());
+        user.setEmail(userDto.getEmail());
+        user.setActivated(userDto.isActivated());
+        return user;
     }
 }
 

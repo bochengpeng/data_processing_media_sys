@@ -1,6 +1,7 @@
 package com.netflix.api.netflix.services.impl;
 
 import com.netflix.api.netflix.dto.ProfileDto;
+import com.netflix.api.netflix.exception.ProfileNotFoundException;
 import com.netflix.api.netflix.models.Profile;
 import com.netflix.api.netflix.models.User;
 import com.netflix.api.netflix.repository.ProfileRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,13 +22,15 @@ public class ProfileServiceImpl implements ProfileService
     private UserRepository userRepository;
 
     @Autowired
-    public ProfileServiceImpl(ProfileRepository profileRepository, UserRepository userRepository) {
+    public ProfileServiceImpl(ProfileRepository profileRepository, UserRepository userRepository)
+    {
         this.profileRepository = profileRepository;
         this.userRepository = userRepository;
     }
 
     @Override
-    public ProfileDto createProfile(int userId, ProfileDto profileDto) {
+    public ProfileDto createProfile(int userId, ProfileDto profileDto)
+    {
         // Fetch the user by ID to associate the profile with the user
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -44,14 +48,30 @@ public class ProfileServiceImpl implements ProfileService
     }
 
     @Override
-    public ProfileDto getProfileById(int profileId, int userId) {
+    public ProfileDto getProfileById(int profileId, int userId) throws ProfileNotFoundException
+    {
         // Retrieve the profile by its ID
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("no user pokemon"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ProfileNotFoundException("no user found"));
         Profile profile = profileRepository.findById(profileId)
-                .orElseThrow(() -> new RuntimeException("Profile not found"));
+                .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
 
         // Convert Profile entity to ProfileDto and return it
         return mapToDto(profile);
+    }
+
+    @Override
+    public List<ProfileDto> getProfilesByName(String name) throws ProfileNotFoundException
+    {
+        List<Profile> profiles = profileRepository.findByName(name);
+
+        if (profiles.isEmpty())
+        {
+            throw new ProfileNotFoundException("no profile found");
+        }
+
+        return profiles.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 
 //    @Override
@@ -72,7 +92,8 @@ public class ProfileServiceImpl implements ProfileService
 //    }
 
     @Override
-    public ProfileDto updateProfile(int profileId, ProfileDto profileDto) {
+    public ProfileDto updateProfile(int profileId, ProfileDto profileDto)
+    {
         // Retrieve the existing profile by ID
         Profile existingProfile = profileRepository.findById(profileId)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
@@ -90,30 +111,33 @@ public class ProfileServiceImpl implements ProfileService
     }
 
     @Override
-    public void deleteProfile(int profileId) {
+    public void deleteProfile(int profileId) throws ProfileNotFoundException
+    {
         // Retrieve the profile by ID
         Profile profile = profileRepository.findById(profileId)
-                .orElseThrow(() -> new RuntimeException("Profile not found"));
+                .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
 
         // Delete the profile entity
         profileRepository.delete(profile);
     }
 
     // Helper method to map Profile entity to ProfileDto
-    private ProfileDto mapToDto(Profile profile) {
+    private ProfileDto mapToDto(Profile profile)
+    {
         ProfileDto profileDto = new ProfileDto();
         profileDto.setProfileId(profile.getProfileId());
         profileDto.setName(profile.getName());
-//        profileDto.setAge(profile.getAge());
+        profileDto.setAge(profile.getAge());
         profileDto.setProfilePhotoUrl(profile.getProfilePhotoUrl());
         return profileDto;
     }
 
     // Helper method to map ProfileDto to Profile entity
-    private Profile mapToEntity(ProfileDto profileDto) {
+    private Profile mapToEntity(ProfileDto profileDto)
+    {
         Profile profile = new Profile();
         profile.setName(profileDto.getName());
-//        profile.setAge(profileDto.getAge());
+        profile.setAge(profileDto.getAge());
         profile.setProfilePhotoUrl(profileDto.getProfilePhotoUrl());
         return profile;
     }

@@ -33,11 +33,5 @@ public class User
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Profile> profiles = new ArrayList<Profile>();
-
-    public User(int userId, String email, String password, boolean activated)
-    {
-    }
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Profile> profiles = new ArrayList<>();
+    private List<Profile> profiles = new ArrayList<>();
 }

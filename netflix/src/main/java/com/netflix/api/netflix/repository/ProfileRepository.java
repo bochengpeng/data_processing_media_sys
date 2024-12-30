@@ -12,12 +12,8 @@ public interface ProfileRepository extends JpaRepository<Profile, Integer>
 {
     // Find profiles by name
     List<Profile> findByName(String name);
-
-    // Find profiles by age
-    List<Profile> findByAge(int age);
-
-    // Find profiles by language
-    List<Profile> findByLanguage(Language language);
+//    List<Profile> findByAge(int age);
+//    List<Profile> findByLanguage(Language language);
 
 //    List<Profile> findByUserId(int userId);
 }
