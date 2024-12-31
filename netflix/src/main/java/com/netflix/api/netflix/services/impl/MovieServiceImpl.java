@@ -62,9 +62,9 @@ public class MovieServiceImpl implements MovieService
         // Update the movie's fields with values from the DTO
         existingMovie.setTitle(movieDto.getTitle());
         existingMovie.setDescription(movieDto.getDescription());
-        existingMovie.setGenre(movieDto.getGenres());
+//        existingMovie.setGenre(movieDto.getGenres());
         existingMovie.setDuration(movieDto.getDuration());
-        existingMovie.setAgeRating(movieDto.getAgeRating());
+//        existingMovie.setAgeRating(movieDto.getAgeRating());
 
         // Save the updated movie entity to the database
         Movie updatedMovie = movieRepository.save(existingMovie);
@@ -89,9 +89,9 @@ public class MovieServiceImpl implements MovieService
         movieDto.setContentId(movie.getMovieId());
         movieDto.setTitle(movie.getTitle());
         movieDto.setDescription(movie.getDescription());
-        movieDto.setGenres(movie.getGenre());
+//        movieDto.setGenres(movie.getGenre());
         movieDto.setDuration(movie.getDuration());
-        movieDto.setAgeRating(movie.getAgeRating());
+//        movieDto.setAgeRating(movie.getAgeRating());
         return movieDto;
     }
 
@@ -100,9 +100,9 @@ public class MovieServiceImpl implements MovieService
         Movie movie = new Movie();
         movie.setTitle(movieDto.getTitle());
         movie.setDescription(movieDto.getDescription());
-        movie.setGenre(movieDto.getGenres());
+//        movie.setGenre(movieDto.getGenres());
         movie.setDuration(movieDto.getDuration());
-        movie.setAgeRating(movieDto.getAgeRating());
+//        movie.setAgeRating(movieDto.getAgeRating());
         return movie;
     }
 }
