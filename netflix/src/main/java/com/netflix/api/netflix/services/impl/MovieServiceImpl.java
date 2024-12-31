@@ -86,7 +86,7 @@ public class MovieServiceImpl implements MovieService
     // Convert Movie entity to MovieDto
     private MovieDto mapToDto(Movie movie) {
         MovieDto movieDto = new MovieDto();
-        movieDto.setContentId(movie.getMovieId());
+//        movieDto.setContentId(movie.getMovieId());
         movieDto.setTitle(movie.getTitle());
         movieDto.setDescription(movie.getDescription());
 //        movieDto.setGenres(movie.getGenre());

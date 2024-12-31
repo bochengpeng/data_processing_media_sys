@@ -1,10 +1,13 @@
 package com.netflix.api.netflix.controllers;
 
+import com.netflix.api.netflix.dto.MovieDto;
 import com.netflix.api.netflix.models.Movie;
 import com.netflix.api.netflix.repository.MovieRepository;
 import com.netflix.api.netflix.services.TMDBService;
+import com.netflix.api.netflix.services.impl.MovieServiceImpl;
 import com.netflix.api.netflix.services.impl.TMDBServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,10 +72,11 @@ public class MovieController {
 
     private final TMDBServiceImpl tmdbService;
     private final MovieRepository movieRepository;
-
-    public MovieController(TMDBServiceImpl tmdbService, MovieRepository movieRepository) {
+    private MovieServiceImpl movieService;
+    public MovieController(TMDBServiceImpl tmdbService, MovieRepository movieRepository, MovieServiceImpl movieService) {
         this.tmdbService = tmdbService;
         this.movieRepository = movieRepository;
+        this.movieService = movieService;
     }
 
     @GetMapping("/{movieId}")
@@ -81,4 +85,12 @@ public class MovieController {
         movieRepository.save(movie);
         return ResponseEntity.ok(movie);
     }
+
+    @GetMapping("/{movieId}/details")
+    public ResponseEntity<MovieDto> getMovieDetails(@PathVariable(value = "movieId") int movieId)
+    {
+        MovieDto movie = movieService.getMovieById(movieId);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
+
 }
