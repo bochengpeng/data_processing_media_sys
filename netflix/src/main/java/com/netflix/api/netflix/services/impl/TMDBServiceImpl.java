@@ -2,11 +2,7 @@ package com.netflix.api.netflix.services.impl;
 
 import com.netflix.api.netflix.config.TMDBConfig;
 import com.netflix.api.netflix.dto.TMDBMovieDTO;
-import com.netflix.api.netflix.dto.UserDto;
 import com.netflix.api.netflix.models.Movie;
-import com.netflix.api.netflix.models.User;
-import com.netflix.api.netflix.services.TMDBService;
-import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,17 +10,20 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 
 @Service
-public class TMDBServiceImpl {
+public class TMDBServiceImpl
+{
 
     private final RestTemplate restTemplate;
     private final TMDBConfig tmdbConfig;
 
-    public TMDBServiceImpl(RestTemplate restTemplate, TMDBConfig tmdbConfig) {
+    public TMDBServiceImpl(RestTemplate restTemplate, TMDBConfig tmdbConfig)
+    {
         this.restTemplate = restTemplate;
         this.tmdbConfig = tmdbConfig;
     }
 
-    public Movie fetchMovieDetails(int movieId) {
+    public Movie fetchMovieDetails(int movieId)
+    {
         String apiKey = tmdbConfig.getApiKey();
         String url = String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", movieId, apiKey);
 
@@ -33,7 +32,8 @@ public class TMDBServiceImpl {
 
         TMDBMovieDTO movieDTO = response.getBody();
 
-        if (movieDTO == null) {
+        if (movieDTO == null)
+        {
             throw new RuntimeException("Failed to fetch movie details");
         }
 

@@ -18,7 +18,7 @@ public class UserDto
     private String email;
     private String password;
     private boolean isActivated;
-    private LocalDateTime createdAt;
+//    private LocalDateTime createdAt;
 //    private List<ProfileDto> profiles;
     private SubscriptionDto subscription;
 }
