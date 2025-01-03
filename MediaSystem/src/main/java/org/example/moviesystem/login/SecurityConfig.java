@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -29,7 +30,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/medior/**").hasRole("MEDIOR")
 //                        .requestMatchers("/senior/**").hasRole("SENIOR")
 //                        .requestMatchers("/apiuser/**").hasRole("APIUSER")
-            .anyRequest().authenticated()  // Protect any other request, ensuring authentication is required
+            .anyRequest().authenticated()
             )
             .formLogin(form -> form
                     .loginPage("/login")
@@ -45,8 +46,8 @@ public class SecurityConfig {
                     .permitAll()
             )
             .sessionManagement(session -> session
-                    .maximumSessions(1) // Allow only one session per user
-                    .expiredUrl("/login?error=sessionExpired") // Redirect if session expires
+                .maximumSessions(1) // Allow only one session per user
+                .expiredUrl("/login?error=sessionExpired") // Redirect if session expires
             )
             .sessionManagement(session -> session
                     .sessionFixation().migrateSession() // Protect against session fixation attacks
@@ -54,7 +55,6 @@ public class SecurityConfig {
             );
         return http.build();
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {

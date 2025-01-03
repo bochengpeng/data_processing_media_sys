@@ -20,10 +20,11 @@ public class SeriesRatedController
     }
 
     @GetMapping("/home")
-    public String getHomePage()
+    public String getHomePage(HttpSession session)
     {
-//        if (session.getAttribute("loggedIn") == null && (boolean) session.getAttribute("loggedIn")) {
-//            return "redirect:/login"; // Redirect to home if already logged in
+//        if (session.getAttribute("user") == null) {
+//
+//            return "redirect:/login"; // Redirect to login if not authenticated
 //        }
 
         return "home";

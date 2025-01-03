@@ -1,5 +1,6 @@
 package org.example.moviesystem.login;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +22,11 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
 
     @Value("${spring.datasource.url}")
     private String dbUrl;
+    private final HttpSession session;
+
+    public DatabaseAuthenticationProvider(HttpSession session) {
+        this.session = session;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -30,6 +36,10 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
         try (Connection connection = DriverManager.getConnection(dbUrl, username, password)) {
             // If the connection is successful, grant roles based on the username
             String role = "ROLE_" + username.toUpperCase();
+            // Set session attribute for the user
+            session.setAttribute("user", username);
+            System.out.println("Session set for user: " + session.getAttribute("user")); // Debug log
+
             return new UsernamePasswordAuthenticationToken(
                     new User(username, password, Collections.singletonList(new SimpleGrantedAuthority(role))),
                     password,
