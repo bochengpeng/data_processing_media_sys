@@ -16,9 +16,8 @@ public class UserDto
 {
     private int userId;
     private String email;
-    private String password;
+    private String username;
     private boolean isActivated;
-//    private LocalDateTime createdAt;
-//    private List<ProfileDto> profiles;
-    private SubscriptionDto subscription;
+    private LocalDateTime accountLockUntil;
+    private int failedLoginAttempt;
 }

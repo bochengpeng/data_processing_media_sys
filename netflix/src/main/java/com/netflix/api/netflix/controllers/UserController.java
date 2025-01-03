@@ -1,7 +1,9 @@
 package com.netflix.api.netflix.controllers;
 
+import com.netflix.api.netflix.dto.LoginDto;
 import com.netflix.api.netflix.dto.SubscriptionDto;
 import com.netflix.api.netflix.dto.UserDto;
+import com.netflix.api.netflix.exception.ResourceAlreadyExistsException;
 import com.netflix.api.netflix.exception.SubscriptionNotFoundException;
 import com.netflix.api.netflix.exception.UserNotFoundException;
 import com.netflix.api.netflix.models.User;
@@ -36,10 +38,18 @@ public class UserController
 
     @PostMapping("/user/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws UserNotFoundException
+    public ResponseEntity<UserDto> createUser(@RequestBody LoginDto loginDto) throws ResourceAlreadyExistsException
     {
-        return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createUser(loginDto), HttpStatus.CREATED);
     }
+
+    @GetMapping("/activate")
+    public ResponseEntity<String> activateAccount(@RequestParam String token)
+    {
+        userService.activateUser(token); // Delegate to service
+        return ResponseEntity.ok("Account activated successfully. You can now log in.");
+    }
+
 
     @PutMapping("/{userId}/update")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable(value = "userId") int userId) throws UserNotFoundException

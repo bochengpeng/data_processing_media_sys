@@ -26,6 +26,8 @@ public class User
     @Column(nullable = false)
     private String password;
 
+    private String username;
+
     @Column(nullable = false)
     private boolean isActivated;
 
@@ -48,6 +50,10 @@ public class User
     @CollectionTable(name = "user_preferences", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "preference")
     private List<String> preferences = new ArrayList<>();
+
+    private String activationToken; // Token for email verification
+    private String resetToken;
+//    private LocalDateTime tokenExpiryTime; // Token expiration time
 
     public void addProfile(Profile profile)
     {
