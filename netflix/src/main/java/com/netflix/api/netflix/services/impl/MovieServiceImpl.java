@@ -63,7 +63,7 @@ public class MovieServiceImpl implements MovieService
         existingMovie.setTitle(movieDto.getTitle());
         existingMovie.setDescription(movieDto.getDescription());
 //        existingMovie.setGenre(movieDto.getGenres());
-        existingMovie.setDuration(movieDto.getDuration());
+//        existingMovie.setDuration(movieDto.getDuration());
 //        existingMovie.setAgeRating(movieDto.getAgeRating());
 
         // Save the updated movie entity to the database
@@ -90,7 +90,7 @@ public class MovieServiceImpl implements MovieService
         movieDto.setTitle(movie.getTitle());
         movieDto.setDescription(movie.getDescription());
 //        movieDto.setGenres(movie.getGenre());
-        movieDto.setDuration(movie.getDuration());
+        movieDto.setRuntime(movie.getDuration());
 //        movieDto.setAgeRating(movie.getAgeRating());
         return movieDto;
     }
@@ -101,7 +101,7 @@ public class MovieServiceImpl implements MovieService
         movie.setTitle(movieDto.getTitle());
         movie.setDescription(movieDto.getDescription());
 //        movie.setGenre(movieDto.getGenres());
-        movie.setDuration(movieDto.getDuration());
+        movie.setDuration(movieDto.getRuntime());
 //        movie.setAgeRating(movieDto.getAgeRating());
         return movie;
     }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 //@Data
@@ -42,22 +43,10 @@ public class Movie {
     private int movieId;
 
     private int duration;
-
-    @Column(length = 255) // Adjust this if `title` is the issue
     private String title;
-
-//    @Enumerated(EnumType.STRING)
-//    private Genre genre;
-
-//    @Enumerated(EnumType.STRING)
-//    private ContentClassification contentClassification;
-
-//    @Enumerated(EnumType.STRING)
-//    private AgeRating ageRating;
-
     private short ageRating; // Use short to match SMALLINT
     private short contentClassification;
-    @Column(name = "genre")
+//    @Column(name = "genre")
     private short genre;
 
     @Column(length = 5000) // Allow longer descriptions

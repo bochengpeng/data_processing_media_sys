@@ -28,6 +28,8 @@ public class Subscription
     private boolean isTrialPeriod;
 //    @Column(nullable = true)
 //    private int userId;
+@Column(name = "subscription_price", nullable = false, columnDefinition = "DOUBLE DEFAULT 7.99")
+private double subscriptionPrice = 7.99;
 
     @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();

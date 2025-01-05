@@ -92,5 +92,4 @@ public class MovieController {
         MovieDto movie = movieService.getMovieById(movieId);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
-
 }
