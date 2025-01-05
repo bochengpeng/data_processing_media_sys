@@ -1,7 +1,9 @@
 package com.netflix.api.netflix.services.impl;
 
 import com.netflix.api.netflix.config.TMDBConfig;
+//import com.netflix.api.netflix.dto.ReleaseDate;
 import com.netflix.api.netflix.dto.TMDBMovieDTO;
+//import com.netflix.api.netflix.dto.TMDBReleaseDateResponse;
 import com.netflix.api.netflix.models.Movie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,7 @@ public class TMDBServiceImpl
         Movie movie = new Movie();
         movie.setTitle(tmdbMovieDTO.getTitle());
         movie.setAgeRating((short) 0);
+        movie.setDuration(tmdbMovieDTO.getRuntime());
         movie.setDescription(tmdbMovieDTO.getOverview());
         movie.setReleaseDate(LocalDate.parse(tmdbMovieDTO.getRelease_date()));
         return movie;

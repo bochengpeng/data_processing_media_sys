@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 //@Data
@@ -41,8 +42,10 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int movieId;
 
-    private int duration;
+//    @Column(name = "duration", nullable = false, columnDefinition = "TIME DEFAULT '00:00:00'")
+//    private LocalTime duration = LocalTime.of(0, 0, 0);
 
+    private int duration;
     @Column(length = 255) // Adjust this if `title` is the issue
     private String title;
 
