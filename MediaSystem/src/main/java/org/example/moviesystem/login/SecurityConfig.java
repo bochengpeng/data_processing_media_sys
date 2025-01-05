@@ -23,8 +23,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            .csrf(csrf -> csrf
+                    .ignoringRequestMatchers(new AntPathRequestMatcher("/logout")) // Ignore CSRF for logout if necessary
+            )
             .authorizeHttpRequests(authz -> authz
-            .requestMatchers("/login", "/login?error=true").permitAll()
+            .requestMatchers("/login", "/login?error=true", "/logout").permitAll()
             .requestMatchers("/popular", "/popular_series", "/home", "/tv_rate", "/popular_series", "/series", "/ratedxml").authenticated()
 //                        .requestMatchers("/junior/**").hasRole("JUNIOR")
 //                        .requestMatchers("/medior/**").hasRole("MEDIOR")
