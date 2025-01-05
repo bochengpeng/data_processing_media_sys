@@ -42,25 +42,11 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int movieId;
 
-//    @Column(name = "duration", nullable = false, columnDefinition = "TIME DEFAULT '00:00:00'")
-//    private LocalTime duration = LocalTime.of(0, 0, 0);
-
     private int duration;
-    @Column(length = 255) // Adjust this if `title` is the issue
     private String title;
-
-//    @Enumerated(EnumType.STRING)
-//    private Genre genre;
-
-//    @Enumerated(EnumType.STRING)
-//    private ContentClassification contentClassification;
-
-//    @Enumerated(EnumType.STRING)
-//    private AgeRating ageRating;
-
     private short ageRating; // Use short to match SMALLINT
     private short contentClassification;
-    @Column(name = "genre")
+//    @Column(name = "genre")
     private short genre;
 
     @Column(length = 5000) // Allow longer descriptions
