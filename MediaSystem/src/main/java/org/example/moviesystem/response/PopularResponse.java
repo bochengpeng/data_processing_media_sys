@@ -6,11 +6,13 @@ public class PopularResponse
 {
     private PopularSeries[] popularResults;
 
-    public PopularSeries[] getPopularResults() {
+    public PopularSeries[] getPopularResults()
+    {
         return popularResults;
     }
 
-    public void setResults(PopularSeries[] results) {
+    public void setResults(PopularSeries[] results)
+    {
         this.popularResults = results;
     }
 }

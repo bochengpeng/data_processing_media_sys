@@ -13,12 +13,14 @@ public class SeriesRatedRestController
 {
     private final SeriesRatedService seriesRatedService;
 
-    public SeriesRatedRestController(SeriesRatedService seriesRatedService) {
+    public SeriesRatedRestController(SeriesRatedService seriesRatedService)
+    {
         this.seriesRatedService = seriesRatedService;
     }
 
     @GetMapping("/series")
-    public List<RatedSeries> getTopRatedSeries() {
+    public List<RatedSeries> getTopRatedSeries()
+    {
         return seriesRatedService.getTopRatedTVSeries();
     }
 

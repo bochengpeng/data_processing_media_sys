@@ -12,35 +12,43 @@ public class RatedSeries
     private String posterPath;
 
     // Getters and Setters
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public double getVoteAverage() {
+    public double getVoteAverage()
+    {
         return voteAverage;
     }
 
-    public void setVoteAverage(double voteAverage) {
+    public void setVoteAverage(double voteAverage)
+    {
         this.voteAverage = voteAverage;
     }
 
-    public String getOverview() {
+    public String getOverview()
+    {
         return overview;
     }
 
-    public void setOverview(String overview) {
+    public void setOverview(String overview)
+    {
         this.overview = overview;
     }
 
-    public String getPosterPath() {
+    public String getPosterPath()
+    {
         return posterPath;
     }
 
-    public void setPosterPath(String posterPath) {
+    public void setPosterPath(String posterPath)
+    {
         this.posterPath = posterPath;
     }
 }

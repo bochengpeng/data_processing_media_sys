@@ -2,6 +2,7 @@ package org.example.moviesystem.login;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,27 +13,32 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-public class SecurityConfig {
-
+public class SecurityConfig
+{
     private final AuthenticationProvider authenticationProvider;
 
-    public SecurityConfig(DatabaseAuthenticationProvider authenticationProvider) {
+    public SecurityConfig(DatabaseAuthenticationProvider authenticationProvider)
+    {
         this.authenticationProvider = authenticationProvider;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+    {
         http
             .csrf(csrf -> csrf
                 .ignoringRequestMatchers(new AntPathRequestMatcher("/logout")) // Ignore CSRF for logout if necessary
             )
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/genres/**"))
+            )
+            .csrf(csrf -> csrf
+                    .ignoringRequestMatchers(new AntPathRequestMatcher("/new_genres"))
+            )
             .authorizeHttpRequests(authz -> authz
             .requestMatchers("/login", "/login?error=true", "/logout").permitAll()
+            .requestMatchers(HttpMethod.PUT, "/genres/**").permitAll()
             .requestMatchers("/popular", "/popular_series", "/home", "/tv_rate", "/popular_series", "/series", "/ratedxml", "/api/genres").authenticated()
-//                        .requestMatchers("/junior/**").hasRole("JUNIOR")
-//                        .requestMatchers("/medior/**").hasRole("MEDIOR")
-//                        .requestMatchers("/senior/**").hasRole("SENIOR")
-//                        .requestMatchers("/apiuser/**").hasRole("APIUSER")
             .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -60,7 +66,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception
+    {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .authenticationProvider(authenticationProvider)
                 .build();

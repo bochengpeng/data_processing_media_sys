@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class PopularSeries {
+public class PopularSeries
+{
     private String name;
 
     @JsonProperty("poster_path")
@@ -17,43 +18,53 @@ public class PopularSeries {
 
     private double popularity;
 
-    public String getName() {
+    public String getName()
+    {
         return this.name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getPosterPath() {
+    public String getPosterPath()
+    {
         return this.posterPath;
     }
 
-    public void setPosterPath(String posterPath) {
+    public void setPosterPath(String posterPath)
+    {
         this.posterPath = posterPath;
     }
 
-    public String getOverview() {
+    public String getOverview()
+    {
         return this.overview;
     }
 
-    public void setOverview(String overview) {
+    public void setOverview(String overview)
+    {
         this.overview = overview;
     }
 
-    public List<String> getOriginCountry() { // Updated getter
+    public List<String> getOriginCountry()
+    { // Updated getter
         return this.originCountry;
     }
 
-    public void setOriginCountry(List<String> originCountry) { // Updated setter
+    public void setOriginCountry(List<String> originCountry)
+    { // Updated setter
         this.originCountry = originCountry;
     }
 
-    public double getPopularity() {
+    public double getPopularity()
+    {
         return this.popularity;
     }
 
-    public void setPopularity(double popularity) {
+    public void setPopularity(double popularity)
+    {
         this.popularity = popularity;
     }
 }

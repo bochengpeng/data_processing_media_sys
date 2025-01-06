@@ -34,13 +34,16 @@ public class SeriesRatedService
 
     private final RestTemplate restTemplate;
 
-    public SeriesRatedService(RestTemplate restTemplate) {
+    public SeriesRatedService(RestTemplate restTemplate)
+    {
         this.restTemplate = restTemplate;
     }
 
     // Helper method to convert a list of RatedSeries to XML
-    public Document convertListToXml(List<RatedSeries> seriesList) {
-        try {
+    public Document convertListToXml(List<RatedSeries> seriesList)
+    {
+        try
+        {
             RatedSeriesList wrapper = new RatedSeriesList();
             wrapper.setSeries(seriesList);
 
@@ -56,19 +59,23 @@ public class SeriesRatedService
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             return builder.parse(new InputSource(new StringReader(xmlString)));
-        } catch (JAXBException | ParserConfigurationException | SAXException | IOException e) {
+        }
+        catch (JAXBException | ParserConfigurationException | SAXException | IOException e)
+        {
             throw new RuntimeException("Error converting to XML Document", e);
         }
     }
 
     // Fetch top-rated TV series and return as XML
-    public Document getTopRatedTVSeriesAsXml() {
+    public Document getTopRatedTVSeriesAsXml()
+    {
         List<RatedSeries> seriesList = getTopRatedTVSeries(); // Fetch the list
         return convertListToXml(seriesList); // Convert to XML
     }
 
     // Fetch top-rated TV series from TMDB
-    public List<RatedSeries> getTopRatedTVSeries() {
+    public List<RatedSeries> getTopRatedTVSeries()
+    {
         String url = apiUrl + "/tv/top_rated?api_key=" + apiKey + "&language=en-US&page=1"; // Fetch 20 top-rated TV series from page 1
         RatedResponse response = restTemplate.getForObject(url, RatedResponse.class);
         return response != null ? Arrays.asList(response.getResults()) : List.of();
