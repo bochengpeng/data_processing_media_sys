@@ -14,10 +14,8 @@ public class SeriesPopularService
 {
     @Value("${tmdb.api.key}")
     private String apiKey;
-
     @Value("${tmdb.api.url}")
     private String apiUrl;
-
     private final RestTemplate restTemplate;
 
     public SeriesPopularService(RestTemplate restTemplate)

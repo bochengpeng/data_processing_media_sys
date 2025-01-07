@@ -18,22 +18,26 @@ import java.sql.SQLException;
 import java.util.Collections;
 
 @Component
-public class DatabaseAuthenticationProvider implements AuthenticationProvider {
+public class DatabaseAuthenticationProvider implements AuthenticationProvider
+{
 
     @Value("${spring.datasource.url}")
     private String dbUrl;
     private final HttpSession session;
 
-    public DatabaseAuthenticationProvider(HttpSession session) {
+    public DatabaseAuthenticationProvider(HttpSession session)
+    {
         this.session = session;
     }
 
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException
+    {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        try (Connection connection = DriverManager.getConnection(dbUrl, username, password)) {
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password))
+        {
             // If the connection is successful, grant roles based on the username
             String role = "ROLE_" + username.toUpperCase();
             // Set session attribute for the user
@@ -46,13 +50,16 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
                     Collections.singletonList(new SimpleGrantedAuthority(role))
             );
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             throw new BadCredentialsException("Invalid username or password");
         }
     }
 
     @Override
-    public boolean supports(Class<?> authentication) {
+    public boolean supports(Class<?> authentication)
+    {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
