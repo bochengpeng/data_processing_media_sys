@@ -10,6 +10,7 @@ import com.netflix.api.netflix.repository.UserRepository;
 import com.netflix.api.netflix.services.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService
@@ -158,21 +159,47 @@ public class SubscriptionServiceImpl implements SubscriptionService
 //        subscriptionRepository.delete(subscription);
 //    }
 
+//    @Override
+//    public void deleteSubscription(int userId, int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException {
+//        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+//
+//        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found"));
+//
+//        if (!subscription.getUsers().contains(user)) {
+//            throw new SubscriptionNotFoundException("This subscription is not associated with the user.");
+//        }
+//
+//        subscription.getUsers().remove(user);
+//        user.setSubscription(null);
+//
+//        subscriptionRepository.save(subscription);
+//    }
+
     @Override
+    @Transactional
     public void deleteSubscription(int userId, int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        // Fetch the user
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found"));
+        // Fetch the subscription with users
+        Subscription subscription = subscriptionRepository.findByIdWithUsers(subscriptionId)
+                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found"));
 
+        // Check association
         if (!subscription.getUsers().contains(user)) {
             throw new SubscriptionNotFoundException("This subscription is not associated with the user.");
         }
 
+        // Manage bidirectional relationship
         subscription.getUsers().remove(user);
         user.setSubscription(null);
 
-        subscriptionRepository.save(subscription); // Save to reflect the changes
+        // Save changes (if necessary)
+        subscriptionRepository.save(subscription); // Ensure this is required based on your setup.
+        userRepository.save(user); // Explicitly save user if needed.
     }
+
 
     @Override
     public SubscriptionDto getSubscriptionByUserIdAndSubscriptionId(int userId, int subscriptionId) throws SubscriptionNotFoundException, UserNotFoundException {

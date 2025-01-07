@@ -72,7 +72,7 @@ public class MovieController {
 
     private final TMDBServiceImpl tmdbService;
     private final MovieRepository movieRepository;
-    private MovieServiceImpl movieService;
+    private final MovieServiceImpl movieService;
     public MovieController(TMDBServiceImpl tmdbService, MovieRepository movieRepository, MovieServiceImpl movieService) {
         this.tmdbService = tmdbService;
         this.movieRepository = movieRepository;
