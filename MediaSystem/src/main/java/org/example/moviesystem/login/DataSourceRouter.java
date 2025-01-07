@@ -11,7 +11,7 @@ public class DataSourceRouter
     {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/mediasys");
+        dataSource.setUrl("${spring.datasource.url}");
 
         return dataSource;
     }

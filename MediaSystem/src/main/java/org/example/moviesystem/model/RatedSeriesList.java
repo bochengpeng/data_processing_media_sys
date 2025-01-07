@@ -7,7 +7,6 @@ import java.util.List;
 @XmlRootElement(name = "seriesList")
 public class RatedSeriesList
 {
-
     private List<RatedSeries> series;
 
     @XmlElement(name = "series")

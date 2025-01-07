@@ -7,15 +7,11 @@ import java.util.List;
 public class PopularSeries
 {
     private String name;
-
     @JsonProperty("poster_path")
     private String posterPath;
-
     private String overview;
-
     @JsonProperty("origin_country")
     private List<String> originCountry; // Changed from String to List<String>
-
     private double popularity;
 
     public String getName()
