@@ -16,6 +16,9 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
 //    Subscription findByUserId(int userId);
     @Query("SELECT s FROM Subscription s JOIN s.users u WHERE u.userId = :userId")
     Optional<Subscription> findByUserId(@Param("userId") int userId);
+    @Query("SELECT s FROM Subscription s JOIN FETCH s.users WHERE s.id = :id")
+    Optional<Subscription> findByIdWithUsers(@Param("id") int id);
+
     @Query("SELECT COUNT(s) > 0 FROM Subscription s JOIN s.users u WHERE s.subscriptionId = :subscriptionId AND u.userId = :userId")
     boolean existsBySubscriptionIdAndUserId(@Param("subscriptionId") int subscriptionId, @Param("userId") int userId);
 }

@@ -9,16 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Controller
-public class GenreController {
-
+public class GenreController
+{
     private final GenreService genreService;
 
-    public GenreController(GenreService genreService) {
+    public GenreController(GenreService genreService)
+    {
         this.genreService = genreService;
     }
 
     @GetMapping("/api/genres")
-    public String getGenres(Model model) {
+    public String getGenres(Model model)
+    {
         List<Genre> allGenres = genreService.getAllGenres();
         model.addAttribute("genres", allGenres);  // Add the genres to the model
         return "genre";  // This will return the genre.html view

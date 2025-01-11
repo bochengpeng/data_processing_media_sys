@@ -6,14 +6,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class AppConfig {
+public class AppConfig
+{
     @Bean
-    public ModelMapper modelMapper() {
+    public ModelMapper modelMapper()
+    {
         return new ModelMapper();
     }
 
     @Bean
-    public RestTemplate restTemplate() {
+    public RestTemplate restTemplate()
+    {
         return new RestTemplate();
     }
 }

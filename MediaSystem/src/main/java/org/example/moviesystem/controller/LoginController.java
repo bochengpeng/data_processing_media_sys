@@ -10,7 +10,8 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginPage(HttpSession session)
     {
-        if (session.getAttribute("user") != null) {
+        if (session.getAttribute("user") != null)
+        {
 
             return "redirect:/home";
         }

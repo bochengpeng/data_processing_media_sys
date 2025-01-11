@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/netflix/user")
 public class SubscriptionController
 {
-    private SubscriptionService subscriptionService;
+    private final SubscriptionService subscriptionService;
 
     public SubscriptionController(SubscriptionService subscriptionService)
     {

@@ -15,7 +15,8 @@ public class SeriesRatedController
 {
     private final SeriesRatedService SeriesRatedService;
 
-    public SeriesRatedController(SeriesRatedService SeriesRatedService) {
+    public SeriesRatedController(SeriesRatedService SeriesRatedService)
+    {
         this.SeriesRatedService = SeriesRatedService;
     }
 
@@ -26,7 +27,8 @@ public class SeriesRatedController
     }
 
     @GetMapping("/tv_rate")
-    public String getTopRatedTVSeries(Model model) {
+    public String getTopRatedTVSeries(Model model)
+    {
         List<RatedSeries> topRatedTVSeries = SeriesRatedService.getTopRatedTVSeries();
         System.out.println("TV RatedSeries Data: " + topRatedTVSeries);
         for (RatedSeries ratedSeries : topRatedTVSeries) {

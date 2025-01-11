@@ -8,11 +8,13 @@ public class RatedResponse
     private RatedSeries[] results;
     private PopularSeries[] popularResults;
 
-    public RatedSeries[] getResults() {
+    public RatedSeries[] getResults()
+    {
         return results;
     }
 
-    public void setResults(RatedSeries[] results) {
+    public void setResults(RatedSeries[] results)
+    {
         this.results = results;
     }
 

@@ -62,6 +62,6 @@ public class UserController
     public ResponseEntity<String> deleteUser(@PathVariable(value = "userId") int userId) throws UserNotFoundException, SubscriptionNotFoundException
     {
         userService.deleteUser(userId);
-        return new ResponseEntity<>("Subscription deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
     }
 }
