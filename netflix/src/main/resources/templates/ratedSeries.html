@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 20 Rated TV Series</title>
+    <link rel="stylesheet" th:href="@{/css/series.css}" />
+</head>
+<header>
+    <h2>Top 20 Rated TV Series</h2>
+    <button onclick="window.location.href='/home'">Back</button>
+</header>
+<body>
+<section class="movie-list" th:each="ratedSeries : ${ratedSeries}">
+    <div class="movie">
+        <img th:src="'https://image.tmdb.org/t/p/w200/' + ${ratedSeries.posterPath}" alt="TV Series Poster" class="movie-poster" />
+        <div class="movie-info">
+            <h3 th:text="${ratedSeries.name}"></h3>
+            <p class="rating">Rating: <span th:text="${ratedSeries.voteAverage}">0.0</span></p>
+            <p th:text="${ratedSeries.overview}"></p>
+        </div>
+    </div>
+</section>
+</body>
+</html>
