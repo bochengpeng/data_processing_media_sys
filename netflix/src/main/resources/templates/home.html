@@ -4,17 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home-Media View</title>
-    <link rel="stylesheet" th:href="@{/css/home.css}" />
+<!--    <link rel="stylesheet" th:href="@{/css/home.css}" />-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #7d3c98;
+            color: white;
+            padding: 1em 0;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .buttons {
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body>
 <header>
     <h1>Welcome to MediaView</h1>
 </header>
 <div class="container">
-    <h2>Explore The World of TV Series</h2>
+    <h2>Explore The World of Series/Movies</h2>
     <div class="buttons">
         <button onclick="window.location.href='/tv_rate'">Top 20 Rated</button>
         <button onclick="window.location.href='/popular'">Top 20 Popularity</button>
+        <button onclick="window.location.href='/api/movies'">Movie</button>
         <button>Add More</button>
     </div>
 </div>

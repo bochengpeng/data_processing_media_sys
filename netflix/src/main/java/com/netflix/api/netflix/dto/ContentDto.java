@@ -25,5 +25,4 @@ public class ContentDto
     private double rating;
     private AgeRating ageRating;
 
-
 }
