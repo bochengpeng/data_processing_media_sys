@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies</title>
+    <title>My Favorite Movie List</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color:  dimgray;
             color: #333;
         }
 
         header {
-            background-color: #4CAF50;
+            background-color: #2BD868;
             color: white;
             text-align: center;
             padding: 1rem 0;
@@ -72,7 +72,7 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #2BD868;
             color: white;
             font-weight: bold;
         }
@@ -105,7 +105,7 @@
                     throw new Error('Failed to fetch movies');
                 }
                 const movies = await response.json();
-                const table = document.getElementById('movieTable');
+                const table = document.getElementById('favoriteMovies');
                 table.innerHTML = `<tr>
                     <th>Title</th>
                     <th>Duration (mins)</th>
@@ -117,6 +117,10 @@
                     <th>Actions</th>
                 </tr>`;
                 movies.forEach(movie => {
+                    // Convert LocalDate to String in "YYYY-MM-DD" format if needed
+                    const releaseDateString = typeof movie.releaseDate === 'object' && movie.releaseDate.year
+                        ? `${movie.releaseDate.year}-${String(movie.releaseDate.monthValue).padStart(2, '0')}-${String(movie.releaseDate.dayOfMonth).padStart(2, '0')}`
+                        : movie.releaseDate;
                     const row = `<tr>
                         <td><input type="text" value="${movie.title}" data-id="${movie.movieId}" data-field="title" /></td>
                         <td><input type="number" value="${movie.duration}" data-id="${movie.movieId}" data-field="duration" /></td>
@@ -252,11 +256,11 @@
 </head>
 <body>
 <header>
-    <h1>Movie Table</h1>
+    <h1>My Favorite Movie List</h1>
 </header>
 <div class="container">
     <button onclick="window.location.href='/home'">Back to Home</button>
-    <table id="movieTable" border="1">
+    <table id="favoriteMovies" border="1">
         <!-- Table content will be dynamically inserted here -->
     </table>
 </div>

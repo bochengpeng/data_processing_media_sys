@@ -15,7 +15,6 @@ public class Episode
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int episodeId; // Unique ID for the episode
-
     private int episodeNumber;
     private int seasonNumber;
     private int duration;
