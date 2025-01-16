@@ -8,6 +8,7 @@ import com.netflix.api.netflix.services.impl.MovieServiceImpl;
 import com.netflix.api.netflix.services.impl.TMDBServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -86,10 +87,21 @@ public class MovieController {
         return ResponseEntity.ok(movie);
     }
 
-    @GetMapping("/{movieId}/details")
-    public ResponseEntity<MovieDto> getMovieDetails(@PathVariable(value = "movieId") int movieId)
-    {
-        MovieDto movie = movieService.getMovieById(movieId);
-        return new ResponseEntity<>(movie, HttpStatus.OK);
+//    @GetMapping("/{movieId}/details")
+//    public ResponseEntity<MovieDto> getMovieDetails(@PathVariable(value = "movieId") int movieId)
+//    {
+//        MovieDto movie = movieService.getMovieById(movieId);
+//        return new ResponseEntity<>(movie, HttpStatus.OK);
+//    }
+
+    @GetMapping(
+            value = "/{id}/details",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+    )
+    public ResponseEntity<MovieDto> getMovieDetails(
+            @PathVariable("id") int id,
+            @RequestParam(value = "format", required = false) String format) {
+        MovieDto movie = movieService.getMovieById(id);
+        return ResponseEntity.ok(movie);
     }
 }

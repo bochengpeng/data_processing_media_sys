@@ -89,9 +89,10 @@ public class MovieServiceImpl implements MovieService
 //        movieDto.setContentId(movie.getMovieId());
         movieDto.setTitle(movie.getTitle());
         movieDto.setDescription(movie.getDescription());
-//        movieDto.setGenres(movie.getGenre());
+        movieDto.setGenre(movie.getGenre());
         movieDto.setRuntime(movie.getDuration());
-//        movieDto.setAgeRating(movie.getAgeRating());
+        movieDto.setAgeRating(movie.getAgeRating());
+        movieDto.setReleaseDate(movie.getReleaseDate());
         return movieDto;
     }
 
