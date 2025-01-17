@@ -3,7 +3,7 @@
 -- ============================================
 
 -- Create custom roles with LOGIN privileges
-CREATE ROLE junior_user LOGIN PASSWORD 'junior_password';
+CREATE ROLE junior_user LOGIN PASSWORD '1234';
 CREATE ROLE medior_user LOGIN PASSWORD 'medior_password';
 CREATE ROLE senior_user LOGIN PASSWORD 'senior_password';
 CREATE ROLE api_user LOGIN PASSWORD 'api_password';
