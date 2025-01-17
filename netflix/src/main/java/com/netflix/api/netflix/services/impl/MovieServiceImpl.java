@@ -45,7 +45,7 @@ public class MovieServiceImpl implements MovieService
     @Override
     public List<MovieDto> getAllMovies() {
         // Get all movies from the database
-        List<Movie> movieList = movieRepository.findAll();
+        List<Movie> movieList = movieRepository.findAllPublicMovies();
 
         // Convert each movie entity to DTO
         return movieList.stream()

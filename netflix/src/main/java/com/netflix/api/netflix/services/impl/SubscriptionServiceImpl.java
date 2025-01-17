@@ -38,10 +38,12 @@ public class SubscriptionServiceImpl implements SubscriptionService
 //    }
 
     @Override
-    public SubscriptionDto createSubscription(int userId, SubscriptionDto subscriptionDto) throws UserNotFoundException {
+    public SubscriptionDto createSubscription(int userId, SubscriptionDto subscriptionDto) throws UserNotFoundException
+    {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        if (user.getSubscription() != null) {
+        if (user.getSubscription() != null)
+        {
             throw new IllegalStateException("User already has an active subscription.");
         }
 
@@ -88,7 +90,8 @@ public class SubscriptionServiceImpl implements SubscriptionService
 //        return mapToDto(subscription);
 //    }
 
-    public SubscriptionDto getSubscriptionById(int userId, int subscriptionId) throws SubscriptionNotFoundException, UserNotFoundException {
+    public SubscriptionDto getSubscriptionById(int userId, int subscriptionId) throws SubscriptionNotFoundException, UserNotFoundException
+    {
         // Fetch the user
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found"));
 
@@ -97,7 +100,8 @@ public class SubscriptionServiceImpl implements SubscriptionService
                 .orElseThrow(() -> new SubscriptionNotFoundException("Subscription with ID " + subscriptionId + " not found"));
 
         // Check if the subscription is associated with the user
-        if (!subscription.getUsers().contains(user)) {
+        if (!subscription.getUsers().contains(user))
+        {
             throw new SubscriptionNotFoundException("Subscription with ID " + subscriptionId + " is not associated with User ID " + userId);
         }
 
@@ -126,12 +130,14 @@ public class SubscriptionServiceImpl implements SubscriptionService
 //    }
 
     @Override
-    public SubscriptionDto updateSubscription(int userId, int subscriptionId, SubscriptionDto subscriptionDto) throws UserNotFoundException, SubscriptionNotFoundException {
+    public SubscriptionDto updateSubscription(int userId, int subscriptionId, SubscriptionDto subscriptionDto) throws UserNotFoundException, SubscriptionNotFoundException
+    {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found"));
 
-        if (!subscription.getUsers().contains(user)) {
+        if (!subscription.getUsers().contains(user))
+        {
             throw new SubscriptionNotFoundException("This subscription is not associated with the user.");
         }
 
@@ -177,7 +183,8 @@ public class SubscriptionServiceImpl implements SubscriptionService
 
     @Override
     @Transactional
-    public void deleteSubscription(int userId, int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException {
+    public void deleteSubscription(int userId, int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException
+    {
         // Fetch the user
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -187,7 +194,8 @@ public class SubscriptionServiceImpl implements SubscriptionService
                 .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found"));
 
         // Check association
-        if (!subscription.getUsers().contains(user)) {
+        if (!subscription.getUsers().contains(user))
+        {
             throw new SubscriptionNotFoundException("This subscription is not associated with the user.");
         }
 
@@ -202,7 +210,8 @@ public class SubscriptionServiceImpl implements SubscriptionService
 
 
     @Override
-    public SubscriptionDto getSubscriptionByUserIdAndSubscriptionId(int userId, int subscriptionId) throws SubscriptionNotFoundException, UserNotFoundException {
+    public SubscriptionDto getSubscriptionByUserIdAndSubscriptionId(int userId, int subscriptionId) throws SubscriptionNotFoundException, UserNotFoundException
+    {
         // Check if the user exists
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
 
@@ -210,7 +219,8 @@ public class SubscriptionServiceImpl implements SubscriptionService
         Subscription subscription = subscriptionRepository.findById(subscriptionId)
                 .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found"));
 
-        if (subscription.getUsers().stream().noneMatch(u -> u.getUserId() == userId)) {
+        if (subscription.getUsers().stream().noneMatch(u -> u.getUserId() == userId))
+        {
             throw new SubscriptionNotFoundException("Subscription does not belong to this user");
         }
 

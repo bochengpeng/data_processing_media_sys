@@ -69,30 +69,35 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
-public class MovieController {
+public class MovieController
+{
 
     private final TMDBServiceImpl tmdbService;
     private final MovieRepository movieRepository;
     private final MovieServiceImpl movieService;
-    public MovieController(TMDBServiceImpl tmdbService, MovieRepository movieRepository, MovieServiceImpl movieService) {
+
+    public MovieController(TMDBServiceImpl tmdbService, MovieRepository movieRepository, MovieServiceImpl movieService)
+    {
         this.tmdbService = tmdbService;
         this.movieRepository = movieRepository;
         this.movieService = movieService;
     }
 
     @GetMapping("/{movieId}")
-    public ResponseEntity<Movie> getMovie(@PathVariable(value = "movieId") int movieId) {
+    public ResponseEntity<Movie> getMovie(@PathVariable(value = "movieId") int movieId)
+    {
         Movie movie = tmdbService.fetchMovieDetails(movieId);
         movieRepository.save(movie);
         return ResponseEntity.ok(movie);
     }
 
-//    @GetMapping("/{movieId}/details")
-//    public ResponseEntity<MovieDto> getMovieDetails(@PathVariable(value = "movieId") int movieId)
-//    {
-//        MovieDto movie = movieService.getMovieById(movieId);
-//        return new ResponseEntity<>(movie, HttpStatus.OK);
-//    }
+    @GetMapping("/allMovies")
+    public ResponseEntity<List<MovieDto>> getAllMovies()
+    {
+        List<MovieDto> movies = movieService.getAllMovies();
+        return ResponseEntity.ok(movies);
+    }
+
 
     @GetMapping(
             value = "/{id}/details",
@@ -100,7 +105,8 @@ public class MovieController {
     )
     public ResponseEntity<MovieDto> getMovieDetails(
             @PathVariable("id") int id,
-            @RequestParam(value = "format", required = false) String format) {
+            @RequestParam(value = "format", required = false) String format)
+    {
         MovieDto movie = movieService.getMovieById(id);
         return ResponseEntity.ok(movie);
     }

@@ -5,21 +5,19 @@ import com.netflix.api.netflix.models.ContentClassification;
 import com.netflix.api.netflix.models.Genre;
 import com.netflix.api.netflix.models.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie, Integer>
 {
-    // Find movies by title (case-insensitive)
     List<Movie> findByTitleIgnoreCase(String title);
 
-    // Find movies suitable for a specific age
-    List<Movie> findByAgeRatingLessThanEqual(AgeRating age);
+    List<Movie> findByAgeRatingLessThanEqual(short ageRating);
 
-    // Fetch movies by viewing classification
-    List<Movie> findByContentClassification(ContentClassification classification);
+    List<Movie> findByContentClassification(short contentClassification);
 
-    List<Movie> findByGenre(Genre genre);
-//
-//    List<Movie> findByGenreAndClassification(Genre genre, ContentClassification classification);
+    List<Movie> findByGenre(short genre);
+    @Query(value = "SELECT * FROM vw_public_movies", nativeQuery = true)
+    List<Movie> findAllPublicMovies();
 }
