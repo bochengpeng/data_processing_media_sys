@@ -23,19 +23,19 @@ public class SubscriptionController
     @PostMapping("/{userId}/subscription/create")
     public ResponseEntity<SubscriptionDto> createSubscription(@PathVariable(value = "userId") int userId, @RequestBody SubscriptionDto subscriptionDto) throws UserNotFoundException
     {
-        return new ResponseEntity<>(subscriptionService.createSubscription(userId, subscriptionDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.subscriptionService.createSubscription(userId, subscriptionDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{userId}/subscription")
     public SubscriptionDto getSubscriptionByUserId(@PathVariable(value = "userId") int userId) throws SubscriptionNotFoundException
     {
-        return subscriptionService.getSubscriptionByUserId(userId);
+        return this.subscriptionService.getSubscriptionByUserId(userId);
     }
 
     @GetMapping("/{userId}/subscription/{id}")
     public ResponseEntity<SubscriptionDto> getSubscriptionById(@PathVariable(value = "userId") int userId, @PathVariable(value = "id") int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException
     {
-        SubscriptionDto subscriptionDto = subscriptionService.getSubscriptionById(userId, subscriptionId);
+        SubscriptionDto subscriptionDto = this.subscriptionService.getSubscriptionById(userId, subscriptionId);
         return new ResponseEntity<>(subscriptionDto, HttpStatus.OK);
     }
 
@@ -43,14 +43,14 @@ public class SubscriptionController
     public ResponseEntity<SubscriptionDto> updateSubscription(@PathVariable(value = "userId") int userId, @PathVariable(value = "id") int subscriptionId,
                                                               @RequestBody SubscriptionDto subscriptionDto) throws UserNotFoundException, SubscriptionNotFoundException
     {
-        SubscriptionDto updatedSubscription = subscriptionService.updateSubscription(userId, subscriptionId, subscriptionDto);
+        SubscriptionDto updatedSubscription = this.subscriptionService.updateSubscription(userId, subscriptionId, subscriptionDto);
         return new ResponseEntity<>(updatedSubscription, HttpStatus.OK);
     }
 
     @DeleteMapping("/{userId}/subscription/{id}/delete")
     public ResponseEntity<String> deleteSubscription(@PathVariable(value = "userId") int userId, @PathVariable(value = "id") int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException
     {
-        subscriptionService.deleteSubscription(userId, subscriptionId);
+        this.subscriptionService.deleteSubscription(userId, subscriptionId);
         return new ResponseEntity<>("Subscription deleted successfully", HttpStatus.OK);
     }
 }

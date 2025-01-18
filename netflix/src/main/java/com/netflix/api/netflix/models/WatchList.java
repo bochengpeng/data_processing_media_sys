@@ -22,11 +22,11 @@ public class WatchList
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;  // Relationship with Profile
 
-    @ManyToMany
-    @JoinTable(
-            name = "watchlist_saved_content",
-            joinColumns = @JoinColumn(name = "watchlist_id"),
-            inverseJoinColumns = @JoinColumn(name = "content_id")
-    )
-    private List<Content> savedContent;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "watchlist_saved_content",
+//            joinColumns = @JoinColumn(name = "watchlist_id"),
+//            inverseJoinColumns = @JoinColumn(name = "content_id")
+//    )
+//    private List<Content> savedContent;
 }

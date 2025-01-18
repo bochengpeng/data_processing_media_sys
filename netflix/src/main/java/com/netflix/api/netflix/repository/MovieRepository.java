@@ -1,8 +1,5 @@
 package com.netflix.api.netflix.repository;
 
-import com.netflix.api.netflix.models.AgeRating;
-import com.netflix.api.netflix.models.ContentClassification;
-import com.netflix.api.netflix.models.Genre;
 import com.netflix.api.netflix.models.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

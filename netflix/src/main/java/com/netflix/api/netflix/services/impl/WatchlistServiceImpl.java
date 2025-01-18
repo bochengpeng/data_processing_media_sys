@@ -3,7 +3,7 @@ package com.netflix.api.netflix.services.impl;
 import com.netflix.api.netflix.dto.WatchListDto;
 import com.netflix.api.netflix.models.User;
 import com.netflix.api.netflix.models.WatchList;
-import com.netflix.api.netflix.repository.ContentRepository;
+//import com.netflix.api.netflix.repository.ContentRepository;
 import com.netflix.api.netflix.repository.UserRepository;
 import com.netflix.api.netflix.repository.WatchListRepository;
 import com.netflix.api.netflix.services.WatchListService;
@@ -19,13 +19,13 @@ public class WatchlistServiceImpl implements WatchListService
 
     private final WatchListRepository watchlistRepository;
     private final UserRepository userRepository;
-    private final ContentRepository contentRepository;
+//    private final ContentRepository contentRepository;
 
     @Autowired
-    public WatchlistServiceImpl(WatchListRepository watchlistRepository, UserRepository userRepository, ContentRepository contentRepository) {
+    public WatchlistServiceImpl(WatchListRepository watchlistRepository, UserRepository userRepository) {
         this.watchlistRepository = watchlistRepository;
         this.userRepository = userRepository;
-        this.contentRepository = contentRepository;
+//        this.contentRepository = contentRepository;
     }
 
     @Override

@@ -11,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SubscriptionResponse {
+public class SubscriptionResponse
+{
     private List<SubscriptionDto> content;
     private int pageNo;
     private int pageSize;

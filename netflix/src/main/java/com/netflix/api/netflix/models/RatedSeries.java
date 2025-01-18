@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 public class RatedSeries
 {
-    // Getters and Setters
     private String name;
     @JsonProperty("vote_average")
     private double voteAverage; // This corresponds to the "vote_average" in the API response

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/episodes")
+@RequestMapping("/netflix/episodes")
 public class EpisodeController
 {
     @Autowired

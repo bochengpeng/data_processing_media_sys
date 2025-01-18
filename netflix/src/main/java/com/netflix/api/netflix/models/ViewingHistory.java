@@ -33,7 +33,7 @@ public class ViewingHistory
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
-    public ViewingHistory(Long historyId, double watchedPercentage, LocalDateTime stopAt)
+    public ViewingHistory(int historyId, double watchedPercentage, LocalDateTime stopAt)
     {
     }
 }

@@ -21,7 +21,7 @@ public class EmailController
     @GetMapping("/send-email")
     public String sendEmail(@RequestParam String to, @RequestParam String subject, @RequestParam String body)
     {
-        emailSender.sendEmail(to, subject, body);
+        this.emailSender.sendEmail(to, subject, body);
         return "Email sent successfully to " + to;
     }
 }

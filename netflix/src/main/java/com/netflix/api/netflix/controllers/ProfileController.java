@@ -13,7 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/netflix/user")
-public class ProfileController {
+public class ProfileController
+{
     @Autowired
     private ProfileService profileService;
 

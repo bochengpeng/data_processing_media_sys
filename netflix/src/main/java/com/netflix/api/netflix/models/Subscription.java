@@ -21,15 +21,15 @@ public class Subscription
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int subscriptionId;
+
     @Enumerated(EnumType.STRING) // Store enum as string in the database
     private SubscriptionTier tier;
     private LocalDate startDate;
     private LocalDate nextBillingDate;
     private boolean isTrialPeriod;
-//    @Column(nullable = true)
-//    private int userId;
-@Column(name = "subscription_price", nullable = false, columnDefinition = "DOUBLE DEFAULT 7.99")
-private double subscriptionPrice = 7.99;
+
+    @Column(name = "subscription_price", nullable = false, columnDefinition = "DOUBLE DEFAULT 7.99")
+    private double subscriptionPrice = 7.99;
 
     @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,6 +29,10 @@ public class Profile
     @Column(name = "profile_photo_url", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'placeholder.jpeg'")
     private String profilePhotoUrl = "placeholder.jpeg";
 
+    @ElementCollection
+    @CollectionTable(name = "profile_preferences", joinColumns = @JoinColumn(name = "profile_id"))
+    @Column(name = "preference")
+    private List<String> preferences = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Language language;

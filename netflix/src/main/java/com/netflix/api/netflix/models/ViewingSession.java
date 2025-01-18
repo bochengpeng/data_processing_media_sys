@@ -16,11 +16,7 @@ public class ViewingSession
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long sessionId;
-
-    @ManyToOne
-    @JoinColumn(name = "content_id", nullable = false)
-    private Content content; // Establishing relationship with Content
+    private int sessionId;
 
     @Column(nullable = false)
     private LocalDateTime startTime;

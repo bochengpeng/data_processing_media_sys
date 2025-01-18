@@ -14,10 +14,4 @@ public interface WatchListRepository extends JpaRepository<WatchList, Integer>
 
     // Count number of saved contents in a watchlist
     int countSavedContentByProfile_ProfileId(int profileId);
-
-    // Find watchlists that have a specific content
-    List<WatchList> findBySavedContent_ContentId(Long contentId);
-
-    // Check if a specific content exists in a profile's watchlist
-    boolean existsByProfile_ProfileIdAndSavedContent_ContentId(int profileId, Long contentId);
 }

@@ -13,7 +13,7 @@ public class TMDBConfig
 
     public String getApiKey()
     {
-        return environment.getProperty("tmdb.api.key");
+        return this.environment.getProperty("tmdb.api.key");
     }
 }
 

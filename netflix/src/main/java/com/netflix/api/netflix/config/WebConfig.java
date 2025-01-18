@@ -10,9 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.netflix.api.netflix.controllers")
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer
+{
     @Override
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+    public void configureContentNegotiation(ContentNegotiationConfigurer configurer)
+    {
         configurer
                 .favorParameter(true)
                 .parameterName("format")

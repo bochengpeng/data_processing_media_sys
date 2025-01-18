@@ -14,12 +14,14 @@ public class MovieFetchController
 {
     private final MovieFetchService movieFetchService;
 
-    public MovieFetchController(MovieFetchService movieFetchService) {
+    public MovieFetchController(MovieFetchService movieFetchService)
+    {
         this.movieFetchService = movieFetchService;
     }
 
     @GetMapping("/api/movies")
-    public String getMovies(Model model) {
+    public String getMovies(Model model)
+    {
         List<Movie> movies = movieFetchService.getAllMovies();
         model.addAttribute("movies", movies);
         return "movie";

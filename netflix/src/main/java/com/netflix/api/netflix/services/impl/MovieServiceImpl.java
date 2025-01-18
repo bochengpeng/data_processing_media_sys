@@ -16,12 +16,14 @@ public class MovieServiceImpl implements MovieService
     private final MovieRepository movieRepository;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository) {
+    public MovieServiceImpl(MovieRepository movieRepository)
+    {
         this.movieRepository = movieRepository;
     }
 
     @Override
-    public MovieDto createMovie(MovieDto movieDto) {
+    public MovieDto createMovie(MovieDto movieDto)
+    {
         // Convert DTO to entity
         Movie movie = mapToEntity(movieDto);
 
@@ -33,7 +35,8 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
-    public MovieDto getMovieById(int movieId) {
+    public MovieDto getMovieById(int movieId)
+    {
         // Retrieve movie by ID from the database
         Movie movie = movieRepository.findById(movieId)
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
@@ -43,7 +46,8 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
-    public List<MovieDto> getAllMovies() {
+    public List<MovieDto> getAllMovies()
+    {
         // Get all movies from the database
         List<Movie> movieList = movieRepository.findAllPublicMovies();
 
@@ -54,56 +58,60 @@ public class MovieServiceImpl implements MovieService
     }
 
     @Override
-    public MovieDto updateMovie(int movieId, MovieDto movieDto) {
+    public MovieDto updateMovie(int movieId, MovieDto movieDto)
+    {
         // Retrieve existing movie from the database
-        Movie existingMovie = movieRepository.findById(movieId)
+        Movie existingMovie = this.movieRepository.findById(movieId)
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
 
         // Update the movie's fields with values from the DTO
         existingMovie.setTitle(movieDto.getTitle());
         existingMovie.setDescription(movieDto.getDescription());
-//        existingMovie.setGenre(movieDto.getGenres());
-//        existingMovie.setDuration(movieDto.getDuration());
-//        existingMovie.setAgeRating(movieDto.getAgeRating());
+        existingMovie.setGenre(movieDto.getGenre());
+        existingMovie.setDuration(movieDto.getDuration());
+        existingMovie.setAgeRating(movieDto.getAgeRating());
 
         // Save the updated movie entity to the database
-        Movie updatedMovie = movieRepository.save(existingMovie);
+        Movie updatedMovie = this.movieRepository.save(existingMovie);
 
         // Convert the updated entity to DTO and return
         return mapToDto(updatedMovie);
     }
 
     @Override
-    public void deleteMovie(int movieId) {
+    public void deleteMovie(int movieId)
+    {
         // Retrieve movie by ID
-        Movie movie = movieRepository.findById(movieId)
+        Movie movie = this.movieRepository.findById(movieId)
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
 
         // Delete the movie entity
-        movieRepository.delete(movie);
+        this.movieRepository.delete(movie);
     }
 
     // Convert Movie entity to MovieDto
-    private MovieDto mapToDto(Movie movie) {
+    private MovieDto mapToDto(Movie movie)
+    {
         MovieDto movieDto = new MovieDto();
-//        movieDto.setContentId(movie.getMovieId());
+        movieDto.setMovieId(movie.getMovieId());
         movieDto.setTitle(movie.getTitle());
         movieDto.setDescription(movie.getDescription());
         movieDto.setGenre(movie.getGenre());
-        movieDto.setRuntime(movie.getDuration());
+        movieDto.setDuration(movie.getDuration());
         movieDto.setAgeRating(movie.getAgeRating());
         movieDto.setReleaseDate(movie.getReleaseDate());
         return movieDto;
     }
 
     // Convert MovieDto to Movie entity
-    private Movie mapToEntity(MovieDto movieDto) {
+    private Movie mapToEntity(MovieDto movieDto)
+    {
         Movie movie = new Movie();
         movie.setTitle(movieDto.getTitle());
         movie.setDescription(movieDto.getDescription());
-//        movie.setGenre(movieDto.getGenres());
-        movie.setDuration(movieDto.getRuntime());
-//        movie.setAgeRating(movieDto.getAgeRating());
+        movie.setGenre(movieDto.getGenre());
+        movie.setDuration(movieDto.getDuration());
+        movie.setAgeRating(movieDto.getAgeRating());
         return movie;
     }
 }

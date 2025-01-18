@@ -21,6 +21,5 @@ public class Series
 
     @OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
     private List<Episode> episodes;
-
-
+    private String currentSeason;
 }

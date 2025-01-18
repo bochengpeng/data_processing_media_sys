@@ -9,8 +9,7 @@ import java.util.List;
 @Data
 public class ViewingHistoryDto
 {
-    private Long historyId;
-    private ContentDto content;
+    private int historyId;
     private LocalDateTime viewedAt;
     private LocalDateTime stopAt;
     private double watchedPercentage;
