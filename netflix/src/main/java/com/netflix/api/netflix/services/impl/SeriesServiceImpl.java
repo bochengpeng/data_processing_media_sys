@@ -31,7 +31,7 @@ public class SeriesServiceImpl implements SeriesService
     @Override
     public List<SeriesDto> getAllSeries()
     {
-        List<Series> seriesList = this.seriesRepository.findAllPublicSeries();
+        List<Series> seriesList = this.seriesRepository.findAll();
 
         return seriesList.stream()
                 .map(this::mapToDto)
