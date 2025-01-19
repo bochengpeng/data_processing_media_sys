@@ -15,7 +15,6 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int movieId;
-
     private int duration;
     private String title;
     private short ageRating; // Use short to match SMALLINT
