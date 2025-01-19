@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 @Entity
 @Getter
+@Setter
 @Table(name = "users")
 public class User
 {
@@ -29,18 +30,19 @@ public class User
 
     private String username;
 
-    @Column(nullable = false)
+    @Column
     private boolean isActivated;
 
-    @Column(nullable = false)
+    @Column
     private int failedLoginAttempts;
     private LocalDateTime accountLockUntil;
 
+    // Assuming a user can have one subscription, and a subscription can have many users.
     @ManyToOne
-    @JoinColumn(name = "subscription_id", nullable = false)
+    @JoinColumn(name = "subscription_id")
     private Subscription subscription;
 
-    @ManyToOne // Assuming a user can have one subscription, and a subscription can have many users.
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
@@ -55,23 +57,24 @@ public class User
     private String activationToken; // Token for email verification
     private String resetToken; // Token for password reset
     private String inviteCode;
+//    private boolean invitedUsed;
     private LocalDateTime createdAt;
 //    private LocalDateTime tokenExpiryTime; // Token expiration time
 
-    public void addProfile(Profile profile) throws ProfileLimitExceededException
-    {
-        if (this.profiles.size() >= 4)
-        {
-            throw new ProfileLimitExceededException("A user can have a maximum of 4 profiles.");
-        }
-
-        this.profiles.add(profile);
-        profile.setUser(this);
-    }
-
-    public void removeProfile(Profile profile)
-    {
-        this.profiles.remove(profile);
-        profile.setUser(null);
-    }
+//    public void addProfile(Profile profile) throws ProfileLimitExceededException
+//    {
+//        if (this.profiles.size() >= 4)
+//        {
+//            throw new ProfileLimitExceededException("A user can have a maximum of 4 profiles.");
+//        }
+//
+//        this.profiles.add(profile);
+//        profile.setUser(this);
+//    }
+//
+//    public void removeProfile(Profile profile)
+//    {
+//        this.profiles.remove(profile);
+//        profile.setUser(null);
+//    }
 }

@@ -4,6 +4,7 @@ import com.netflix.api.netflix.models.User;
 import com.netflix.api.netflix.repository.UserRepository;
 import com.netflix.api.netflix.services.AuthService;
 import com.netflix.api.netflix.services.EmailService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,31 +15,31 @@ import java.util.UUID;
 public class AuthServiceImpl implements AuthService
 {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, EmailService emailService)
+    public AuthServiceImpl(UserRepository userRepository, EmailService emailService)
     {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
     }
 
     @Override
     public void authenticate(String email, String password)
     {
-        User user = userRepository.findByEmail(email)
+        User user = this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
 
         this.assertAccountActiveness(user);
         this.authenticateUserPassword(user, password);
 
         user.setFailedLoginAttempts(0); // Reset on successful login
-        userRepository.save(user);
+        this.userRepository.save(user);
     }
 
     private void authenticateUserPassword(User user, String password)
     {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         if (!passwordEncoder.matches(password, user.getPassword()))
         {
             user.setFailedLoginAttempts(user.getFailedLoginAttempts() + 1);
@@ -49,7 +50,7 @@ public class AuthServiceImpl implements AuthService
                 user.setFailedLoginAttempts(0); // Reset attempts
             }
 
-            userRepository.save(user);
+            this.userRepository.save(user);
             throw new IllegalArgumentException("Invalid email or password");
         }
     }
@@ -63,20 +64,23 @@ public class AuthServiceImpl implements AuthService
     }
 
     @Override
-    public void initiatePasswordReset(String email) {
-        User user = userRepository.findByEmail(email)
+    public void initiatePasswordReset(String email)
+    {
+        User user = this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Email not found"));
 
         user.setResetToken(UUID.randomUUID().toString());
 //        user.setTokenExpiryTime(LocalDateTime.now().plusHours(1)); // Token valid for 1 hour
-        userRepository.save(user);
+        this.userRepository.save(user);
 
-        emailService.sendPasswordResetEmail(user.getEmail(), user.getResetToken());
+        this.emailService.sendPasswordResetEmail(user.getEmail(), user.getResetToken());
     }
 
     @Override
-    public void resetPassword(String token, String newPassword) {
-        User user = userRepository.findByResetToken(token)
+    public void resetPassword(String token, String newPassword)
+    {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        User user = this.userRepository.findByResetToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid or expired token"));
 
 //        if (user.getTokenExpiryTime().isBefore(LocalDateTime.now())) {
@@ -86,6 +90,6 @@ public class AuthServiceImpl implements AuthService
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setResetToken(null); // Clear the token
 //        user.setTokenExpiryTime(null);
-        userRepository.save(user);
+        this.userRepository.save(user);
     }
 }

@@ -1,12 +1,9 @@
 package com.netflix.api.netflix.controllers;
 
-import com.netflix.api.netflix.dto.MovieDto;
 import com.netflix.api.netflix.dto.SeriesDto;
-import com.netflix.api.netflix.models.Movie;
-import com.netflix.api.netflix.models.Series;
-import com.netflix.api.netflix.repository.SeriesRepository;
 import com.netflix.api.netflix.services.SeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +26,8 @@ public class SeriesController
     public ResponseEntity<List<SeriesDto>> getAllSeries()
     {
         List<SeriesDto> series = this.seriesService.getAllSeries();
-        return ResponseEntity.ok(series);
+
+        return new ResponseEntity<>(series, HttpStatus.OK);
     }
 
     @GetMapping(
@@ -41,6 +39,28 @@ public class SeriesController
             @RequestParam(value = "format", required = false) String format)
     {
         SeriesDto seriesDto = this.seriesService.getSeriesById(id);
-        return ResponseEntity.ok(seriesDto);
+
+        return new ResponseEntity<>(seriesDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<SeriesDto> createSeries(@RequestBody SeriesDto seriesDto)
+    {
+        return new ResponseEntity<>(this.seriesService.createSeries(seriesDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{seriesId}/update")
+    public ResponseEntity<SeriesDto> updateSeries(@RequestBody SeriesDto seriesDto, @PathVariable(value = "seriesId") int seriesId)
+    {
+        SeriesDto updatedSeries = this.seriesService.updateSeries(seriesId, seriesDto);
+        return new ResponseEntity<>(updatedSeries, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{seriesId}/delete")
+    public ResponseEntity<String> deleteSeries(@PathVariable(value = "seriesId") int seriesId)
+    {
+        this.seriesService.deleteSeries(seriesId);
+        return new ResponseEntity<>("Series deleted successfully", HttpStatus.OK);
     }
 }

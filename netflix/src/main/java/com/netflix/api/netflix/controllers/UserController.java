@@ -44,7 +44,6 @@ public class UserController
         return ResponseEntity.ok("Account activated successfully. You can now log in.");
     }
 
-
     @PutMapping("/{userId}/update")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable(value = "userId") int userId) throws UserNotFoundException
     {

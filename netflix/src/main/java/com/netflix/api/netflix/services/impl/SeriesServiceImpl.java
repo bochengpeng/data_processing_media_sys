@@ -74,16 +74,23 @@ public class SeriesServiceImpl implements SeriesService
     private SeriesDto mapToDto(Series series)
     {
         SeriesDto seriesDto = new SeriesDto();
+        seriesDto.setSeriesId(series.getSeriesId());
+        seriesDto.setTitle(seriesDto.getTitle());
         seriesDto.setEpisodes(series.getEpisodes());
         seriesDto.setCurrentSeason(series.getCurrentSeason());
+        seriesDto.setTotalSeasons(series.getTotalSeasons());
+
         return seriesDto;
     }
 
     private Series mapToEntity(SeriesDto seriesDto)
     {
         Series series = new Series();
+        series.setTitle(seriesDto.getTitle());
+        series.setTotalSeasons(seriesDto.getTotalSeasons());
         series.setCurrentSeason(seriesDto.getCurrentSeason());
         series.setEpisodes(seriesDto.getEpisodes());
+
         return series;
     }
 }

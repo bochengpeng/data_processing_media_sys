@@ -14,12 +14,12 @@ public class Episode
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int episodeId; // Unique ID for the episode
+    private int episodeId;
     private int episodeNumber;
     private int seasonNumber;
     private int duration;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "series_id", nullable = false)
     private Series series;
 }

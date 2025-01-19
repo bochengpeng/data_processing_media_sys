@@ -8,20 +8,20 @@ import com.netflix.api.netflix.models.User;
 import com.netflix.api.netflix.repository.UserRepository;
 import com.netflix.api.netflix.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class UserServiceImpl implements UserService
 {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder)
+    public UserServiceImpl(UserRepository userRepository)
     {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,54 +33,58 @@ public class UserServiceImpl implements UserService
         }
 
         User user = mapToEntity(loginDto);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(loginDto.getPassword());
+        user.setPassword(hashedPassword);
         user.setActivated(false); // Newly created user should not be activated yet
         user.setFailedLoginAttempts(0); // Default value
         user.setAccountLockUntil(null); // No lock on new user accounts
+        user.setCreatedAt(LocalDateTime.now());
         User newUser = this.userRepository.save(user);
 
         return mapToDto(newUser);
     }
 
-
     @Override
     public UserDto getUserById(int userId) throws UserNotFoundException
     {
-        User user = userRepository.findById(userId)
+        User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
+
         return mapToDto(user);
     }
 
     @Override
     public UserDto updateUser(UserDto userDto, int userId) throws UserNotFoundException
     {
-        User user = userRepository.findById(userId)
+        User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found for update"));
 
         user.setEmail(userDto.getEmail());
         user.setActivated(userDto.isActivated());
 
-        User updatedUser = userRepository.save(user);
+        User updatedUser = this.userRepository.save(user);
+
         return mapToDto(updatedUser);
     }
 
     @Override
     public void deleteUser(int userId) throws UserNotFoundException
     {
-        User user = userRepository.findById(userId)
+        User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found for delete"));
-        userRepository.delete(user);
+        this.userRepository.delete(user);
     }
 
     @Override
     public void activateUser(String token)
     {
-        User user = userRepository.findByActivationToken(token)
+        User user = this.userRepository.findByActivationToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid or expired activation token"));
         user.setActivated(true);
         user.setActivationToken(null); // Clear the token after activation
-        userRepository.save(user);
+        this.userRepository.save(user);
     }
-
 
     private UserDto mapToDto(User user)
     {
@@ -90,6 +94,8 @@ public class UserServiceImpl implements UserService
         userDto.setEmail(user.getEmail());
         userDto.setAccountLockUntil(user.getAccountLockUntil());
         userDto.setFailedLoginAttempt(user.getFailedLoginAttempts());
+        userDto.setUsername(user.getUsername());
+
         return userDto;
     }
 
@@ -99,7 +105,7 @@ public class UserServiceImpl implements UserService
         user.setEmail(loginDto.getEmail());
         user.setPassword(loginDto.getPassword());
         user.setUsername(loginDto.getUsername());
+
         return user;
     }
 }
-

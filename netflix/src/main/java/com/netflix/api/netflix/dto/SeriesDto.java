@@ -11,5 +11,6 @@ public class SeriesDto
     private int seriesId;
     private int totalSeasons;
     private String currentSeason;
+    private String title;
     private List<Episode> episodes;
 }

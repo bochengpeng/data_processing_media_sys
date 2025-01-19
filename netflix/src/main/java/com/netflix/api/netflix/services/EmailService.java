@@ -12,14 +12,19 @@ public class EmailService
         this.emailSender = emailSender;
     }
 
-    public void sendActivationEmail(String email, String token) {
-        String activationUrl = "https://localhost:8080/netflix/user/login?token=" + token;
-        String message = "Click the link to activate your account: " + activationUrl;
-        emailSender.sendEmail(email, "Account Activation", message);
-    }
+//    public void sendActivationEmail(String email, String token)
+//    {
+//        String activationUrl = "https://localhost:8080/netflix/user/login?token=" + token;
+//        String message = "Click the link to activate your account: " + activationUrl;
+//        emailSender.sendEmail(email, "Account Activation", message);
+//    }
 
-    public void sendPasswordResetEmail(String email, String token) {
-        // Send email with reset link: /reset-password?token=...
-    }
+    public void sendPasswordResetEmail(String email, String token)
+    {
+        String resetLink = "http://localhost:8080/netflix/forgot-password?token=" + token;
+        String subject = "Password Reset Request";
+        String body = "To reset your password, please click the link below:\n\n" + resetLink;
 
+        emailSender.sendEmail(email, subject, body);
+    }
 }
