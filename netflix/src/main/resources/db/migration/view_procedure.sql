@@ -1,67 +1,61 @@
 -- Create database users with different privileges
-CREATE USER 'api_user'@'localhost' IDENTIFIED BY 'api_password';
-CREATE USER 'analyst_user'@'localhost' IDENTIFIED BY 'analyst_password';
-CREATE USER 'admin_user'@'localhost' IDENTIFIED BY 'admin_password';
-CREATE USER 'reporting_user'@'localhost' IDENTIFIED BY 'report_password';
+CREATE USER api_user WITH PASSWORD 'api_password';
+CREATE USER analyst_user WITH PASSWORD 'analyst_password';
+CREATE USER admin_user WITH PASSWORD 'admin_password';
+CREATE USER reporting_user WITH PASSWORD 'report_password';
 
 -- Create Views
 -- View for public movie information (used by API)
-CREATE VIEW vw_public_movies AS
-SELECT
-    m.movieId,
-    m.title,
-    m.duration,
-    m.releaseDate,
-    m.description,
-    g.name as genre_name,
-    c.rating_description as content_rating
+CREATE OR REPLACE VIEW public.vw_public_movies
+AS
+SELECT movie_id,
+       title,
+       duration,
+       release_date,
+       description,
+       age_rating,
+       content_classification,
+       genre
 FROM movies m
-         JOIN genres g ON m.genre = g.genre_id
-         JOIN content_classifications c ON m.contentClassification = c.classification_id
-WHERE m.is_active = 1;
+WHERE movie_id > 0;
 
 -- View for analytical purposes (used by analysts)
-CREATE VIEW vw_movie_analytics AS
+CREATE VIEW vw_user_engagement AS
 SELECT
-    m.movieId,
+    p.profile_id,
+    p.user_id,  -- Assuming Profile has a reference to User
+    u.username,
+    m.movie_id,
     m.title,
     m.duration,
-    m.releaseDate,
-    COUNT(s.screening_id) as total_screenings,
-    COUNT(DISTINCT t.ticket_id) as tickets_sold,
-    SUM(t.price) as total_revenue
-FROM movies m
-         LEFT JOIN screenings s ON m.movieId = s.movie_id
-         LEFT JOIN tickets t ON s.screening_id = t.screening_id
-GROUP BY m.movieId, m.title, m.duration, m.releaseDate;
+    vh.watched_percentage,
+    vh.viewed_at,
+    vh.stop_at,
+    CASE
+        WHEN vh.watched_percentage = 100 THEN 'Completed'
+        ELSE 'In Progress'
+        END AS watch_status,
+    COUNT(vh.history_id) OVER (PARTITION BY p.profile_id) AS total_viewings
+FROM profiles p
+         JOIN users u ON p.user_id = u.user_id
+         JOIN viewing_history vh ON p.profile_id = vh.profile_id
+         JOIN movies m ON vh.movie_id = m.movie_id;
 
 -- Stored Procedures
-DELIMITER //
-
 -- Procedure to add new movie with validation
-CREATE PROCEDURE sp_add_movie(
-    IN p_title VARCHAR(255),
-    IN p_duration INT,
-    IN p_genre_id INT,
-    IN p_age_rating SMALLINT,
-    IN p_content_classification SMALLINT,
-    IN p_description TEXT,
-    IN p_release_date DATE
-)
+CREATE OR REPLACE FUNCTION sp_add_movie(
+    p_title VARCHAR,
+    p_duration INT,
+    p_genre_id INT,
+    p_age_rating SMALLINT,
+    p_content_classification SMALLINT,
+    p_description TEXT,
+    p_release_date DATE
+) RETURNS VOID AS $$
 BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-ROLLBACK;
-SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Error occurred while adding movie';
-END;
-
-START TRANSACTION;
-
--- Validate inputs
-IF p_duration <= 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Duration must be positive';
+    -- Validate inputs
+    IF p_duration <= 0 THEN
+        RAISE EXCEPTION 'Duration must be positive';
 END IF;
 
     -- Insert movie
@@ -69,10 +63,10 @@ INSERT INTO movies (
     title,
     duration,
     genre,
-    ageRating,
-    contentClassification,
+    age_rating,
+    content_classification,
     description,
-    releaseDate
+    release_date
 ) VALUES (
              p_title,
              p_duration,
@@ -82,79 +76,66 @@ INSERT INTO movies (
              p_description,
              p_release_date
          );
-
-COMMIT;
-END //
+END;
+$$ LANGUAGE plpgsql;
 
 -- Procedure for generating movie reports
-CREATE PROCEDURE sp_generate_movie_report(
-    IN p_start_date DATE,
-    IN p_end_date DATE
-)
+CREATE OR REPLACE FUNCTION sp_generate_movie_report(
+    p_start_date DATE,
+    p_end_date DATE
+) RETURNS TABLE(
+                   title VARCHAR,
+                   total_views INT,  -- Number of times the movie was viewed
+                   total_watch_time INT,  -- Total watch time (sum of watched time in minutes)
+                   average_watched_percentage NUMERIC  -- Average watched percentage
+               ) AS $$
 BEGIN
-SELECT
-    m.title,
-    COUNT(s.screening_id) as screening_count,
-    COUNT(t.ticket_id) as tickets_sold,
-    SUM(t.price) as revenue
-FROM movies m
-         LEFT JOIN screenings s ON m.movieId = s.movie_id
-         LEFT JOIN tickets t ON s.screening_id = t.screening_id
-WHERE s.screening_date BETWEEN p_start_date AND p_end_date
-GROUP BY m.movieId, m.title
-ORDER BY revenue DESC;
-END //
+    RETURN QUERY
+        SELECT
+            m.title,
+            COUNT(vh.history_id) AS total_views,  -- Count the number of views for the movie
+            SUM(EXTRACT(EPOCH FROM (vh.stop_at - vh.viewed_at)) / 60) AS total_watch_time,  -- Total watch time in minutes
+            AVG(vh.watched_percentage) AS average_watched_percentage  -- Average percentage watched by users
+        FROM movies m
+                 LEFT JOIN viewing_history vh ON m.movie_id = vh.movie_id
+        WHERE vh.viewed_at BETWEEN p_start_date AND p_end_date
+        GROUP BY m.movie_id, m.title
+        ORDER BY total_views DESC;  -- Ordering by most viewed movies
+END;
+$$ LANGUAGE plpgsql;
 
-DELIMITER ;
 
 -- Triggers
-DELIMITER //
-
--- Trigger to log movie changes
-CREATE TRIGGER trg_movie_audit_insert
-    AFTER INSERT ON movies
-    FOR EACH ROW
-BEGIN
-    INSERT INTO movie_audit_log (
-        movie_id,
-        action_type,
-        action_date,
-        user_id
-    ) VALUES (
-                 NEW.movieId,
-                 'INSERT',
-                 NOW(),
-                 @current_user_id
-             );
-END //
-
 -- Trigger to validate age rating
+CREATE OR REPLACE FUNCTION trg_movie_age_rating_validate() RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.age_rating NOT IN (0, 6, 12, 16, 18) THEN
+        RAISE EXCEPTION 'Invalid age rating';
+END IF;
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE TRIGGER trg_movie_age_rating_validate
     BEFORE INSERT ON movies
     FOR EACH ROW
-BEGIN
-    IF NEW.ageRating NOT IN (0, 6, 12, 16, 18) THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Invalid age rating';
-END IF;
-END //
-
-DELIMITER ;
+    EXECUTE FUNCTION trg_movie_age_rating_validate();
 
 -- Grant appropriate privileges to users
 -- API User (minimal read access)
-GRANT SELECT ON cinema_db.vw_public_movies TO 'api_user'@'localhost';
+GRANT SELECT ON vw_public_movies TO api_user;
 
--- Analyst User (read access to analytical views and basic procedures)
-GRANT SELECT ON cinema_db.vw_movie_analytics TO 'analyst_user'@'localhost';
-GRANT EXECUTE ON PROCEDURE cinema_db.sp_generate_movie_report TO 'analyst_user'@'localhost';
+-- Analyst User (read access to analytical views and basic functions)
+GRANT SELECT ON vw_user_engagement TO analyst_user;
+GRANT EXECUTE ON FUNCTION sp_generate_movie_report TO analyst_user;
 
 -- Admin User (full access)
-GRANT ALL PRIVILEGES ON cinema_db.* TO 'admin_user'@'localhost';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO admin_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO admin_user;
 
--- Reporting User (read-only access to specific views and reporting procedures)
-GRANT SELECT ON cinema_db.vw_movie_analytics TO 'reporting_user'@'localhost';
-GRANT EXECUTE ON PROCEDURE cinema_db.sp_generate_movie_report TO 'reporting_user'@'localhost';
+-- Reporting User (read-only access to specific views and reporting functions)
+GRANT SELECT ON vw_user_engagement TO reporting_user;
+GRANT EXECUTE ON FUNCTION sp_generate_movie_report TO reporting_user;
 
 -- Set appropriate transaction isolation levels
-SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
+SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED;

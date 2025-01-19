@@ -27,7 +27,7 @@ public class EpisodeServiceImpl implements EpisodeService
         this.seriesRepository = seriesRepository;
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     @Override
     // Create a new Episode
     public EpisodeDto createEpisode(EpisodeDto episodeDto)
@@ -64,6 +64,7 @@ public class EpisodeServiceImpl implements EpisodeService
         return mapToDto(episode);
     }
 
+    @Transactional
     @Override
     // Update an Episode
     public EpisodeDto updateEpisode(int episodeId, EpisodeDto episodeDto) throws EpisodeNotFoundException
@@ -81,6 +82,7 @@ public class EpisodeServiceImpl implements EpisodeService
         return mapToDto(updatedEpisode);
     }
 
+    @Transactional
     @Override
     // Delete an Episode
     public void deleteEpisode(int episodeId) throws EpisodeNotFoundException

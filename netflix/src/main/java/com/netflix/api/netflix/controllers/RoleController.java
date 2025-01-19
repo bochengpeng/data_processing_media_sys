@@ -1,61 +1,31 @@
 package com.netflix.api.netflix.controllers;
 
-import com.netflix.api.netflix.models.Role;
-import com.netflix.api.netflix.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/netflix/roles")
-public class RoleController
-{
+@RequestMapping("/role")
+public class RoleController {
+
     @Autowired
-    private RoleRepository roleRepository;
+    private JdbcTemplate jdbcTemplate;
 
-    @GetMapping
-    public List<Role> getAllRoles()
-    {
-        return roleRepository.findAll();
-    }
+    @PostMapping("/create-role/{roleName}/{password}")
+    public String createRole(@PathVariable String roleName, @PathVariable String password) {
+        try {
+            // Create the PostgreSQL user with the specified password
+            String createUserSql = "CREATE USER " + roleName + " WITH PASSWORD ?";
+            jdbcTemplate.update(createUserSql, password);  // Run the CREATE USER query
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Role> getRoleById(@PathVariable int id)
-    {
-        return roleRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+            // Optionally, grant privileges to the user (adjust as necessary)
+            String grantPrivilegesSql = "GRANT ALL PRIVILEGES ON DATABASE netflix_api TO " + roleName;
+            jdbcTemplate.update(grantPrivilegesSql);  // Grant privileges to the new user
 
-    @PostMapping
-    public Role createRole(@RequestBody Role role)
-    {
-        return roleRepository.save(role);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Role> updateRole(@PathVariable int id, @RequestBody Role roleDetails)
-    {
-        return roleRepository.findById(id)
-                .map(role ->
-                {
-                    role.setName(roleDetails.getName());
-                    return ResponseEntity.ok(roleRepository.save(role));
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRole(@PathVariable int id)
-    {
-        return roleRepository.findById(id)
-                .map(role ->
-                {
-                    roleRepository.delete(role);
-                    return ResponseEntity.ok().<Void>build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+            return "User '" + roleName + "' created and granted privileges successfully!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error occurred while creating the user: " + e.getMessage();
+        }
     }
 }

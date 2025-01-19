@@ -9,6 +9,7 @@ import com.netflix.api.netflix.repository.UserRepository;
 import com.netflix.api.netflix.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ public class ProfileServiceImpl implements ProfileService
         this.userRepository = userRepository;
     }
 
+    @Transactional
     @Override
     public ProfileDto createProfile(int userId, ProfileDto profileDto)
     {
@@ -90,6 +92,7 @@ public class ProfileServiceImpl implements ProfileService
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public ProfileDto updateProfile(int profileId, ProfileDto profileDto)
     {
@@ -109,6 +112,7 @@ public class ProfileServiceImpl implements ProfileService
         return mapToDto(updatedProfile);
     }
 
+    @Transactional
     @Override
     public void deleteProfile(int profileId) throws ProfileNotFoundException
     {

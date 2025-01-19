@@ -49,15 +49,8 @@ public class User
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Profile> profiles = new ArrayList<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "user_preferences", joinColumns = @JoinColumn(name = "user_id"))
-//    @Column(name = "preference")
-//    private List<String> preferences = new ArrayList<>();
-
     private String activationToken; // Token for email verification
     private String resetToken; // Token for password reset
     private String inviteCode;
-//    private boolean invitedUsed;
     private LocalDateTime createdAt;
-//    private LocalDateTime tokenExpiryTime; // Token expiration time
 }

@@ -7,6 +7,7 @@ import com.netflix.api.netflix.services.EmailService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class AuthServiceImpl implements AuthService
         this.emailService = emailService;
     }
 
+    @Transactional
     @Override
     public void authenticate(String email, String password)
     {
@@ -36,7 +38,8 @@ public class AuthServiceImpl implements AuthService
         this.userRepository.save(user);
     }
 
-    private void authenticateUserPassword(User user, String password)
+    @Transactional
+    protected void authenticateUserPassword(User user, String password)
     {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -70,12 +73,12 @@ public class AuthServiceImpl implements AuthService
                 .orElseThrow(() -> new IllegalArgumentException("Email not found"));
 
         user.setResetToken(UUID.randomUUID().toString());
-//        user.setTokenExpiryTime(LocalDateTime.now().plusHours(1)); // Token valid for 1 hour
         this.userRepository.save(user);
 
         this.emailService.sendPasswordResetEmail(user.getEmail(), user.getResetToken());
     }
 
+    @Transactional
     @Override
     public void resetPassword(String token, String newPassword)
     {
@@ -83,13 +86,8 @@ public class AuthServiceImpl implements AuthService
         User user = this.userRepository.findByResetToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid or expired token"));
 
-//        if (user.getTokenExpiryTime().isBefore(LocalDateTime.now())) {
-//            throw new IllegalArgumentException("Token has expired");
-//        }
-
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setResetToken(null); // Clear the token
-//        user.setTokenExpiryTime(null);
         this.userRepository.save(user);
     }
 }

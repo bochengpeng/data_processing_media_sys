@@ -10,6 +10,7 @@ import com.netflix.api.netflix.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService
         this.userRepository = userRepository;
     }
 
+    @Transactional
     @Override
     public UserDto createUser(LoginDto loginDto) throws ResourceAlreadyExistsException
     {
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService
         return mapToDto(user);
     }
 
+    @Transactional
     @Override
     public UserDto updateUser(UserDto userDto, int userId) throws UserNotFoundException
     {
@@ -68,6 +71,7 @@ public class UserServiceImpl implements UserService
         return mapToDto(updatedUser);
     }
 
+    @Transactional
     @Override
     public void deleteUser(int userId) throws UserNotFoundException
     {
@@ -76,6 +80,7 @@ public class UserServiceImpl implements UserService
         this.userRepository.delete(user);
     }
 
+    @Transactional
     @Override
     public void activateUser(String token)
     {

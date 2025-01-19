@@ -5,6 +5,7 @@ import com.netflix.api.netflix.models.Series;
 import com.netflix.api.netflix.repository.SeriesRepository;
 import com.netflix.api.netflix.services.SeriesService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ public class SeriesServiceImpl implements SeriesService
         this.seriesRepository = seriesRepository;
     }
 
+    @Transactional
     @Override
     public SeriesDto createSeries(SeriesDto seriesDto)
     {
@@ -38,6 +40,7 @@ public class SeriesServiceImpl implements SeriesService
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public SeriesDto updateSeries(int seriesId, SeriesDto seriesDto)
     {
@@ -53,6 +56,7 @@ public class SeriesServiceImpl implements SeriesService
         return mapToDto(updatedSeries);
     }
 
+    @Transactional
     @Override
     public void deleteSeries(int seriesId)
     {

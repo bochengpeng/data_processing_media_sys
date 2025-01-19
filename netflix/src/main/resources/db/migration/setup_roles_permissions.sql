@@ -3,7 +3,7 @@
 -- ============================================
 
 -- Create custom roles with LOGIN privileges
-CREATE ROLE junior_user LOGIN PASSWORD '1234';
+CREATE ROLE junior_user LOGIN PASSWORD 'junior_password';
 CREATE ROLE medior_user LOGIN PASSWORD 'medior_password';
 CREATE ROLE senior_user LOGIN PASSWORD 'senior_password';
 CREATE ROLE api_user LOGIN PASSWORD 'api_password';
@@ -16,13 +16,13 @@ CREATE ROLE api_user LOGIN PASSWORD 'api_password';
 GRANT SELECT ON users, profiles, series, movies, episodes, contents, watch_list, watchlist_saved_content TO junior_user;
 
 -- Revoke access to sensitive tables from Juniors
-REVOKE SELECT ON user_preferences, viewing_history, viewing_session FROM junior_user;
+REVOKE SELECT ON public.users, public.profiles, viewing_history, viewing_session FROM junior_user;
 
 -- Grant SELECT on specific tables to Mediors
-GRANT SELECT ON users, profiles, series, movies, episodes, contents, user_preferences, watch_list, watchlist_saved_content, viewing_history TO medior_user;
+GRANT SELECT ON users, profiles, series, movies, episodes, contents, watch_list, watchlist_saved_content, viewing_history TO medior_user;
 
 -- Revoke access to financial data from Mediors
-REVOKE SELECT ON viewing_session FROM medior_user;
+REVOKE SELECT ON viewing_session, subscriptions FROM medior_user;
 
 -- Grant ALL privileges on all tables to Seniors
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO senior_user;

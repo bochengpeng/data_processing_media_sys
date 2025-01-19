@@ -87,6 +87,7 @@ public class ViewingHistoryServiceImpl implements ViewingHistoryService
         return mapToDto(viewingHistory);
     }
 
+    @Transactional
     @Override
     public void deleteViewingHistory(int historyId) throws ViewingHistoryNotFoundException
     {
@@ -100,17 +101,17 @@ public class ViewingHistoryServiceImpl implements ViewingHistoryService
     public ViewingHistoryDto updateViewingHistory(int profileId, int vhId, ViewingHistoryInternalDto viewingHistoryDto) throws ProfileNotFoundException
     {
         // Check if ViewingHistory exists
-        ViewingHistory existingViewingHistory = viewingHistoryRepository.findById(vhId)
+        ViewingHistory existingViewingHistory = this.viewingHistoryRepository.findById(vhId)
                 .orElseThrow(() -> new RuntimeException("ViewingHistory not found"));
 
         // Fetch associated entities (Profile, Movie, Episode)
-        Profile profile = profileRepository.findById(profileId)
+        Profile profile = this.profileRepository.findById(profileId)
                 .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
 
-        Movie movie = movieRepository.findById(viewingHistoryDto.getMovie().getMovieId())
+        Movie movie = this.movieRepository.findById(viewingHistoryDto.getMovie().getMovieId())
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
 
-        Episode episode = episodeRepository.findById(viewingHistoryDto.getEpisode().getEpisodeId())
+        Episode episode = this.episodeRepository.findById(viewingHistoryDto.getEpisode().getEpisodeId())
                 .orElseThrow(() -> new RuntimeException("Episode not found"));
 
         // Update fields
@@ -121,7 +122,7 @@ public class ViewingHistoryServiceImpl implements ViewingHistoryService
         existingViewingHistory.setViewedAt(viewingHistoryDto.getViewedAt());
         existingViewingHistory.setStopAt(viewingHistoryDto.getStopAt());
         // Save updated ViewingHistory
-        ViewingHistory updatedViewingHistory = viewingHistoryRepository.save(existingViewingHistory);
+        ViewingHistory updatedViewingHistory = this.viewingHistoryRepository.save(existingViewingHistory);
 
         // Convert to DTO for response
         return mapToDto(updatedViewingHistory);

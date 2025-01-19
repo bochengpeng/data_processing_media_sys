@@ -6,6 +6,7 @@ import com.netflix.api.netflix.repository.MovieRepository;
 import com.netflix.api.netflix.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class MovieServiceImpl implements MovieService
         Movie movie = mapToEntity(movieDto);
 
         // Save the movie entity to the database
-        Movie savedMovie = movieRepository.save(movie);
+        Movie savedMovie = this.movieRepository.save(movie);
 
         // Convert the saved entity back to DTO and return
         return mapToDto(savedMovie);
@@ -38,7 +39,7 @@ public class MovieServiceImpl implements MovieService
     public MovieDto getMovieById(int movieId)
     {
         // Retrieve movie by ID from the database
-        Movie movie = movieRepository.findById(movieId)
+        Movie movie = this.movieRepository.findById(movieId)
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
 
         // Convert entity to DTO and return
@@ -49,7 +50,7 @@ public class MovieServiceImpl implements MovieService
     public List<MovieDto> getAllMovies()
     {
         // Get all movies from the database
-        List<Movie> movieList = movieRepository.findAllPublicMovies();
+        List<Movie> movieList = this.movieRepository.findAllPublicMovies();
 
         // Convert each movie entity to DTO
         return movieList.stream()
@@ -57,6 +58,7 @@ public class MovieServiceImpl implements MovieService
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public MovieDto updateMovie(int movieId, MovieDto movieDto)
     {
@@ -78,6 +80,7 @@ public class MovieServiceImpl implements MovieService
         return mapToDto(updatedMovie);
     }
 
+    @Transactional
     @Override
     public void deleteMovie(int movieId)
     {
