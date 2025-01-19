@@ -113,11 +113,11 @@ public class ProfileServiceImpl implements ProfileService
     public void deleteProfile(int profileId) throws ProfileNotFoundException
     {
         // Retrieve the profile by ID
-        Profile profile = profileRepository.findById(profileId)
+        Profile profile = this.profileRepository.findById(profileId)
                 .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
 
         // Delete the profile entity
-        profileRepository.delete(profile);
+        this.profileRepository.delete(profile);
     }
 
     // Helper method to map Profile entity to ProfileDto
@@ -128,6 +128,7 @@ public class ProfileServiceImpl implements ProfileService
         profileDto.setName(profile.getName());
         profileDto.setAge(profile.getAge());
         profileDto.setProfilePhotoUrl(profile.getProfilePhotoUrl());
+
         return profileDto;
     }
 
@@ -138,6 +139,7 @@ public class ProfileServiceImpl implements ProfileService
         profile.setName(profileDto.getName());
         profile.setAge(profileDto.getAge());
         profile.setProfilePhotoUrl(profileDto.getProfilePhotoUrl());
+
         return profile;
     }
 }

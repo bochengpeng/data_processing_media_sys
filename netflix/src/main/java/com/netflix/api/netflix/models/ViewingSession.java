@@ -1,9 +1,7 @@
 package com.netflix.api.netflix.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +10,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "viewing_session")
+@Getter
+@Setter
 public class ViewingSession
 {
     @Id

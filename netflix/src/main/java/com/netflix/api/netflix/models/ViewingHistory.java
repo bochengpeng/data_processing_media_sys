@@ -1,9 +1,7 @@
 package com.netflix.api.netflix.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "viewing_history")
+@Setter
+@Getter
 public class ViewingHistory
 {
     @Id
@@ -37,7 +37,5 @@ public class ViewingHistory
     @JoinColumn(name = "episode_id", nullable = false)
     private Episode episode;
 
-    public ViewingHistory(int historyId, double watchedPercentage, LocalDateTime stopAt)
-    {
-    }
+    private double watchedPercentage;
 }

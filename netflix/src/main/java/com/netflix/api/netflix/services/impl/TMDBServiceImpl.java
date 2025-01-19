@@ -26,31 +26,27 @@ public class TMDBServiceImpl
 
     public Movie fetchMovieDetails(int movieId)
     {
-        String apiKey = tmdbConfig.getApiKey();
+        String apiKey = this.tmdbConfig.getApiKey();
         String url = String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", movieId, apiKey);
 
         // Use RestTemplate to fetch the data
-        ResponseEntity<TMDBMovieDTO> response = restTemplate.getForEntity(url, TMDBMovieDTO.class);
+        ResponseEntity<TMDBMovieDTO> response = this.restTemplate.getForEntity(url, TMDBMovieDTO.class);
 
         TMDBMovieDTO movieDTO = response.getBody();
-
-        if (movieDTO == null)
-        {
-            throw new RuntimeException("Failed to fetch movie details");
-        }
 
         // Map DTO to Movie entity
         return mapToEntity(movieDTO);
     }
 
-    private Movie mapToEntity(TMDBMovieDTO tmdbMovieDTO) {
+    private Movie mapToEntity(TMDBMovieDTO tmdbMovieDTO)
+    {
         Movie movie = new Movie();
         movie.setTitle(tmdbMovieDTO.getTitle());
 
         // Default values for missing data
-        movie.setAgeRating((short) getAgeRatingFromCertification(tmdbMovieDTO)); // Mapping logic for ageRating
-        movie.setContentClassification((short) 0); // Update this logic when classification logic is available
-        movie.setGenre(getGenreId(tmdbMovieDTO)); // Map first genre or use a default
+//        movie.setAgeRating((short) getAgeRatingFromCertification(tmdbMovieDTO)); // Mapping logic for ageRating
+//        movie.setContentClassification((short) 0); // Update this logic when classification logic is available
+//        movie.setGenre(getGenreId(tmdbMovieDTO)); // Map first genre or use a default
 
         movie.setDuration(tmdbMovieDTO.getRuntime());
         movie.setDescription(tmdbMovieDTO.getOverview());
@@ -60,9 +56,11 @@ public class TMDBServiceImpl
     }
 
     // Example: Get age rating from certification
-    private int getAgeRatingFromCertification(TMDBMovieDTO tmdbMovieDTO) {
+    private int getAgeRatingFromCertification(TMDBMovieDTO tmdbMovieDTO)
+    {
         // Assuming the DTO has certifications information
-        if (tmdbMovieDTO.getRelease_dates() != null) {
+        if (tmdbMovieDTO.getRelease_dates() != null)
+        {
             return tmdbMovieDTO.getRelease_dates()
                     .stream()
                     .filter(cert -> cert.getIso_3166_1().equals("US")) // Filter for US certification
@@ -74,17 +72,21 @@ public class TMDBServiceImpl
     }
 
     // Example: Map the first genre from the genre list to a short
-    private short getGenreId(TMDBMovieDTO tmdbMovieDTO) {
-        if (tmdbMovieDTO.getGenres() != null && !tmdbMovieDTO.getGenres().isEmpty()) {
+    private short getGenreId(TMDBMovieDTO tmdbMovieDTO)
+    {
+        if (tmdbMovieDTO.getGenres() != null && !tmdbMovieDTO.getGenres().isEmpty())
+        {
             int firstGenreId = tmdbMovieDTO.getGenres().get(0).getId();
 
             // Map TMDb genre IDs to your allowed values
             return mapGenreId(firstGenreId);
         }
+
         return 1; // Default to a valid genre ID
     }
 
-    private short mapGenreId(int tmdbGenreId) {
+    private short mapGenreId(int tmdbGenreId)
+    {
         // Example mapping based on TMDb genre IDs
         return switch (tmdbGenreId)
         {
@@ -98,7 +100,8 @@ public class TMDBServiceImpl
     }
 
     // Example: Parse certification to age rating (implement logic as per requirement)
-    private int parseAgeRating(String certification) {
+    private int parseAgeRating(String certification)
+    {
         return switch (certification)
         {
             case "G" -> 1;

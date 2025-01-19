@@ -1,12 +1,14 @@
 package com.netflix.api.netflix.controllers;
 
-import com.netflix.api.netflix.models.ViewingHistory;
-import com.netflix.api.netflix.repository.ViewingHistoryRepository;
+import com.netflix.api.netflix.dto.ViewingHistoryDto;
+import com.netflix.api.netflix.dto.ViewingHistoryInternalDto;
+import com.netflix.api.netflix.exception.ProfileNotFoundException;
+import com.netflix.api.netflix.exception.ViewingHistoryNotFoundException;
+import com.netflix.api.netflix.services.ViewingHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/netflix/viewing-history")
@@ -14,44 +16,46 @@ public class ViewingHistoryController
 {
 
     @Autowired
-    private ViewingHistoryRepository viewingHistoryRepository;
+    private ViewingHistoryService viewingHistoryService;
 
-    @GetMapping
-    public List<ViewingHistory> getAllViewingHistories()
-    {
-        return viewingHistoryRepository.findAll();
-    }
+//    @GetMapping
+//    public List<ViewingHistory> getAllViewingHistories()
+//    {
+//        return viewingHistoryRepository.findAll();
+//    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ViewingHistory> getViewingHistoryById(@PathVariable int id)
+    public ResponseEntity<ViewingHistoryDto> getViewingHistoryById(@PathVariable int id) throws ViewingHistoryNotFoundException
     {
-        return viewingHistoryRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        ViewingHistoryDto viewingHistory = this.viewingHistoryService.getViewingHistoryById(id);
+
+        return new ResponseEntity<>(viewingHistory, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ViewingHistory createViewingHistory(@RequestBody ViewingHistory viewingHistory)
+    @PostMapping("/create/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ViewingHistoryDto> createViewingHistory(@PathVariable(value = "id") int id, @RequestBody ViewingHistoryDto viewingHistory) throws ProfileNotFoundException
     {
-        return viewingHistoryRepository.save(viewingHistory);
+        return new ResponseEntity<>(this.viewingHistoryService.createViewingHistory(id, viewingHistory), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ViewingHistory> updateViewingHistory(@PathVariable int id, @RequestBody ViewingHistory updatedHistory)
-    {
-        return viewingHistoryRepository.findById(id).map(existingHistory ->
-        {
-            existingHistory.setMovie(updatedHistory.getMovie());
-            existingHistory.setStopAt(updatedHistory.getStopAt());
-            return ResponseEntity.ok(viewingHistoryRepository.save(existingHistory));
-        }).orElse(ResponseEntity.notFound().build());
+    // Update an existing ViewingHistory
+    @PutMapping("/update/{id}/history/{vhid}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ViewingHistoryDto> updateViewingHistory(
+            @PathVariable(value = "id") int profileId,
+            @PathVariable(value = "vhid") int vhId,
+            @RequestBody ViewingHistoryInternalDto viewingHistory) throws ProfileNotFoundException {
+        ViewingHistoryDto updatedViewingHistory = viewingHistoryService.updateViewingHistory(profileId, vhId, viewingHistory);
+        return new ResponseEntity<>(updatedViewingHistory, HttpStatus.OK);
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteViewingHistory(@PathVariable Long id) {
-//        return viewingHistoryRepository.findById(id).map(history -> {
-//            viewingHistoryRepository.delete(history);
-//            return ResponseEntity.noContent().build();
-//        }).orElse(ResponseEntity.notFound().build());
-//    }
+    // Delete a ViewingHistory by ID
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<String> deleteViewingHistory(@PathVariable(value = "id") int id) throws ViewingHistoryNotFoundException
+    {
+        viewingHistoryService.deleteViewingHistory(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
