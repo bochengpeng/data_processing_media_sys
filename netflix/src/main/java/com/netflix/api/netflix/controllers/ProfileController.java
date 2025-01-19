@@ -2,7 +2,6 @@ package com.netflix.api.netflix.controllers;
 
 import com.netflix.api.netflix.dto.ProfileDto;
 import com.netflix.api.netflix.exception.ProfileNotFoundException;
-import com.netflix.api.netflix.exception.UserNotFoundException;
 import com.netflix.api.netflix.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,72 +11,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/netflix/user")
+@RequestMapping("/netflix/profile")
 public class ProfileController
 {
     @Autowired
     private ProfileService profileService;
 
-    @GetMapping("/{userId}/profiles/{profileId}")
-    public ResponseEntity<ProfileDto> getProfileById(
-            @PathVariable int profileId,
-            @PathVariable int userId)
-            throws ProfileNotFoundException
+    @GetMapping("/{profileId}")
+    public ResponseEntity<ProfileDto> getProfileById(@PathVariable int profileId) throws ProfileNotFoundException
     {
-        ProfileDto profile = profileService.getProfileById(profileId, userId);
-        return ResponseEntity.ok(profile);
+        ProfileDto profile = this.profileService.getProfileById(profileId);
+        return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
-    @GetMapping("/profiles/{profileName}")
-    public ResponseEntity<List<ProfileDto>> getProfilesByName(
-            @PathVariable(value = "profileName") String profileName)
-            throws UserNotFoundException, ProfileNotFoundException
+    @GetMapping("/name/{profileName}")
+    public ResponseEntity<List<ProfileDto>> getProfilesByName(@PathVariable(value = "profileName") String profileName) throws ProfileNotFoundException
     {
-        List<ProfileDto> profiles = profileService.getProfilesByName(profileName);
-        return ResponseEntity.ok(profiles);
+        List<ProfileDto> profiles = this.profileService.getProfilesByName(profileName);
+        return new ResponseEntity<>(profiles, HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public List<Profile> getAllProfiles()
-//    {
-//        return profileRepository.findAll();
-//    }
+    @PostMapping("/create/{userId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<ProfileDto> createProfile(@PathVariable(value = "userId") int userId, @RequestBody ProfileDto profileDto)
+    {
+        return new ResponseEntity<>(this.profileService.createProfile(userId, profileDto), HttpStatus.CREATED);
+    }
 
-//    @GetMapping("/user/{userId}/profiles/{id}")
-//    public ResponseEntity<ProfileDto> getProfileById(@PathVariable(value = "id") int id, @PathVariable(value = "userId") int userId)
-//    {
-//        ProfileDto profileDto = profileService.getProfileById(id, userId);
-//        return new ResponseEntity<>(profileDto, HttpStatus.OK);
-//    }
+    @PutMapping("/{profileId}/update")
+    public ResponseEntity<ProfileDto> updateProfile(@PathVariable(value = "profileId") int profileId, @RequestBody ProfileDto profileDto)
+    {
+        ProfileDto updatedProfile = this.profileService.updateProfile(profileId, profileDto);
+        return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
+    }
 
-//    @PostMapping
-//    public Profile createProfile(@RequestBody Profile profile)
-//    {
-//        return profileRepository.save(profile);
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Profile> updateProfile(@PathVariable int id, @RequestBody Profile profileDetails)
-//    {
-//        return profileRepository.findById(id)
-//                .map(profile ->
-//                {
-//                    profile.setName(profileDetails.getName());
-////                    profile.setAge(profileDetails.getAge());
-//                    return ResponseEntity.ok(profileRepository.save(profile));
-//                })
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteProfile(@PathVariable int id)
-//    {
-//        return profileRepository.findById(id)
-//                .map(profile ->
-//                {
-//                    profileRepository.delete(profile);
-//                    return ResponseEntity.ok().<Void>build();
-//                })
-//                .orElse(ResponseEntity.notFound().build());
-//    }
+    @DeleteMapping("/{profileId}/delete")
+    public ResponseEntity<String> deleteProfile(@PathVariable(value = "profileId") int profileId) throws ProfileNotFoundException
+    {
+        this.profileService.deleteProfile(profileId);
+        return new ResponseEntity<>("Profile deleted successfully", HttpStatus.OK);
+    }
 }

@@ -1,6 +1,7 @@
 package com.netflix.api.netflix.repository;
 
 import com.netflix.api.netflix.models.Subscription;
+import com.netflix.api.netflix.models.SubscriptionTier;
 import com.netflix.api.netflix.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
 
     @Query("SELECT COUNT(s) > 0 FROM Subscription s JOIN s.users u WHERE s.subscriptionId = :subscriptionId AND u.userId = :userId")
     boolean existsBySubscriptionIdAndUserId(@Param("subscriptionId") int subscriptionId, @Param("userId") int userId);
+
+    Optional<Subscription> findByTier(SubscriptionTier tier);
 }

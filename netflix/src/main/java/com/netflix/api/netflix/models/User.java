@@ -60,21 +60,4 @@ public class User
 //    private boolean invitedUsed;
     private LocalDateTime createdAt;
 //    private LocalDateTime tokenExpiryTime; // Token expiration time
-
-//    public void addProfile(Profile profile) throws ProfileLimitExceededException
-//    {
-//        if (this.profiles.size() >= 4)
-//        {
-//            throw new ProfileLimitExceededException("A user can have a maximum of 4 profiles.");
-//        }
-//
-//        this.profiles.add(profile);
-//        profile.setUser(this);
-//    }
-//
-//    public void removeProfile(Profile profile)
-//    {
-//        this.profiles.remove(profile);
-//        profile.setUser(null);
-//    }
 }

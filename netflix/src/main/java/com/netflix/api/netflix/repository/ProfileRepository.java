@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface ProfileRepository extends JpaRepository<Profile, Integer>
 {
-    // Find profiles by name
     List<Profile> findByName(String name);
 //    List<Profile> findByAge(int age);
 //    List<Profile> findByLanguage(Language language);

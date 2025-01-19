@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService
 {
@@ -27,76 +31,59 @@ public class SubscriptionServiceImpl implements SubscriptionService
         this.userRepository = userRepository;
     }
 
-//    @Override
-//    public SubscriptionDto createSubscription(int userId, SubscriptionDto subscriptionDto) throws UserNotFoundException
-//    {
-//        Subscription subscription = mapToEntity(subscriptionDto);
-//        User user = userRepository.findByUserId(userId).orElseThrow(() -> new UserNotFoundException("User with associated subscription not found"));
-//        subscription.setUserId(user.getUserId());
-//        Subscription newSubscription = subscriptionRepository.save(subscription);
-//        return mapToDto(newSubscription);
-//    }
-
+    @Transactional
     @Override
     public SubscriptionDto createSubscription(int userId, SubscriptionDto subscriptionDto) throws UserNotFoundException
     {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        User user = this.userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (user.getSubscription() != null)
         {
             throw new IllegalStateException("User already has an active subscription.");
         }
 
-        Subscription subscription = mapToEntity(subscriptionDto);
-        subscription.getUsers().add(user);
+        Subscription subscription = this.subscriptionRepository.findByTier(subscriptionDto.getTier())
+                .orElseGet(() ->
+                {
+                    Subscription newSubscription = new Subscription();
+                    newSubscription.setTier(subscriptionDto.getTier());
+                    newSubscription.setStartDate(LocalDate.now());
+                    newSubscription.setNextBillingDate(subscriptionDto.getNextBillingDate());
+                    newSubscription.setTrialPeriod(subscriptionDto.isTrialPeriod());
+
+                    return this.subscriptionRepository.save(newSubscription);
+                });
+
+        // Set the subscription for the user
         user.setSubscription(subscription);
+        this.userRepository.save(user); // Save the user with the updated subscription
 
-        Subscription savedSubscription = subscriptionRepository.save(subscription);
-        return mapToDto(savedSubscription);
+        // Add the user to the subscription's user list (optional, if needed for bidirectional management)
+        subscription.getUsers().add(user);
+        this.subscriptionRepository.save(subscription); // Save the subscription with the updated user list
+
+        return mapToDto(subscription);
     }
-
-//    @Override
-//    public SubscriptionDto getSubscriptionByUserId(int userId)
-//    {
-//        Subscription subscription = subscriptionRepository.findByUserId(userId);
-//
-//        return mapToDto(subscription);
-//    }
 
     @Override
     public SubscriptionDto getSubscriptionByUserId(int userId) throws SubscriptionNotFoundException
     {
         // Use the repository method, which returns Optional<Subscription>
-        Subscription subscription = subscriptionRepository.findByUserId(userId)
+        Subscription subscription = this.subscriptionRepository.findByUserId(userId)
                 .orElseThrow(() -> new SubscriptionNotFoundException("No active subscription found for user with ID: " + userId));
 
         // Convert the Subscription entity to a DTO and return
         return mapToDto(subscription);
     }
 
-
-//    @Override
-//    public SubscriptionDto getSubscriptionById(int userId, int subscriptionId) throws SubscriptionNotFoundException, UserNotFoundException
-//    {
-//
-//        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with associated subscription not found"));
-//
-//        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new SubscriptionNotFoundException("Subscription with associate user not found"));
-//
-//        if(subscription.getUserId() != user.getUserId()) {
-//            throw new SubscriptionNotFoundException("This review does not belong to a pokemon");
-//        }
-//
-//        return mapToDto(subscription);
-//    }
-
     public SubscriptionDto getSubscriptionById(int userId, int subscriptionId) throws SubscriptionNotFoundException, UserNotFoundException
     {
         // Fetch the user
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found"));
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found"));
 
         // Fetch the subscription
-        Subscription subscription = subscriptionRepository.findById(subscriptionId)
+        Subscription subscription = this.subscriptionRepository.findById(subscriptionId)
                 .orElseThrow(() -> new SubscriptionNotFoundException("Subscription with ID " + subscriptionId + " not found"));
 
         // Check if the subscription is associated with the user
@@ -108,26 +95,6 @@ public class SubscriptionServiceImpl implements SubscriptionService
         // Map subscription entity to DTO and return
         return mapToDto(subscription);
     }
-
-
-//    @Override
-//    public SubscriptionDto updateSubscription(int userId, int subscriptionId, SubscriptionDto subscriptionDto) throws UserNotFoundException, SubscriptionNotFoundException
-//    {
-//        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with associated subscription not found"));
-//        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new SubscriptionNotFoundException("Subscription with associated user not found"));
-//        if (subscription.getUserId() != user.getUserId())
-//        {
-//            throw new SubscriptionNotFoundException("This subscription does not belong to a user");
-//        }
-//
-//        subscription.setTier(subscriptionDto.getTier());
-//        subscription.setStartDate(subscriptionDto.getStartDate());
-//        subscription.setTrialPeriod(subscriptionDto.isTrialPeriod());
-//        subscription.setNextBillingDate(subscriptionDto.getNextBillingDate());
-//
-//        Subscription updateSubscription = subscriptionRepository.save(subscription);
-//        return mapToDto(updateSubscription);
-//    }
 
     @Override
     public SubscriptionDto updateSubscription(int userId, int subscriptionId, SubscriptionDto subscriptionDto) throws UserNotFoundException, SubscriptionNotFoundException

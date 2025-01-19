@@ -11,15 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class ProfileServiceImpl implements ProfileService
 {
 
-    private ProfileRepository profileRepository;
-    private UserRepository userRepository;
+    private final ProfileRepository profileRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public ProfileServiceImpl(ProfileRepository profileRepository, UserRepository userRepository)
@@ -32,27 +31,29 @@ public class ProfileServiceImpl implements ProfileService
     public ProfileDto createProfile(int userId, ProfileDto profileDto)
     {
         // Fetch the user by ID to associate the profile with the user
-        User user = userRepository.findById(userId)
+        User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getProfiles().size() >= 4)
+        {
+            throw new IllegalArgumentException("Cannot create profiles");
+        }
 
         // Convert ProfileDto to Profile entity
         Profile profile = mapToEntity(profileDto);
-//        profile.setUser(user); // Associate the profile with the user
-
         profile.setUser(user);
         // Save the profile entity
-        Profile savedProfile = profileRepository.save(profile);
+        Profile savedProfile = this.profileRepository.save(profile);
 
         // Convert the saved profile entity to a ProfileDto and return it
         return mapToDto(savedProfile);
     }
 
     @Override
-    public ProfileDto getProfileById(int profileId, int userId) throws ProfileNotFoundException
+    public ProfileDto getProfileById(int profileId) throws ProfileNotFoundException
     {
         // Retrieve the profile by its ID
-        User user = userRepository.findById(userId).orElseThrow(() -> new ProfileNotFoundException("no user found"));
-        Profile profile = profileRepository.findById(profileId)
+        Profile profile = this.profileRepository.findById(profileId)
                 .orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
 
         // Convert Profile entity to ProfileDto and return it
@@ -62,7 +63,7 @@ public class ProfileServiceImpl implements ProfileService
     @Override
     public List<ProfileDto> getProfilesByName(String name) throws ProfileNotFoundException
     {
-        List<Profile> profiles = profileRepository.findByName(name);
+        List<Profile> profiles = this.profileRepository.findByName(name);
 
         if (profiles.isEmpty())
         {
@@ -74,37 +75,20 @@ public class ProfileServiceImpl implements ProfileService
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<ProfileDto> getProfilesByUserId(int userId)
-//    {
-//        return null;
-//    }
-
-//    @Override
-//    public List<ProfileDto> getProfilesByUserId(int userId) {
-//        // Retrieve all profiles associated with the user
-//        List<Profile> profiles = profileRepository.findByUserId(userId);
-//
-//        // Convert Profile entities to ProfileDto and return the list
-//        return profiles.stream()
-//                .map(this::mapToDto)
-//                .collect(Collectors.toList());
-//    }
-
     @Override
     public ProfileDto updateProfile(int profileId, ProfileDto profileDto)
     {
         // Retrieve the existing profile by ID
-        Profile existingProfile = profileRepository.findById(profileId)
+        Profile existingProfile = this.profileRepository.findById(profileId)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
 
         // Update the profile fields with the data from the DTO
         existingProfile.setName(profileDto.getName());
-//        existingProfile.setAge(profileDto.getAge());
+        existingProfile.setAge(profileDto.getAge());
         existingProfile.setProfilePhotoUrl(profileDto.getProfilePhotoUrl());
 
         // Save the updated profile entity
-        Profile updatedProfile = profileRepository.save(existingProfile);
+        Profile updatedProfile = this.profileRepository.save(existingProfile);
 
         // Convert the updated profile entity to ProfileDto and return it
         return mapToDto(updatedProfile);

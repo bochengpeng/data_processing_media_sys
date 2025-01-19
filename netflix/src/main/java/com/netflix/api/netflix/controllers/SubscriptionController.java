@@ -8,7 +8,6 @@ import com.netflix.api.netflix.services.SubscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/netflix/user")
 public class SubscriptionController
@@ -27,9 +26,10 @@ public class SubscriptionController
     }
 
     @GetMapping("/{userId}/subscription")
-    public SubscriptionDto getSubscriptionByUserId(@PathVariable(value = "userId") int userId) throws SubscriptionNotFoundException
+    public ResponseEntity<SubscriptionDto> getSubscriptionByUserId(@PathVariable(value = "userId") int userId) throws SubscriptionNotFoundException
     {
-        return this.subscriptionService.getSubscriptionByUserId(userId);
+        SubscriptionDto subscriptionDto = this.subscriptionService.getSubscriptionByUserId(userId);
+        return new ResponseEntity<>(subscriptionDto, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}/subscription/{id}")
