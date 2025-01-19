@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService
@@ -117,37 +115,6 @@ public class SubscriptionServiceImpl implements SubscriptionService
         return mapToDto(updatedSubscription);
     }
 
-
-//    @Override
-//    public void deleteSubscription(int userId, int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException
-//    {
-//        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User with associated subscription not found"));
-//        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new SubscriptionNotFoundException("Subscription with associated user not found"));
-//
-//        if (subscription.getUserId() != user.getUserId())
-//        {
-//            throw new SubscriptionNotFoundException("This subscription does not belong to a user");
-//        }
-//
-//        subscriptionRepository.delete(subscription);
-//    }
-
-//    @Override
-//    public void deleteSubscription(int userId, int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException {
-//        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
-//
-//        Subscription subscription = subscriptionRepository.findById(subscriptionId).orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found"));
-//
-//        if (!subscription.getUsers().contains(user)) {
-//            throw new SubscriptionNotFoundException("This subscription is not associated with the user.");
-//        }
-//
-//        subscription.getUsers().remove(user);
-//        user.setSubscription(null);
-//
-//        subscriptionRepository.save(subscription);
-//    }
-
     @Override
     @Transactional
     public void deleteSubscription(int userId, int subscriptionId) throws UserNotFoundException, SubscriptionNotFoundException
@@ -175,7 +142,6 @@ public class SubscriptionServiceImpl implements SubscriptionService
         userRepository.save(user); // Explicitly save user if needed.
     }
 
-
     @Override
     public SubscriptionDto getSubscriptionByUserIdAndSubscriptionId(int userId, int subscriptionId) throws SubscriptionNotFoundException, UserNotFoundException
     {
@@ -194,7 +160,6 @@ public class SubscriptionServiceImpl implements SubscriptionService
         // Map the subscription entity to a DTO and return
         return mapToDto(subscription);
     }
-
 
     // Helper method to map Subscription entity to SubscriptionDto
     private SubscriptionDto mapToDto(Subscription subscription)
