@@ -17,10 +17,9 @@ public class Movie {
     private int movieId;
     private int duration;
     private String title;
-    private short ageRating; // Use short to match SMALLINT
-    private short contentClassification;
-//    @Column(name = "genre")
-    private short genre;
+    private AgeRating ageRating; // Use short to match SMALLINT
+    private ContentClassification contentClassification;
+    private Genre genre;
 
     @Column(length = 5000) // Allow longer descriptions
     private String description;

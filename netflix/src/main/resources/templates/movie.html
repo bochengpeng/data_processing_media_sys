@@ -124,9 +124,9 @@
                     const row = `<tr>
                         <td><input type="text" value="${movie.title}" data-id="${movie.movieId}" data-field="title" /></td>
                         <td><input type="number" value="${movie.duration}" data-id="${movie.movieId}" data-field="duration" /></td>
-                        <td><input type="number" value="${movie.ageRating}" data-id="${movie.movieId}" data-field="ageRating" /></td>
-                        <td><input type="number" value="${movie.contentClassification}" data-id="${movie.movieId}" data-field="contentClassification" /></td>
-                        <td><input type="number" value="${movie.genre}" data-id="${movie.movieId}" data-field="genre" /></td>
+                        <td><input type="text" value="${movie.ageRating}" data-id="${movie.movieId}" data-field="ageRating" /></td>
+                        <td><input type="text" value="${movie.contentClassification}" data-id="${movie.movieId}" data-field="contentClassification" /></td>
+                        <td><input type="text" value="${movie.genre}" data-id="${movie.movieId}" data-field="genre" /></td>
                         <td><textarea data-id="${movie.movieId}" data-field="description">${movie.description}</textarea></td>
                         <td><input type="date" value="${movie.releaseDate}" data-id="${movie.movieId}" data-field="releaseDate" /></td>
                         <td>
@@ -140,9 +140,9 @@
                 const addRow = `<tr>
                     <td><input type="text" id="newTitle" placeholder="Enter title" /></td>
                     <td><input type="number" id="newDuration" placeholder="Enter duration" /></td>
-                    <td><input type="number" id="newAgeRating" placeholder="Enter age rating" /></td>
-                    <td><input type="number" id="newContentClassification" placeholder="Enter content classification" /></td>
-                    <td><input type="number" id="newGenre" placeholder="Enter genre" /></td>
+                    <td><input type="text" id="newAgeRating" placeholder="Enter age rating" /></td>
+                    <td><input type="text" id="newContentClassification" placeholder="Enter content classification" /></td>
+                    <td><input type="text" id="newGenre" placeholder="Enter genre" /></td>
                     <td><textarea id="newDescription" placeholder="Enter description"></textarea></td>
                     <td><input type="date" id="newReleaseDate" /></td>
                     <td><button onclick="addMovie()">Add Movie</button></td>
