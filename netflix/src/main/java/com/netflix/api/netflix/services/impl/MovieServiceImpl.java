@@ -100,6 +100,7 @@ public class MovieServiceImpl implements MovieService
         movieDto.setDuration(movie.getDuration());
         movieDto.setAgeRating(movie.getAgeRating());
         movieDto.setReleaseDate(movie.getReleaseDate());
+
         return movieDto;
     }
 
@@ -112,6 +113,7 @@ public class MovieServiceImpl implements MovieService
         movie.setGenre(movieDto.getGenre());
         movie.setDuration(movieDto.getDuration());
         movie.setAgeRating(movieDto.getAgeRating());
+
         return movie;
     }
 }

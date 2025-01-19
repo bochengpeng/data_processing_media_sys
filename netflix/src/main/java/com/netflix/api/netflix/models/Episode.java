@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +20,9 @@ public class Episode
     private int episodeNumber;
     private int seasonNumber;
     private int duration;
+    private String title;
+    private String description;
+    private LocalDate releaseDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "series_id", nullable = false)

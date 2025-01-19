@@ -21,7 +21,6 @@ public class SubscriptionServiceImpl implements SubscriptionService
     private final SubscriptionRepository subscriptionRepository;
     private final UserRepository userRepository;
 
-
     @Autowired
     public SubscriptionServiceImpl(SubscriptionRepository subscriptionRepository, UserRepository userRepository)
     {

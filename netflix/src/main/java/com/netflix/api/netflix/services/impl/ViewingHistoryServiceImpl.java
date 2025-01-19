@@ -2,6 +2,7 @@ package com.netflix.api.netflix.services.impl;
 
 import com.netflix.api.netflix.dto.ViewingHistoryDto;
 import com.netflix.api.netflix.dto.ViewingHistoryInternalDto;
+import com.netflix.api.netflix.exception.EpisodeNotFoundException;
 import com.netflix.api.netflix.exception.ProfileNotFoundException;
 import com.netflix.api.netflix.exception.ViewingHistoryNotFoundException;
 import com.netflix.api.netflix.models.Episode;
@@ -40,13 +41,13 @@ public class ViewingHistoryServiceImpl implements ViewingHistoryService
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ViewingHistoryDto createViewingHistory(int profileId, ViewingHistoryDto viewingHistoryDto) throws ProfileNotFoundException
+    public ViewingHistoryDto createViewingHistory(int profileId, ViewingHistoryDto viewingHistoryDto) throws ProfileNotFoundException, EpisodeNotFoundException
     {
         Profile profile = this.profileRepository.findById(profileId)
                 .orElseThrow(() -> new ProfileNotFoundException("profile not found"));
 
         Episode episode = this.episodeRepository.findById(viewingHistoryDto.getEpisode().getEpisodeId())
-                .orElseThrow(() -> new RuntimeException("Episode not found"));
+                .orElseThrow(() -> new EpisodeNotFoundException("Episode not found"));
 
         Movie movie = this.movieRepository.findById(viewingHistoryDto.getMovie().getMovieId())
                 .orElseThrow(() -> new RuntimeException("Movie not found"));
@@ -63,7 +64,7 @@ public class ViewingHistoryServiceImpl implements ViewingHistoryService
     }
 
     @Override
-    public List<ViewingHistoryDto> getViewingHistoriesByProfileId(int profileId) throws ProfileNotFoundException, ViewingHistoryNotFoundException
+    public List<ViewingHistoryDto> getViewingHistoriesByProfileId(int profileId) throws ViewingHistoryNotFoundException
     {
         List<ViewingHistory> viewingHistories = this.viewingHistoryRepository.findByProfileId(profileId);
 
