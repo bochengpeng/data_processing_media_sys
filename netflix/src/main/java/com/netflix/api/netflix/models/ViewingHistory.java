@@ -24,7 +24,7 @@ public class ViewingHistory
     private Profile profile; // Association with Profile
 
     @OneToMany(mappedBy = "viewingHistory", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ViewingSession> watchedList; // Correct OneToMany relationship
+    private List<ViewingSession> watchedList;
 
     private LocalDateTime viewedAt;
 
@@ -32,6 +32,10 @@ public class ViewingHistory
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
+
+    @ManyToOne
+    @JoinColumn(name = "episode_id", nullable = false)
+    private Episode episode;
 
     public ViewingHistory(int historyId, double watchedPercentage, LocalDateTime stopAt)
     {

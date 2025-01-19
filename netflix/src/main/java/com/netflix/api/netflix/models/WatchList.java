@@ -22,11 +22,19 @@ public class WatchList
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;  // Relationship with Profile
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "watchlist_saved_content",
-//            joinColumns = @JoinColumn(name = "watchlist_id"),
-//            inverseJoinColumns = @JoinColumn(name = "content_id")
-//    )
-//    private List<Content> savedContent;
+    @ManyToMany
+    @JoinTable(
+            name = "watch_list_movies",
+            joinColumns = @JoinColumn(name = "watch_list_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
+    private List<Movie> movies;  // List of Movies in the watch list
+
+    @ManyToMany
+    @JoinTable(
+            name = "watch_list_episodes",
+            joinColumns = @JoinColumn(name = "watch_list_id"),
+            inverseJoinColumns = @JoinColumn(name = "episode_id")
+    )
+    private List<Episode> episodes;  // List of Episodes in the watch list
 }

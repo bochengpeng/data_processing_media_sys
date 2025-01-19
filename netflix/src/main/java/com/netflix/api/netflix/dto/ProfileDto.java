@@ -10,7 +10,7 @@ public class ProfileDto
     private String name;
     private int age;
     private String profilePhotoUrl;
-    private Language language;
-    private WatchListDto watchList;
-    private ViewingHistoryDto viewingHistory;
+//    private Language language;
+//    private WatchListDto watchList;
+//    private ViewingHistoryDto viewingHistory;
 }

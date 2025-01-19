@@ -27,4 +27,10 @@ public class ViewingSession
     @ManyToOne
     @JoinColumn(name = "history_id", nullable = false)
     private ViewingHistory viewingHistory;
+
+    @Column
+    private double watchedPercentage;
+
+    @Column
+    private LocalDateTime stopAt;
 }

@@ -61,6 +61,21 @@ public class ProfileServiceImpl implements ProfileService
     }
 
     @Override
+    public List<ProfileDto> getProfilesByUserId(int userId) throws ProfileNotFoundException
+    {
+        List<Profile> profiles = this.profileRepository.findByUserId(userId);
+
+        if (profiles.isEmpty())
+        {
+            throw new ProfileNotFoundException("no profile found");
+        }
+
+        return profiles.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<ProfileDto> getProfilesByName(String name) throws ProfileNotFoundException
     {
         List<Profile> profiles = this.profileRepository.findByName(name);

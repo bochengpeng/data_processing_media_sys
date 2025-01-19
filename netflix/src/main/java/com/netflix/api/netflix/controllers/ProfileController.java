@@ -31,6 +31,13 @@ public class ProfileController
         return new ResponseEntity<>(profiles, HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ProfileDto>> getProfilesByUserId(@PathVariable(value = "userId") int userId) throws ProfileNotFoundException
+    {
+        List<ProfileDto> profiles = this.profileService.getProfilesByUserId(userId);
+        return new ResponseEntity<>(profiles, HttpStatus.OK);
+    }
+
     @PostMapping("/create/{userId}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ProfileDto> createProfile(@PathVariable(value = "userId") int userId, @RequestBody ProfileDto profileDto)
