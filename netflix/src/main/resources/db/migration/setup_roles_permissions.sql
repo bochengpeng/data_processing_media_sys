@@ -13,13 +13,13 @@ CREATE ROLE api_user LOGIN PASSWORD 'api_password';
 -- ============================================
 
 -- Grant SELECT on specific tables to Juniors
-GRANT SELECT ON users, profiles, series, movies, episodes, contents, watch_list, watchlist_saved_content TO junior_user;
+GRANT SELECT ON users, profiles, series, movies, episodes, watch_list TO junior_user;
 
 -- Revoke access to sensitive tables from Juniors
 REVOKE SELECT ON public.users, public.profiles, viewing_history, viewing_session FROM junior_user;
 
 -- Grant SELECT on specific tables to Mediors
-GRANT SELECT ON users, profiles, series, movies, episodes, contents, watch_list, watchlist_saved_content, viewing_history TO medior_user;
+GRANT SELECT ON users, profiles, series, movies, episodes, watch_list, viewing_history TO medior_user;
 
 -- Revoke access to financial data from Mediors
 REVOKE SELECT ON viewing_session, subscriptions FROM medior_user;

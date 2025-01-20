@@ -35,5 +35,3 @@ public class Subscription
     private List<User> users = new ArrayList<>();
 }
 
-// find a way to restore and backup the database in case of corruption, put everything in a package to send him
-

@@ -7,10 +7,12 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication(exclude = RepositoryRestMvcAutoConfiguration.class)
 @EntityScan("com.netflix.api.netflix.models")
-public class NetflixApplication {
+public class NetflixApplication
+{
 
-	public static void main(String[] args) {
-		SpringApplication.run(NetflixApplication.class, args);
-	}
+    public static void main(String[] args)
+    {
+        SpringApplication.run(NetflixApplication.class, args);
+    }
 
 }

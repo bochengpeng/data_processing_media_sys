@@ -17,7 +17,7 @@ public class Movie {
     private int movieId;
     private int duration;
     private String title;
-    private AgeRating ageRating; // Use short to match SMALLINT
+    private AgeRating ageRating;
     private ContentClassification contentClassification;
     private Genre genre;
 

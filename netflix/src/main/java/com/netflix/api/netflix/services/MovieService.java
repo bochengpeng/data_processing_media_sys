@@ -10,10 +10,15 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface MovieService {
+public interface MovieService
+{
     MovieDto createMovie(MovieDto movieDto);
+
     MovieDto getMovieById(int movieId);
+
     List<MovieDto> getAllMovies();
+
     MovieDto updateMovie(int movieId, MovieDto movieDto);
+
     void deleteMovie(int movieId);
 }

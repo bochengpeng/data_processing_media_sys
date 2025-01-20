@@ -11,11 +11,13 @@ public class MovieFetchService
 {
     private final MovieFetchRepository movieFetchRepository;
 
-    public MovieFetchService(MovieFetchRepository movieFetchRepository) {
+    public MovieFetchService(MovieFetchRepository movieFetchRepository)
+    {
         this.movieFetchRepository = movieFetchRepository;
     }
 
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAllMovies()
+    {
         return movieFetchRepository.findAll();
     }
 }
