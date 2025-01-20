@@ -34,6 +34,15 @@ public class UserServiceImpl implements UserService
             throw new ResourceAlreadyExistsException("Email is already in use");
         }
 
+        // Validate email format using regular expression
+        String email = loginDto.getEmail();
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";  // Regex to validate email
+
+        if (!email.matches(emailRegex))
+        {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+
         User user = mapToEntity(loginDto);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(loginDto.getPassword());
