@@ -1,6 +1,5 @@
 package com.netflix.api.netflix.dto;
 
-import com.netflix.api.netflix.models.Subtitle;
 import com.netflix.api.netflix.models.VideoQuality;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
@@ -9,19 +8,14 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ViewingHistoryDto {
-
-//    @Min(value = 1, message = "ID must be a positive integer")
+public class ViewingHistoryDto
+{
     private Integer profileId;
 
-    // Either movieId or episodeId must be provided; handle this logic in custom validator or service
+    // Either movieId or episodeId must be provided;
     private Integer movieId;
     private Integer episodeId;
 

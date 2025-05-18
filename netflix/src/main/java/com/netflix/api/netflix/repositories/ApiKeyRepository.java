@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface ApiKeyRepository extends JpaRepository<ApiKey, Integer>
 {
-    Optional<ApiKey> findByKey(String apiKey);
 }

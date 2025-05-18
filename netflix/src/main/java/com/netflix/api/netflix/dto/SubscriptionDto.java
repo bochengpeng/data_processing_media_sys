@@ -18,15 +18,11 @@ import java.time.LocalDate;
 @Data
 public class SubscriptionDto
 {
-
-//    @Min(value = 1, message = "Subscription ID must be greater than 0")
     private int subscriptionId;
 
     @NotNull(message = "Subscription tier is required")
     private SubscriptionTier tier;
 
-//    @NotNull(message = "Start date is required")
-//    @PastOrPresent(message = "Start date cannot be in the future")
     private LocalDate startDate;
 
     @NotNull(message = "Next billing date is required")

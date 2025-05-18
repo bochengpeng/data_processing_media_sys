@@ -2,6 +2,7 @@ package com.netflix.api.netflix.services.impl;
 
 import com.netflix.api.netflix.dto.ProfileDto;
 import com.netflix.api.netflix.exception.ProfileNotFoundException;
+import com.netflix.api.netflix.exception.UserNotFoundException;
 import com.netflix.api.netflix.models.Profile;
 import com.netflix.api.netflix.models.User;
 import com.netflix.api.netflix.repositories.ProfileRepository;
@@ -34,7 +35,7 @@ public class ProfileServiceImpl implements ProfileService
         try
         {
             User user = this.userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new UserNotFoundException("User not found"));
 
             if (user.getProfiles().size() >= 4)
             {

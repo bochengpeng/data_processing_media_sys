@@ -12,8 +12,6 @@ import jakarta.validation.constraints.*;
 @Data
 public class SeriesDto
 {
-
-//    @Min(value = 1, message = "Series ID must be greater than 0")
     private int seriesId;
 
     @Min(value = 1, message = "Total seasons must be at least 1")

@@ -61,7 +61,6 @@ public class ViewingHistoryController
     // Create a new Viewing History
     @PostMapping("/create")
     public ResponseEntity<?> createViewingHistory(
-//            @PathVariable("profileId") int profileId,
             @Valid @RequestBody ViewingHistoryDto viewingHistoryDto,
             BindingResult result)
     {
@@ -83,7 +82,6 @@ public class ViewingHistoryController
     // Update existing Viewing History
     @PutMapping("/update/history/{historyId}")
     public ResponseEntity<?> updateViewingHistory(
-//            @PathVariable("profileId") int profileId,
             @PathVariable("historyId") int historyId,
             @Valid @RequestBody ViewingHistoryDto viewingHistoryDto,
             BindingResult result)

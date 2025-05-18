@@ -13,7 +13,6 @@ import java.util.Set;
 @Data
 public class MovieDto
 {
-//    @Min(value = 1, message = "Movie ID must be at least 1")
     private int movieId;
 
     @NotBlank(message = "Title is required")
@@ -22,7 +21,7 @@ public class MovieDto
 
     @Min(value = 1, message = "Duration must be at least 1 minute")
     @NotNull(message = "Duration is required")
-    private Integer duration; // Changed to Integer for @NotNull to work properly
+    private Integer duration;
 
     @NotNull(message = "Age rating is required")
     private AgeRating ageRating;

@@ -15,8 +15,6 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 public class WatchListDto
 {
-
-//    @Min(value = 1, message = "Watchlist ID must be a positive integer")
     private int id;
 
     @NotNull(message = "Profile ID is required")

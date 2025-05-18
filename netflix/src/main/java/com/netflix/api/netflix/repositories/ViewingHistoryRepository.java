@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface ViewingHistoryRepository extends JpaRepository<ViewingHistory, Integer>
 {
-    int countByProfile_ProfileId(int profileId);
-
     @Query("SELECT vh FROM ViewingHistory vh WHERE vh.profile.profileId = :profileId")
     List<ViewingHistory> findByProfileId(int profileId);
 }
