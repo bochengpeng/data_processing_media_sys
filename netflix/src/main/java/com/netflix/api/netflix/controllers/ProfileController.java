@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,8 +64,13 @@ public class ProfileController
     }
 
     @PostMapping("/create/{userId}")
-    public ResponseEntity<?> createProfile(@PathVariable int userId, @Valid @RequestBody ProfileDto profileDto)
+    public ResponseEntity<?> createProfile(@PathVariable int userId, @Valid @RequestBody ProfileDto profileDto, BindingResult result)
     {
+        if (result.hasErrors())
+        {
+            return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
+        }
+
         try
         {
             ProfileDto created = this.profileService.createProfile(userId, profileDto);
@@ -76,8 +82,13 @@ public class ProfileController
     }
 
     @PutMapping("/{profileId}")
-    public ResponseEntity<?> updateProfile(@PathVariable int profileId, @Valid @RequestBody ProfileDto profileDto)
+    public ResponseEntity<?> updateProfile(@PathVariable int profileId, @Valid @RequestBody ProfileDto profileDto, BindingResult result)
     {
+        if (result.hasErrors())
+        {
+            return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
+        }
+
         try
         {
             ProfileDto updated = this.profileService.updateProfile(profileId, profileDto);

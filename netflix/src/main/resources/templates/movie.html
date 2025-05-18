@@ -163,7 +163,7 @@
             });
 
             try {
-                const response = await fetch(`/movies/${movieId}`, {
+                const response = await fetch(`/movies/update/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -202,7 +202,7 @@
             }
 
             try {
-                const response = await fetch('/new_movies', {
+                const response = await fetch('/movies/upload', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -231,7 +231,7 @@
             }
 
             try {
-                const response = await fetch(`/delete/${movieId}`, {
+                const response = await fetch(`/movies/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',

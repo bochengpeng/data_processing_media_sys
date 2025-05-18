@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 public class EpisodeDto
 {
-    @Min(value = 1, message = "Episode ID must be at least 1")
+//    @Min(value = 1, message = "Episode ID must be at least 1")
     private int episodeId;
 
     @NotBlank(message = "Title is required")

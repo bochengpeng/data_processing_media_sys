@@ -13,10 +13,10 @@ CREATE ROLE api_user LOGIN PASSWORD 'api_password';
 -- ============================================
 
 -- Grant SELECT on specific tables to Juniors
-GRANT SELECT ON users, profiles, series, movies, episodes, watch_list TO junior;
+GRANT SELECT ON users, profiles, series, movies, episodes, watch_list TO junior_user;
 
 -- Revoke access to sensitive tables from Juniors
-REVOKE SELECT ON public.users, public.profiles, viewing_history, viewing_session FROM junior;
+REVOKE SELECT ON public.users, public.profiles, viewing_history, viewing_session FROM junior_user;
 
 -- Grant SELECT on specific tables to Mediors
 GRANT SELECT ON users, profiles, series, movies, episodes, watch_list, viewing_history TO medior_user;
@@ -76,20 +76,12 @@ REVOKE SELECT ON subscription FROM junior_user;
 -- 7. Create and Grant Permissions on Views
 -- ============================================
 
--- Example: Create a view for API user to access limited user information
-CREATE VIEW api_user_limited_users AS
+CREATE VIEW public.api_user_limited_users AS
 SELECT user_id, email, is_activated
 FROM users;
 
 -- Grant SELECT on the view to API user
-GRANT SELECT ON api_user_limited_users TO api_user;
-
--- Repeat the above CREATE VIEW and GRANT SELECT steps for other necessary views
--- Example:
--- CREATE VIEW api_user_watch_list AS
--- SELECT id, user_id, content_id, added_at
--- FROM watch_list;
--- GRANT SELECT ON api_user_watch_list TO api_user;
+GRANT SELECT ON public.api_user_limited_users TO api_user;
 
 -- Ensure that new tables inherit default privileges
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO junior_user, medior_user, senior_user;

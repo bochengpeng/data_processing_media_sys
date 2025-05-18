@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ViewingHistoryDto {
 
-    @Min(value = 1, message = "ID must be a positive integer")
+//    @Min(value = 1, message = "ID must be a positive integer")
     private Integer profileId;
 
     // Either movieId or episodeId must be provided; handle this logic in custom validator or service

@@ -13,7 +13,7 @@ import jakarta.validation.constraints.*;
 public class SeriesDto
 {
 
-    @Min(value = 1, message = "Series ID must be greater than 0")
+//    @Min(value = 1, message = "Series ID must be greater than 0")
     private int seriesId;
 
     @Min(value = 1, message = "Total seasons must be at least 1")
@@ -28,7 +28,6 @@ public class SeriesDto
     private String title;
 
     @Valid
-    @NotEmpty(message = "Episodes list cannot be empty")
     private List<Episode> episodes;
 }
 

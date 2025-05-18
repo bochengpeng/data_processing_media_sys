@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 public class MovieDto
 {
-    @Min(value = 1, message = "Movie ID must be at least 1")
+//    @Min(value = 1, message = "Movie ID must be at least 1")
     private int movieId;
 
     @NotBlank(message = "Title is required")

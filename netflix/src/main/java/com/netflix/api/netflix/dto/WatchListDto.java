@@ -16,7 +16,7 @@ import jakarta.validation.constraints.NotNull;
 public class WatchListDto
 {
 
-    @Min(value = 1, message = "Watchlist ID must be a positive integer")
+//    @Min(value = 1, message = "Watchlist ID must be a positive integer")
     private int id;
 
     @NotNull(message = "Profile ID is required")
@@ -30,7 +30,6 @@ public class WatchListDto
     @NotNull(message = "Content type is required")
     private ContentType contentType;
 
-    @NotNull(message = "Added date and time is required")
     private LocalDateTime addedAt;
 }
 

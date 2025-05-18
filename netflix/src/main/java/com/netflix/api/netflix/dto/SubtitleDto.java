@@ -15,7 +15,7 @@ import jakarta.validation.constraints.*;
 public class SubtitleDto
 {
 
-    @Min(value = 1, message = "ID must be a positive integer")
+//    @Min(value = 1, message = "ID must be a positive integer")
     private int id;
 
     @NotNull(message = "Content ID is required")

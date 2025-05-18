@@ -11,8 +11,10 @@ import com.netflix.api.netflix.repositories.MovieRepository;
 import com.netflix.api.netflix.repositories.ProfileRepository;
 import com.netflix.api.netflix.repositories.ViewingHistoryRepository;
 import com.netflix.api.netflix.services.ViewingHistoryService;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,15 +31,24 @@ public class ViewingHistoryServiceImpl implements ViewingHistoryService
     private final ProfileRepository profileRepository;
 
     @Override
-    public ViewingHistoryDto createViewingHistory(ViewingHistoryDto dto)
-    {
-        try
-        {
+    public ViewingHistoryDto createViewingHistory(ViewingHistoryDto dto) {
+        try {
+            // Better validation
+            if (dto.getEpisodeId() != null) {
+                // Explicitly check if the episode exists
+                boolean episodeExists = this.episodeRepository.existsById(dto.getEpisodeId());
+                if (!episodeExists) {
+                    throw new RuntimeException("Episode with ID " + dto.getEpisodeId() + " not found");
+                }
+            } else if (dto.getMovieId() == null) {
+                // If both episodeId and movieId are null, throw an exception
+                throw new RuntimeException("Either episodeId or movieId must be provided");
+            }
+
             ViewingHistory entity = mapToEntity(dto);
             return mapToDto(this.viewingHistoryRepository.save(entity));
-        } catch (Exception e)
-        {
-            throw new RuntimeException("Failed to create viewing history", e);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create viewing history: " + e.getMessage(), e);
         }
     }
 
@@ -125,46 +136,80 @@ public class ViewingHistoryServiceImpl implements ViewingHistoryService
     }
 
     // DTO to Entity
-    private ViewingHistory mapToEntity(ViewingHistoryDto dto)
-    {
+
+    private ViewingHistory mapToEntity(ViewingHistoryDto dto) {
         ViewingHistory vh = new ViewingHistory();
-        try
-        {
-            if (dto.getProfileId() != null)
-            {
-                Profile profile = this.profileRepository.findById(dto.getProfileId())
-                        .orElseThrow(() -> new RuntimeException("Profile not found"));
-                vh.setProfile(profile);
-            }
 
-            if (dto.getMovieId() != null)
-            {
-                Movie movie = this.movieRepository.findById(dto.getMovieId())
-                        .orElseThrow(() -> new RuntimeException("Movie not found"));
-                vh.setMovie(movie);
-            }
-
-            if (dto.getEpisodeId() != null)
-            {
-                Episode episode = this.episodeRepository.findById(dto.getEpisodeId())
-                        .orElseThrow(() -> new RuntimeException("Episode not found"));
-                vh.setEpisode(episode);
-            }
-
-            vh.setViewedAt(dto.getViewedAt());
-            vh.setStopAt(dto.getStopAt());
-            vh.setWatchDuration(dto.getWatchDuration());
-            vh.setResumePosition(dto.getResumePosition());
-            vh.setCompleted(dto.isCompleted());
-            vh.setSubtitlesEnabled(dto.isSubtitlesEnabled());
-            vh.setSelectedQuality(dto.getSelectedQuality());
-
-        } catch (Exception e)
-        {
-            throw new RuntimeException("Failed to map ViewingHistoryDto to entity", e);
+        // Set the relationships first
+        if (dto.getProfileId() != null) {
+            Profile profile = this.profileRepository.findById(dto.getProfileId())
+                    .orElseThrow(() -> new RuntimeException("Profile not found with id: " + dto.getProfileId()));
+            vh.setProfile(profile);
         }
+
+        if (dto.getMovieId() != null) {
+            Movie movie = this.movieRepository.findById(dto.getMovieId())
+                    .orElseThrow(() -> new RuntimeException("Movie not found with id: " + dto.getMovieId()));
+            vh.setMovie(movie);
+        }
+
+        if (dto.getEpisodeId() != null) {
+            Episode episode = this.episodeRepository.findById(dto.getEpisodeId())
+                    .orElseThrow(() -> new RuntimeException("Episode not found with id: " + dto.getEpisodeId()));
+            vh.setEpisode(episode);
+        }
+
+        // Then set the basic properties
+        vh.setViewedAt(dto.getViewedAt() != null ? dto.getViewedAt() : LocalDateTime.now());
+        vh.setStopAt(dto.getStopAt());
+        vh.setWatchDuration(dto.getWatchDuration());
+        vh.setResumePosition(dto.getResumePosition());
+        vh.setCompleted(dto.isCompleted());
+        vh.setSubtitlesEnabled(dto.isSubtitlesEnabled());
+        vh.setSelectedQuality(dto.getSelectedQuality());
+
         return vh;
     }
+//    private ViewingHistory mapToEntity(ViewingHistoryDto dto)
+//    {
+//        ViewingHistory vh = new ViewingHistory();
+//        try
+//        {
+//            if (dto.getProfileId() != null)
+//            {
+//                Profile profile = this.profileRepository.findById(dto.getProfileId())
+//                        .orElseThrow(() -> new RuntimeException("Profile not found"));
+//                vh.setProfile(profile);
+//            }
+//
+//            if (dto.getMovieId() != null)
+//            {
+//                Movie movie = this.movieRepository.findById(dto.getMovieId())
+//                        .orElseThrow(() -> new RuntimeException("Movie not found"));
+//                vh.setMovie(movie);
+//            }
+//
+//            if (dto.getEpisodeId() != null)
+//            {
+//                Episode episode = this.episodeRepository.findById(dto.getEpisodeId())
+//                        .orElseThrow(() -> new RuntimeException("Episode not found"));
+//                vh.setEpisode(episode);
+//            }
+//
+//            vh.setViewedAt(dto.getViewedAt());
+//            vh.setStopAt(dto.getStopAt());
+//            vh.setWatchDuration(dto.getWatchDuration());
+//            vh.setResumePosition(dto.getResumePosition());
+//            vh.setCompleted(dto.isCompleted());
+//            vh.setSubtitlesEnabled(dto.isSubtitlesEnabled());
+//            vh.setSelectedQuality(dto.getSelectedQuality());
+//
+//        } catch (Exception e)
+//        {
+//            throw new RuntimeException("Failed to map ViewingHistoryDto to entity", e);
+//        }
+//        return vh;
+//    }
 
     // Entity to DTO
     private ViewingHistoryDto mapToDto(ViewingHistory vh)

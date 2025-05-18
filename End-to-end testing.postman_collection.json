@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"duration\": 120,\r\n  \"title\": \"The Great Adventure\",\r\n  \"ageRating\": \"SIXTEEN\",\r\n  \"contentClassification\": \"TERROR\",\r\n  \"genre\": \"ACTION\",\r\n  \"description\": \"An epic adventure of a lifetime.\",\r\n  \"releaseDate\": \"2025-01-01\"\r\n}\r\n",
+							"raw": "{\r\n  \"duration\": 120,\r\n  \"title\": \"The Great Adventure\",\r\n  \"ageRating\": \"SIXTEEN\",\r\n  \"contentClassification\": [\"VIOLENCE\"],\r\n  \"genre\": \"ACTION\",\r\n  \"description\": \"An epic adventure of a lifetime.\",\r\n  \"releaseDate\": \"2025-01-01\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -25,18 +25,259 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/new_movies",
+							"raw": "http://localhost:8080/movies/upload",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"new_movies"
+								"movies",
+								"upload"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "[Setup] Create movie - null body",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/movies/upload",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"movies",
+										"upload"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 21:25:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "An error occurred while creating the movie."
+						},
+						{
+							"name": "[Setup] Create movie JSON",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"movieId\": 1,\r\n  \"title\": \"Inception\",\r\n  \"duration\": 148,\r\n  \"ageRating\": \"NINE\",\r\n  \"contentClassification\": [\"VIOLENCE\", \"TERROR\"],\r\n  \"genre\": \"ACTION\",\r\n  \"description\": \"A mind-bending thriller where dream invasion is possible.\",\r\n  \"releaseDate\": \"2010-07-16\",\r\n  \"availableQualities\": [\"HD\", \"UHD\"],\r\n  \"director\": \"Christopher Nolan\",\r\n  \"actors\": [\r\n    \"Leonardo DiCaprio\",\r\n    \"Joseph Gordon-Levitt\",\r\n    \"Ellen Page\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/movies/upload",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"movies",
+										"upload"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 14:55:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"movieId\": 1,\n    \"title\": \"Inception\",\n    \"duration\": 148,\n    \"ageRating\": \"NINE\",\n    \"contentClassification\": [\n        \"TERROR\",\n        \"VIOLENCE\"\n    ],\n    \"genre\": \"ACTION\",\n    \"description\": \"A mind-bending thriller where dream invasion is possible.\",\n    \"releaseDate\": [\n        2010,\n        7,\n        16\n    ],\n    \"availableQualities\": [\n        \"HD\",\n        \"UHD\"\n    ],\n    \"director\": \"Christopher Nolan\",\n    \"actors\": [\n        \"Leonardo DiCaprio\",\n        \"Joseph Gordon-Levitt\",\n        \"Ellen Page\"\n    ]\n}"
+						},
+						{
+							"name": "[Setup] Create movie XML",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"movieId\": 1,\r\n  \"title\": \"Inception\",\r\n  \"duration\": 148,\r\n  \"ageRating\": \"NINE\",\r\n  \"contentClassification\": [\"VIOLENCE\", \"TERROR\"],\r\n  \"genre\": \"ACTION\",\r\n  \"description\": \"A mind-bending thriller where dream invasion is possible.\",\r\n  \"releaseDate\": \"2010-07-16\",\r\n  \"availableQualities\": [\"HD\", \"UHD\"],\r\n  \"director\": \"Christopher Nolan\",\r\n  \"actors\": [\r\n    \"Leonardo DiCaprio\",\r\n    \"Joseph Gordon-Levitt\",\r\n    \"Ellen Page\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/movies/upload?format=xml",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"movies",
+										"upload"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "xml"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/xml;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:20:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "<MovieDto>\n    <movieId>2</movieId>\n    <title>Inception</title>\n    <duration>148</duration>\n    <ageRating>NINE</ageRating>\n    <contentClassification>\n        <contentClassification>VIOLENCE</contentClassification>\n        <contentClassification>TERROR</contentClassification>\n    </contentClassification>\n    <genre>ACTION</genre>\n    <description>A mind-bending thriller where dream invasion is possible.</description>\n    <releaseDate>2010</releaseDate>\n    <releaseDate>7</releaseDate>\n    <releaseDate>16</releaseDate>\n    <availableQualities>\n        <availableQualities>UHD</availableQualities>\n        <availableQualities>HD</availableQualities>\n    </availableQualities>\n    <director>Christopher Nolan</director>\n    <actors>\n        <actors>Leonardo DiCaprio</actors>\n        <actors>Joseph Gordon-Levitt</actors>\n        <actors>Ellen Page</actors>\n    </actors>\n</MovieDto>"
+						}
+					]
 				},
 				{
 					"name": "[Setup] Create series",
@@ -78,7 +319,8 @@
 									"    pm.expect(responseData.episodes).to.be.null;",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -108,7 +350,164 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "[Setup] Create series failed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"totalSeasons\": 5,\r\n    \"currentSeason\": 2,\r\n    \"title\": \"The Great Adventure\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/series/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"series",
+										"create"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "738"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:20:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "Validation failed: [Field error in object 'seriesDto' on field 'seriesId': rejected value [0]; codes [Min.seriesDto.seriesId,Min.seriesId,Min.int,Min]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [seriesDto.seriesId,seriesId]; arguments []; default message [seriesId],1]; default message [Series ID must be greater than 0], Field error in object 'seriesDto' on field 'episodes': rejected value [null]; codes [NotEmpty.seriesDto.episodes,NotEmpty.episodes,NotEmpty.java.util.List,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [seriesDto.episodes,episodes]; arguments []; default message [episodes]]; default message [Episodes list cannot be empty]]"
+						},
+						{
+							"name": "[Setup] Create series",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"seriesId\": 1,\r\n  \"totalSeasons\": 3,\r\n  \"currentSeason\": \"Season 3\",\r\n  \"title\": \"My Awesome Series\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/series/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"series",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:24:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"seriesId\": 4,\n    \"totalSeasons\": 3,\n    \"currentSeason\": \"Season 3\",\n    \"title\": \"My Awesome Series\",\n    \"episodes\": null\n}"
+						}
+					]
 				},
 				{
 					"name": "Create episode",
@@ -138,7 +537,164 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create episode -Series not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"episodeName\": \"Episode 1: The Beginning\",\r\n  \"description\": \"This is the first episode of the series, introducing the main characters and plot.\",\r\n  \"duration\": 45,\r\n  \"series\": {\r\n    \"seriesId\": 1\r\n  }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/episodes/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"episodes",
+										"create"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 20:46:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "An error occurred while creating the episode."
+						},
+						{
+							"name": "Create episode",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"episodeId\": 10,\r\n  \"title\": \"The Great Reveal\",\r\n  \"seasonNumber\": 2,\r\n  \"episodeNumber\": 5,\r\n  \"duration\": 42,\r\n  \"releaseDate\": \"2024-05-15\",\r\n  \"description\": \"The season's biggest secret is finally unveiled.\",\r\n  \"series\": {\r\n    \"seriesId\": 1,\r\n    \"totalSeasons\": 3,\r\n    \"currentSeason\": \"Season 2\",\r\n    \"title\": \"Mystery Chronicles\",\r\n    \"episodes\": []\r\n  }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/episodes/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"episodes",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 21:11:59 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"episodeId\": 3,\n    \"title\": \"Episode 1\",\n    \"seasonNumber\": 0,\n    \"episodeNumber\": 0,\n    \"duration\": 0,\n    \"releaseDate\": null,\n    \"description\": \"First episode\",\n    \"series\": {\n        \"id\": 1,\n        \"title\": \"The Great Adventure\",\n        \"description\": null,\n        \"releaseDate\": null,\n        \"duration\": null,\n        \"genre\": null,\n        \"contentClassification\": [],\n        \"ageRating\": null,\n        \"availableQualities\": [],\n        \"totalSeasons\": 5,\n        \"episodes\": [\n            {\n                \"episodeId\": 1,\n                \"episodeNumber\": 0,\n                \"seasonNumber\": 0,\n                \"duration\": 0,\n                \"title\": \"Episode 1\",\n                \"description\": \"First episode\",\n                \"releaseDate\": null\n            },\n            {\n                \"episodeId\": 2,\n                \"episodeNumber\": 0,\n                \"seasonNumber\": 0,\n                \"duration\": 0,\n                \"title\": \"Episode 1\",\n                \"description\": \"First episode\",\n                \"releaseDate\": null\n            },\n            {\n                \"episodeId\": 3,\n                \"episodeNumber\": 0,\n                \"seasonNumber\": 0,\n                \"duration\": 0,\n                \"title\": \"Episode 1\",\n                \"description\": \"First episode\",\n                \"releaseDate\": null\n            }\n        ],\n        \"currentSeason\": \"2\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "Create user",
@@ -168,7 +724,88 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"thu\",\r\n    \"password\": \"thutran\",\r\n    \"email\":\"trannguyenanhthu2504@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:34:44 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"userId\": 1,\n    \"email\": \"trannguyenanhthu2504@gmail.com\",\n    \"username\": \"thu\",\n    \"accountLockUntil\": null,\n    \"failedLoginAttempt\": 0,\n    \"activated\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Update user",
@@ -245,7 +882,89 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update user",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"thutran@gmail.com\",\r\n    \"username\": \"Thu Tran\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/1/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"1",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:35:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"userId\": 1,\n    \"email\": \"thutran@gmail.com\",\n    \"username\": \"thu\",\n    \"accountLockUntil\": null,\n    \"failedLoginAttempt\": 0,\n    \"activated\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Activate account",
@@ -265,7 +984,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/netflix/user/activate?token=1234a",
+							"raw": "http://localhost:8080/netflix/user/activate?token=d9790d08-9c00-4f3c-a1e9-1fb510d5811b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -279,12 +998,99 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "1234a"
+									"value": "d9790d08-9c00-4f3c-a1e9-1fb510d5811b"
 								}
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Activate account",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/activate?token=d9790d08-9c00-4f3c-a1e9-1fb510d5811b",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"activate"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "d9790d08-9c00-4f3c-a1e9-1fb510d5811b"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 06:56:10 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Account activated successfully. You can now log in."
+						}
+					]
 				},
 				{
 					"name": "Login",
@@ -353,7 +1159,324 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"thutran@gmail.com\",\r\n    \"password\": \"thutran\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:40:12 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Login successful\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Reset password request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/netflix/user/reset-request?email=trannguyenanhthu2504@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"netflix",
+								"user",
+								"reset-request"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "trannguyenanhthu2504@gmail.com"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Reset password request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/reset-request?email=thutran@gmail.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"reset-request"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "thutran@gmail.com"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "16"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:42:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Reset token sent"
+						}
+					]
+				},
+				{
+					"name": "Reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"newpassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/netflix/user/reset-password?token=ce12c674-9d34-40d5-b7b6-2f506c45ae72",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"netflix",
+								"user",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "ce12c674-9d34-40d5-b7b6-2f506c45ae72"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"newpassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/reset-password?token=345e5596-c7cb-49d3-aa48-e7893d1c7082",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"reset-password"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "345e5596-c7cb-49d3-aa48-e7893d1c7082"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:46:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Password reset successfully"
+						}
+					]
 				},
 				{
 					"name": "Generate API key",
@@ -380,7 +1503,162 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Generate API key - User not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/key/generate-key?userId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"key",
+										"generate-key"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "15"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 20:37:10 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "User not found."
+						},
+						{
+							"name": "Generate API key",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/key/generate-key?userId=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"key",
+										"generate-key"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:46:58 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "55542d68-5d27-4b06-91e3-ae8f073effba"
+						}
+					]
 				},
 				{
 					"name": "Get user with ID = 1",
@@ -452,7 +1730,162 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get user with ID = 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/1?format=json",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"1"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "json"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:47:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"userId\": 1,\n    \"email\": \"thutran@gmail.com\",\n    \"username\": \"thu\",\n    \"accountLockUntil\": null,\n    \"failedLoginAttempt\": 0,\n    \"activated\": true\n}"
+						},
+						{
+							"name": "Get user with ID = 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/1?format=xml",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"1"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "xml"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/xml;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:47:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "<UserDto>\n    <userId>1</userId>\n    <email>thutran@gmail.com</email>\n    <username>thu</username>\n    <accountLockUntil/>\n    <failedLoginAttempt>0</failedLoginAttempt>\n    <activated>true</activated>\n</UserDto>"
+						}
+					]
 				},
 				{
 					"name": "Create subscription",
@@ -518,7 +1951,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/netflix/user/7/subscription/create",
+							"raw": "http://localhost:8080/netflix/user/1/subscription/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -527,13 +1960,256 @@
 							"path": [
 								"netflix",
 								"user",
-								"7",
+								"1",
 								"subscription",
 								"create"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create subscription - User not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tier\": \"UHD\",\r\n    \"startDate\": \"2025-01-01\",\r\n    \"nextBillingDate\": \"2025-02-01\",\r\n    \"isTrialPeriod\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/1000/subscription/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"1000",
+										"subscription",
+										"create"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 01:53:30 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "User not found: User not found"
+						},
+						{
+							"name": "Create subscription - Failed user has a sub",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tier\": \"UHD\",\r\n    \"nextBillingDate\": \"2025-07-01\",\r\n    \"isTrialPeriod\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/2/subscription/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"2",
+										"subscription",
+										"create"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "100"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 13:49:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "Error creating subscription: Failed to create subscription: User already has an active subscription."
+						},
+						{
+							"name": "Create subscription",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tier\": \"UHD\",\r\n    \"nextBillingDate\": \"2025-07-01\",\r\n    \"isTrialPeriod\": true\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/1/subscription/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"1",
+										"subscription",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:48:04 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"subscriptionId\": 1,\n    \"tier\": \"UHD\",\n    \"startDate\": [\n        2025,\n        5,\n        18\n    ],\n    \"nextBillingDate\": [\n        2025,\n        7,\n        1\n    ],\n    \"trialPeriod\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Create profile",
@@ -600,10 +2276,92 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create profile",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Thu\",\r\n    \"age\": 30,\r\n    \"user\": {\r\n        \"userId\": 2\r\n    },\r\n    \"profilePhotoUrl\": \"profile_photo.jpg\",\r\n    \"language\":\"ENGLISH\",\r\n    \"preferences\": [\"Action\", \"Comedy\", \"Drama\"],\r\n    \"contentClassifications\": [\"TERROR\", \"VIOLENCE\"]\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/profiles/create/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"profiles",
+										"create",
+										"2"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 13:25:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"profileId\": 2,\n    \"name\": \"Thu\",\n    \"age\": 30,\n    \"profilePhotoUrl\": \"profile_photo.jpg\",\n    \"preferences\": [\n        \"Action\",\n        \"Comedy\",\n        \"Drama\"\n    ],\n    \"language\": \"ENGLISH\",\n    \"contentClassifications\": [\n        \"TERROR\",\n        \"VIOLENCE\"\n    ],\n    \"interestedInSeries\": false,\n    \"interestedInFilms\": false\n}"
+						}
+					]
 				},
 				{
-					"name": "Get profile",
+					"name": "Get profile XML format",
 					"event": [
 						{
 							"listen": "test",
@@ -659,7 +2417,85 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/profile/1?format=xml",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"profile",
+										"1"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "xml"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/xml;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 07:54:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "<ProfileDto>\n    <profileId>1</profileId>\n    <name>Thu</name>\n    <age>30</age>\n    <profilePhotoUrl>profile_photo.jpg</profilePhotoUrl>\n</ProfileDto>"
+						}
+					]
 				},
 				{
 					"name": "All profiles of a user",
@@ -727,7 +2563,158 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "All profiles of a user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/profiles/user/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"profiles",
+										"user",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:51:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"profileId\": 1,\n        \"name\": \"Thu\",\n        \"age\": 30,\n        \"profilePhotoUrl\": \"profile_photo.jpg\",\n        \"preferences\": [\n            \"Action\",\n            \"Comedy\",\n            \"Drama\"\n        ],\n        \"language\": \"ENGLISH\",\n        \"contentClassifications\": [\n            \"VIOLENCE\",\n            \"TERROR\"\n        ],\n        \"interestedInSeries\": false,\n        \"interestedInFilms\": false\n    },\n    {\n        \"profileId\": 2,\n        \"name\": \"Thu\",\n        \"age\": 20,\n        \"profilePhotoUrl\": \"profile_photo.jpg\",\n        \"preferences\": [\n            \"Action\",\n            \"Comedy\",\n            \"Drama\"\n        ],\n        \"language\": \"ENGLISH\",\n        \"contentClassifications\": [\n            \"VIOLENCE\",\n            \"TERROR\"\n        ],\n        \"interestedInSeries\": false,\n        \"interestedInFilms\": false\n    }\n]"
+						},
+						{
+							"name": "All profiles of a user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/profiles/user/1?format=xml",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"profiles",
+										"user",
+										"1"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "xml"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/xml;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:57:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "<ArrayList>\n    <item>\n        <profileId>1</profileId>\n        <name>Thu</name>\n        <age>30</age>\n        <profilePhotoUrl>profile_photo.jpg</profilePhotoUrl>\n        <preferences>\n            <preferences>Action</preferences>\n            <preferences>Comedy</preferences>\n            <preferences>Drama</preferences>\n        </preferences>\n        <language>ENGLISH</language>\n        <contentClassifications>\n            <contentClassifications>VIOLENCE</contentClassifications>\n            <contentClassifications>TERROR</contentClassifications>\n        </contentClassifications>\n        <interestedInSeries>false</interestedInSeries>\n        <interestedInFilms>false</interestedInFilms>\n    </item>\n    <item>\n        <profileId>2</profileId>\n        <name>Thu</name>\n        <age>20</age>\n        <profilePhotoUrl>profile_photo.jpg</profilePhotoUrl>\n        <preferences>\n            <preferences>Action</preferences>\n            <preferences>Comedy</preferences>\n            <preferences>Drama</preferences>\n        </preferences>\n        <language>ENGLISH</language>\n        <contentClassifications>\n            <contentClassifications>VIOLENCE</contentClassifications>\n            <contentClassifications>TERROR</contentClassifications>\n        </contentClassifications>\n        <interestedInSeries>false</interestedInSeries>\n        <interestedInFilms>false</interestedInFilms>\n    </item>\n</ArrayList>"
+						}
+					]
 				},
 				{
 					"name": "Subscription",
@@ -800,7 +2787,81 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Subscription",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/1/subscription/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"1",
+										"subscription",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 08:03:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"subscriptionId\": 1,\n    \"tier\": \"UHD\",\n    \"startDate\": [\n        2025,\n        5,\n        17\n    ],\n    \"nextBillingDate\": [\n        2025,\n        2,\n        1\n    ],\n    \"trialPeriod\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "All Movies XML",
@@ -879,7 +2940,84 @@
 						},
 						"description": "Get movies details in XML"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "All Movies XML",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/movies/view-all?format=xml",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"movies",
+										"view-all"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "xml"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "xml",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/xml;charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 01:03:27 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "<List>\n    <item>\n        <movieId>1</movieId>\n        <title>new movie</title>\n        <duration>0</duration>\n        <ageRating/>\n        <genre/>\n        <description/>\n        <releaseDate/>\n        <director/>\n    </item>\n    <item>\n        <movieId>2</movieId>\n        <title>new movie</title>\n        <duration>0</duration>\n        <ageRating/>\n        <genre/>\n        <description/>\n        <releaseDate/>\n        <director/>\n    </item>\n</List>"
+						}
+					]
 				},
 				{
 					"name": "All Series JSON",
@@ -932,12 +3070,10 @@
 									"  const responseData = pm.response.json();",
 									"  ",
 									"  pm.expect(responseData).to.be.an('array');",
-									"  responseData.forEach(function(series) {",
-									"    pm.expect(series.episodes).to.be.an('array').that.is.empty;",
-									"  });",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -945,7 +3081,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/netflix/series/allSeries?format=json",
+							"raw": "http://localhost:8080/netflix/series/view-all?format=json",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -954,7 +3090,7 @@
 							"path": [
 								"netflix",
 								"series",
-								"allSeries"
+								"view-all"
 							],
 							"query": [
 								{
@@ -964,7 +3100,85 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "All Series JSON",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/series/view-all?format=json",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"series",
+										"view-all"
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "json"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 16:58:56 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"seriesId\": 4,\n        \"totalSeasons\": 3,\n        \"currentSeason\": \"Season 3\",\n        \"title\": \"My Awesome Series\",\n        \"episodes\": [\n            {\n                \"episodeId\": 1,\n                \"episodeNumber\": 5,\n                \"seasonNumber\": 2,\n                \"duration\": 42,\n                \"title\": \"The Great Reveal\",\n                \"description\": \"The season's biggest secret is finally unveiled.\",\n                \"releaseDate\": [\n                    2024,\n                    5,\n                    15\n                ]\n            }\n        ]\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Create viewing history",
@@ -973,7 +3187,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"profile\": {\r\n    \"profileId\": 1\r\n  },\r\n  \"movie\": {\r\n    \"movieId\": 1\r\n  },\r\n  \"episode\": {\r\n    \"episodeId\": 1\r\n  }\r\n}\r\n",
+							"raw": "{\r\n  \"profileId\": 1,\r\n  \"movieId\": 1,\r\n  \"episodeId\": 1,\r\n  \"viewedAt\": \"2025-05-17T14:30:00\",\r\n  \"stopAt\": \"2025-05-17T15:00:00\",\r\n  \"watchDuration\": 1800,\r\n  \"resumePosition\": 1500,\r\n  \"completed\": false,\r\n  \"subtitlesEnabled\": true,\r\n  \"selectedQuality\": \"HD\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -995,7 +3209,88 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create viewing history",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"profileId\": 1,\r\n  \"movieId\": 1,\r\n  \"episodeId\": 1,\r\n  \"viewedAt\": \"2025-05-18T14:30:00\",\r\n  \"stopAt\": \"2025-05-18T15:10:00\",\r\n  \"watchDuration\": 2400,\r\n  \"resumePosition\": 1200,\r\n  \"completed\": false,\r\n  \"subtitlesEnabled\": true,\r\n  \"selectedQuality\": \"HD\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/viewing-history/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"viewing-history",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 17:29:34 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"profileId\": 1,\n    \"movieId\": 1,\n    \"episodeId\": 1,\n    \"viewedAt\": [\n        2025,\n        5,\n        18,\n        14,\n        30\n    ],\n    \"stopAt\": [\n        2025,\n        5,\n        18,\n        15,\n        10\n    ],\n    \"watchDuration\": 2400,\n    \"resumePosition\": 1200,\n    \"completed\": false,\n    \"subtitlesEnabled\": true,\n    \"selectedQuality\": \"HD\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Viewing history by profile id",
@@ -1017,7 +3312,80 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Viewing history by profile id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/viewing-history/profile/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"viewing-history",
+										"profile",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 10:05:49 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"profileId\": 1,\n        \"movieId\": 1,\n        \"episodeId\": 1,\n        \"viewedAt\": [\n            2025,\n            5,\n            17,\n            14,\n            30\n        ],\n        \"stopAt\": [\n            2025,\n            5,\n            17,\n            15,\n            0\n        ],\n        \"watchDuration\": 1800,\n        \"resumePosition\": 1500,\n        \"completed\": false,\n        \"subtitlesEnabled\": true,\n        \"selectedQuality\": \"HD\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Update subscription",
@@ -1093,7 +3461,186 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update subscription",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tier\": \"UHD\",\r\n    \"startDate\": \"2025-01-01\",\r\n    \"nextBillingDate\": \"2025-02-01\",\r\n    \"isTrialPeriod\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/1/subscription/1/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"1",
+										"subscription",
+										"1",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 10:08:37 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"subscriptionId\": 1,\n    \"tier\": \"UHD\",\n    \"startDate\": [\n        2025,\n        1,\n        1\n    ],\n    \"nextBillingDate\": [\n        2025,\n        2,\n        1\n    ],\n    \"trialPeriod\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/role/create-role/tthu-user/thutran2504",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"role",
+								"create-role",
+								"tthu-user",
+								"thutran2504"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create role",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/role/create-role/tthu-user/thutran2504",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"role",
+										"create-role",
+										"tthu-user",
+										"thutran2504"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "61"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 18 May 2025 01:37:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "User 'tthu-user' created and granted privileges successfully!"
+						}
+					]
 				},
 				{
 					"name": "Delete user",
@@ -1101,7 +3648,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/netflix/user/5/delete",
+							"raw": "http://localhost:8080/netflix/user/1/delete",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1110,12 +3657,85 @@
 							"path": [
 								"netflix",
 								"user",
-								"5",
+								"1",
 								"delete"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Delete user",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/netflix/user/1/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"netflix",
+										"user",
+										"1",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "25"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 17 May 2025 14:01:57 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "User deleted successfully"
+						}
+					]
 				}
 			]
 		}

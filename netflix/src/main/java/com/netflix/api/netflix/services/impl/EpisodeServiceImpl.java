@@ -148,7 +148,7 @@ public class EpisodeServiceImpl implements EpisodeService
         episodeDto.setSeasonNumber(episode.getSeasonNumber());
         episodeDto.setDuration(episode.getDuration());
         episodeDto.setDescription(episode.getDescription());
-        episodeDto.setSeries(episode.getSeries());
+//        episodeDto.setSeries(episode.getSeries());
 
         return episodeDto;
     }

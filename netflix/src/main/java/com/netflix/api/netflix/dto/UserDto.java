@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserDto
 {
-    @Min(value = 1, message = "ID must be a positive integer")
+//    @Min(value = 1, message = "ID must be a positive integer")
     private int userId;
 
     @NotBlank(message = "Email cannot be empty")
