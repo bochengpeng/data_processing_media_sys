@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 20 Rated TV Series</title>
+    <!--    <link rel="stylesheet" th:href="@{/css/series.css}" />-->
+    <style>
+        /* ratedSeries.html */
+        body {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(250px, 1fr));
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #2BD868;
+            color: white;
+            text-align: center;
+            align-content: center;
+            padding: 20px 0;
+        }
+
+        /* Container for movie list */
+        .movie-list {
+            gap: 10px;
+            padding: 5px;
+            margin: 0;
+        }
+
+        .movie {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .movie:hover {
+            transform: translateY(-5px);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: auto;
+            border-bottom: 5px solid #f4f4f4;
+        }
+
+        .movie-info {
+            padding: 15px;
+        }
+
+        .movie-info h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .movie-info .rating {
+            font-weight: bold;
+            color: #FF9800;
+        }
+
+        .movie-info p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+
+        /* Make sure text stays within bounds */
+        .movie-info {
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .movie-list {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .movie-info h3 {
+                font-size: 1.2em;
+            }
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .buttons {
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<header>
+    <h2>Top 20 Rated TV Series</h2>
+    <button onclick="window.location.href='/home'">Back</button>
+</header>
+<body>
+<section class="movie-list" th:each="ratedSeries : ${ratedSeries}">
+    <div class="movie">
+        <img th:src="'https://image.tmdb.org/t/p/w200/' + ${ratedSeries.posterPath}" alt="TV Series Poster"
+             class="movie-poster"/>
+        <div class="movie-info">
+            <h3 th:text="${ratedSeries.name}"></h3>
+            <p class="rating">Rating: <span th:text="${ratedSeries.voteAverage}">0.0</span></p>
+            <p th:text="${ratedSeries.overview}"></p>
+        </div>
+    </div>
+</section>
+</body>
+</html>
