@@ -1,9 +1,23 @@
 CREATE OR REPLACE FUNCTION add_user(_email TEXT, _password TEXT)
     RETURNS VOID AS $$
 BEGIN
-    INSERT INTO users(email, password) VALUES (_email, _password);
+    INSERT INTO users (
+        email,
+        password,
+        referral_discount_applied,
+        is_activated,
+        created_at
+    )
+    VALUES (
+               _email,
+               _password,
+               false,
+               true,
+               NOW()
+           );
 END;
 $$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION update_watchlist(_profile_id BIGINT, _content_id BIGINT)
     RETURNS VOID AS $$

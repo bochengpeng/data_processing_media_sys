@@ -22,7 +22,7 @@ REVOKE SELECT ON public.users, public.profiles, viewing_history, viewing_session
 GRANT SELECT ON users, profiles, series, movies, episodes, watch_list, viewing_history TO medior_user;
 
 -- Revoke access to financial data from Mediors
-REVOKE SELECT ON viewing_session, subscription FROM medior_user;
+REVOKE SELECT ON viewing_session, subscriptions FROM medior_user;
 
 -- Grant ALL privileges on all tables to Seniors
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO senior_user;
@@ -68,7 +68,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO api_user
 REVOKE SELECT (password, username) ON users FROM junior_user;
 
 -- Restrict Juniors from accessing financial data in 'user_preferences'
-REVOKE SELECT ON subscription FROM junior_user;
+REVOKE SELECT ON subscriptions FROM junior_user;
 
 -- Note: Ensure that column-level revokes are supported in your PostgreSQL version
 
